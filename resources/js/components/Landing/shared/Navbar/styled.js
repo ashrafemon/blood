@@ -38,6 +38,25 @@ export const useStyles = makeStyles((theme) => ({
             },
         },
     },
+    logo:{
+        borderRadius: '0 !important',
+
+        '& .MuiAvatar-img': {
+            objectFit: 'contain !important'
+        }
+    },
+
+
+    loginLogo:{
+        borderRadius: '0 !important',
+        margin: 'auto',
+        width: '200px',
+        height: '100px',
+
+        '& .MuiAvatar-img': {
+            objectFit: 'contain !important'
+        }
+    },
 
     loginBtn: {
         background:
