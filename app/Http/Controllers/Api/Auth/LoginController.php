@@ -24,7 +24,7 @@ class LoginController extends Controller
                         'statusCode' => 200,
                         'data' => [
                             'token' => 'Bearer ' . $accessToken,
-                            'data' => $user
+                            'data' => $user->load(['profile'])
                         ]
                     ], 200);
                 } else {
@@ -44,7 +44,7 @@ class LoginController extends Controller
             return response([
                 'status' => 'success',
                 'statusCode' => 200,
-                'data' => auth()->user()
+                'data' => auth()->user()->load(['profile'])
             ], 200);
         } catch (Exception $e) {
             return serverError($e);
