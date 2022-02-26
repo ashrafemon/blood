@@ -1,13 +1,12 @@
 import React from 'react'
 import {Box} from "@mui/system";
-import {Card, CardContent, Container, Grid, TextareaAutosize, TextField, Typography} from "@mui/material";
+import {Card, CardContent, Container, Grid, TextField, Typography} from "@mui/material";
 import {useStyles} from "./styled";
 
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
-
 
 
 const Contact = () => {
@@ -125,7 +124,8 @@ const Contact = () => {
 
                                 <TextField label="Your Subject *" margin="normal" fullWidth size='small' />
 
-                                <TextField label="Description" multiline maxRows={5} minRows={5} fullWidth variant="outlined" placeholder="Write description" />
+                                <TextField label="Description" multiline maxRows={9} minRows={9} fullWidth
+                                           variant="outlined" placeholder="Write description"/>
 
                             </CardContent>
                         </Card>

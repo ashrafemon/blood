@@ -32,16 +32,18 @@ const HowWork = () => {
                             </CardContent>
                         </Card>
                     </Grid>
+
                     <Grid item lg={2}>
-                        <Card className={classes.workCard}>
+                        <Card className={classes.workCard2}>
                             <CardContent>
-                                <Avatar src={WorkImg3} className={classes.avatar} />
-                                <Typography variant="body1" color="primary" align="center" mt={3}>
+                                <Avatar src={WorkImg3} className={classes.avatar2} />
+                                <Typography variant="body1" color="white" align="center" mt={3}>
                                     Easily contribute as donor & patient through us
                                 </Typography>
                             </CardContent>
                         </Card>
                     </Grid>
+
                     <Grid item lg={2}>
                         <Card className={classes.workCard}>
                             <CardContent>

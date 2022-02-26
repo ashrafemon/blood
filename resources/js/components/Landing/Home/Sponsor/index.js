@@ -1,6 +1,6 @@
 import React from 'react'
 import {Box} from "@mui/system";
-import {Avatar, Button, Container, Grid, Typography} from "@mui/material";
+import {Avatar, Container, Grid, Typography} from "@mui/material";
 import {useStyles} from "./styled";
 import SponsorImg1 from "../../../../assets/images/sponsor-1.png";
 

@@ -1,6 +1,5 @@
 import {makeStyles} from "@mui/styles";
 import BloodDropImg from '../../../../assets/images/blood-drop.png';
-import ReviewBgImg from '../../../../assets/images/review.png';
 
 export const useStyles = makeStyles((theme) => ({
     title: {
@@ -22,17 +21,8 @@ export const useStyles = makeStyles((theme) => ({
     },
 
 
-    avatar: {
-        width: '100%',
-        height: '500px',
-        borderRadius: '0 !important',
-    },
-
     contactCard: {
         borderRadius: '8px'
-    },
-    textArea: {
-        width: '100%'
     },
 
 

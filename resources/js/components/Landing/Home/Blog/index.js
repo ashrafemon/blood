@@ -33,17 +33,250 @@ const Blog = () => {
                             <CardContent>
                                 <Avatar src={BlogImg1} className={classes.avatar}/>
 
-                                <Typography variant='body1'>
+                                <Typography variant='h4' my={2}>
                                     Blog Title
                                 </Typography>
 
 
-                                <Typography variant='body1'>
-                                    by Ashiqur Rahman 14th Feb, 2021 3 comments
+                                <Grid container alignItems='center' mb={2}>
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            By Ashiqur Rahman
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            14th Feb, 2021
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            3 comments
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+
+
+                                <Typography variant='h5' color='rgba(103, 116, 142, 1)'>
+                                    The way to survive in modern society is to be an ascetic. It is to retreat from
+                                    society. There’s too much society everywhere you go.
+                                </Typography>
+
+                                <Button variant='text'>
+                                    Read More <ArrowRightAltIcon/>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+
+                    <Grid item lg={4}>
+                        <Card>
+                            <CardContent>
+                                <Avatar src={BlogImg1} className={classes.avatar}/>
+
+                                <Typography variant='h4' my={2}>
+                                    Blog Title
                                 </Typography>
 
 
-                                <Typography variant='body1'>
+                                <Grid container alignItems='center' mb={2}>
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            By Ashiqur Rahman
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            14th Feb, 2021
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            3 comments
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+
+
+                                <Typography variant='h5' color='rgba(103, 116, 142, 1)'>
+                                    The way to survive in modern society is to be an ascetic. It is to retreat from
+                                    society. There’s too much society everywhere you go.
+                                </Typography>
+
+                                <Button variant='text'>
+                                    Read More <ArrowRightAltIcon/>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+
+                    <Grid item lg={4}>
+                        <Card>
+                            <CardContent>
+                                <Avatar src={BlogImg1} className={classes.avatar}/>
+
+                                <Typography variant='h4' my={2}>
+                                    Blog Title
+                                </Typography>
+
+
+                                <Grid container alignItems='center' mb={2}>
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            By Ashiqur Rahman
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            14th Feb, 2021
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            3 comments
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+
+
+                                <Typography variant='h5' color='rgba(103, 116, 142, 1)'>
+                                    The way to survive in modern society is to be an ascetic. It is to retreat from
+                                    society. There’s too much society everywhere you go.
+                                </Typography>
+
+                                <Button variant='text'>
+                                    Read More <ArrowRightAltIcon/>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    <Grid item lg={4}>
+                        <Card>
+                            <CardContent>
+                                <Avatar src={BlogImg1} className={classes.avatar}/>
+
+                                <Typography variant='h4' my={2}>
+                                    Blog Title
+                                </Typography>
+
+
+                                <Grid container alignItems='center' mb={2}>
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            By Ashiqur Rahman
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            14th Feb, 2021
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            3 comments
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+
+
+                                <Typography variant='h5' color='rgba(103, 116, 142, 1)'>
+                                    The way to survive in modern society is to be an ascetic. It is to retreat from
+                                    society. There’s too much society everywhere you go.
+                                </Typography>
+
+                                <Button variant='text'>
+                                    Read More <ArrowRightAltIcon/>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    <Grid item lg={4}>
+                        <Card>
+                            <CardContent>
+                                <Avatar src={BlogImg1} className={classes.avatar}/>
+
+                                <Typography variant='h4' my={2}>
+                                    Blog Title
+                                </Typography>
+
+
+                                <Grid container alignItems='center' mb={2}>
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            By Ashiqur Rahman
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            14th Feb, 2021
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            3 comments
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+
+
+                                <Typography variant='h5' color='rgba(103, 116, 142, 1)'>
+                                    The way to survive in modern society is to be an ascetic. It is to retreat from
+                                    society. There’s too much society everywhere you go.
+                                </Typography>
+
+                                <Button variant='text'>
+                                    Read More <ArrowRightAltIcon/>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    <Grid item lg={4}>
+                        <Card>
+                            <CardContent>
+                                <Avatar src={BlogImg1} className={classes.avatar}/>
+
+                                <Typography variant='h4' my={2}>
+                                    Blog Title
+                                </Typography>
+
+
+                                <Grid container alignItems='center' mb={2}>
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            By Ashiqur Rahman
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            14th Feb, 2021
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item lg={4}>
+                                        <Typography variant='body1'>
+                                            3 comments
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+
+
+                                <Typography variant='h5' color='rgba(103, 116, 142, 1)'>
                                     The way to survive in modern society is to be an ascetic. It is to retreat from
                                     society. There’s too much society everywhere you go.
                                 </Typography>

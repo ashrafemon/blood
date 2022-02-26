@@ -1,12 +1,9 @@
 import {makeStyles} from "@mui/styles";
 import BloodDropImg from '../../../../assets/images/blood-drop.png';
-import ReviewBgImg from '../../../../assets/images/review.png';
 
 export const useStyles = makeStyles((theme) => ({
     title: {
-        fontSize: '48px !important',
-        textTransform: 'uppercase',
-        position: 'relative',
+        fontSize: '48px !important', textTransform: 'uppercase', position: 'relative',
 
         '&::after': {
             content: "''",
@@ -23,9 +20,7 @@ export const useStyles = makeStyles((theme) => ({
 
 
     avatar: {
-        width: '100px',
-        height: '100px',
-        borderRadius: '50% !important',
+        width: '100px', height: '100px', margin: "auto", borderRadius: '50% !important',
     },
 
     volunteerCard: {
@@ -34,11 +29,7 @@ export const useStyles = makeStyles((theme) => ({
 
 
     overlay: {
-        position: 'absolute',
-        bottom: '20px',
-        left: '20px',
-        zIndex: '11',
-        color: 'white',
+        position: 'absolute', bottom: '20px', left: '20px', zIndex: '11', color: 'white',
     },
 
 }))

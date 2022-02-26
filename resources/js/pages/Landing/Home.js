@@ -4,7 +4,7 @@ import HowWork from "../../components/Landing/Home/HowWork";
 import Counter from "../../components/Landing/Home/Counter";
 import Campaign from "../../components/Landing/Home/Campaign";
 import Reviews from "../../components/Landing/Home/Reviews";
-import Volunteers from "../../components/Landing/Home/Volunteers";
+import Heros from "../../components/Landing/Home/Heros";
 import Blog from "../../components/Landing/Home/Blog";
 import Gellary from "../../components/Landing/Home/Gellery";
 import Sponsor from "../../components/Landing/Home/Sponsor";
@@ -20,7 +20,7 @@ const Home = () => {
             <AppStore/>
             <Campaign />
             <Reviews/>
-            <Volunteers/>
+            <Heros/>
             <Blog/>
             <Gellary/>
             <Sponsor/>

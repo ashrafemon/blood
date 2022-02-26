@@ -1,6 +1,5 @@
 import {makeStyles} from "@mui/styles";
 import BloodDropImg from '../../../../assets/images/blood-drop.png';
-import ReviewBgImg from '../../../../assets/images/review.png';
 
 export const useStyles = makeStyles((theme) => ({
     title: {
