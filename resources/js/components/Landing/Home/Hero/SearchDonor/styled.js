@@ -7,5 +7,7 @@ export const useStyles = makeStyles(() => ({
         fontSize: '20px !important',
         textTransform: 'capitalize !important',
         fontWeight: '600 !important'
-    }
+    },
+
+
 }))

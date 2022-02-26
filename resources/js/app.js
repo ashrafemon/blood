@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/Landing/Home";
 import LandingLayout from "./layouts/LandingLayout";
 import Seekers from "./pages/Landing/Seekers";
+import Profile from "./pages/Landing/Profile";
 
 const App = () => {
     const theme = useMemo(() => {
@@ -54,6 +55,7 @@ const App = () => {
                     <LandingLayout>
                         <Route exact path="/" component={Home} />
                         <Route exact path="/seekers" component={Seekers} />
+                        <Route exact path="/profile" component={Profile} />
                     </LandingLayout>
                 </Switch>
             </BrowserRouter>

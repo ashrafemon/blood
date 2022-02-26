@@ -7,6 +7,7 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import HeroImg from '../../../../assets/images/home-hero/hero-1.png'
+import HeroImg2 from '../../../../assets/images/home-hero/hero-2.png'
 
 const Hero = () => {
     const classes = useStyles()
@@ -16,7 +17,7 @@ const Hero = () => {
         autoplay: true,
         loop: true,
         dots: false,
-        nav: false
+        nav: true,
     }
 
     return (
@@ -26,7 +27,7 @@ const Hero = () => {
                     <Avatar src={HeroImg} className={classes.avatar}/>
                 </Box>
                 <Box className="item">
-                    <Avatar src={HeroImg} className={classes.avatar}/>
+                    <Avatar src={HeroImg2} className={classes.avatar}/>
                 </Box>
             </OwlCarousel>
 
