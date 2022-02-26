@@ -37,4 +37,11 @@ Route::prefix('v1')->group(function(){
     Route::apiResource('/blood-requests', \App\Http\Controllers\Api\BloodRequestController::class)->only(['index', 'store', 'show']);
 
     Route::post('/file-uploader', [\App\Http\Controllers\Api\HelperController::class, 'fileUploader']);
+
+    Route::prefix('site')->group(function (){
+        Route::get('/districts', [\App\Http\Controllers\Api\SiteController::class, 'districts']);
+        Route::get('/areas', [\App\Http\Controllers\Api\SiteController::class, 'areas']);
+        Route::get('/areas-by-district/{district_id}', [\App\Http\Controllers\Api\SiteController::class, 'areasByDistrict']);
+        Route::get('/hospitals', [\App\Http\Controllers\Api\SiteController::class, 'hospitals']);
+    });
 });

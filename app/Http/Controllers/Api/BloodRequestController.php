@@ -5,32 +5,33 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BloodSeekerRequest;
 use App\Models\BloodRequest;
+use Exception;
 
 class BloodRequestController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum'], ['only'=>['store']]);
+        $this->middleware(['auth:sanctum'], ['only' => ['store']]);
     }
 
     public function index()
     {
-        try{
-            $bloodRequests = BloodRequest::with(['user.profile'])->where('status', 'active')->paginate(12);
+        try {
+            $bloodRequests = BloodRequest::with(['user.profile', 'hospital', 'district', 'area'])->where('status', 'active')->paginate(12);
 
             return response([
                 'status' => 'success',
                 'statusCode' => 200,
                 'data' => $bloodRequests
-            ],200);
-        }catch (\Exception $e){
+            ], 200);
+        } catch (Exception $e) {
             return serverError($e);
         }
     }
 
     public function store(BloodSeekerRequest $request)
     {
-        try{
+        try {
             $bloodRequest = BloodRequest::create([
                 'user_id' => auth()->id(),
                 'district_id' => $request->district_id,
@@ -49,31 +50,31 @@ class BloodRequestController extends Controller
                 'status' => 'success',
                 'statusCode' => 201,
                 'message' => 'Your request for blood has been posted',
-                'data' => $bloodRequest
+                'data' => $bloodRequest->load(['user.profile', 'hospital', 'district', 'area'])
             ], 201);
-        }catch (\Exception $e){
+        } catch (Exception $e) {
             return serverError($e);
         }
     }
 
     public function show($id)
     {
-        try{
-            $bloodRequest = BloodRequest::with(['user.profile'])
+        try {
+            $bloodRequest = BloodRequest::with(['user.profile', 'hospital', 'district', 'area'])
                 ->where('id', $id)
                 ->where('status', 'active')
                 ->first();
 
-            if($bloodRequest){
+            if ($bloodRequest) {
                 return response([
                     'status' => 'success',
                     'statusCode' => 200,
                     'data' => $bloodRequest
                 ], 200);
-            }else{
+            } else {
                 return itemNotFound();
             }
-        }catch (\Exception $e){
+        } catch (Exception $e) {
             return serverError($e);
         }
     }

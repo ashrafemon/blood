@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('district_id');
             $table->unsignedInteger('area_id')->nullable();
-            $table->string('hospital')->nullable();
+            $table->unsignedInteger('hospital_id')->nullable();
             $table->enum('blood_group', ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'])->nullable();
             $table->enum('emergency', ['true', 'false'])->default('false');
             $table->date('accepted_date')->nullable();
