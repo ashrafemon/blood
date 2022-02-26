@@ -1,6 +1,6 @@
 import React from 'react'
 import {Box} from "@mui/system";
-import {Card, CardContent, Container, Grid, TextField, Typography} from "@mui/material";
+import {Button, Card, CardContent, Container, Grid, TextField, Typography} from "@mui/material";
 import {useStyles} from "./styled";
 
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
@@ -120,12 +120,23 @@ const Contact = () => {
                                     <Grid item spacing={2} xl={6}>
                                         <TextField label="Your Email *" fullWidth size='small' />
                                     </Grid>
+
+
+                                    <Grid item spacing={2} xl={12}>
+                                        <TextField label="Your Subject *" fullWidth size='small' />
+                                    </Grid>
+
+                                    <Grid item spacing={2} xl={12}>
+                                        <TextField label="Description" multiline maxRows={6} minRows={6} fullWidth
+                                                   variant="outlined" placeholder="Write description"/>
+                                    </Grid>
+
+                                    <Grid item spacing={2} xl={12} textAlign='center'>
+                                        <Button variant='contained'>
+                                            Send Message
+                                        </Button>
+                                    </Grid>
                                 </Grid>
-
-                                <TextField label="Your Subject *" margin="normal" fullWidth size='small' />
-
-                                <TextField label="Description" multiline maxRows={9} minRows={9} fullWidth
-                                           variant="outlined" placeholder="Write description"/>
 
                             </CardContent>
                         </Card>

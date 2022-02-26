@@ -16,6 +16,9 @@ const SignUp = () => {
 
     return (
         <Box>
+
+
+
             {/* For Name */}
             <TextField
                 margin="normal"

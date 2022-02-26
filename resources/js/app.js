@@ -1,11 +1,12 @@
 import ReactDOM from "react-dom";
-import { CssBaseline, createTheme, ThemeProvider } from "@mui/material";
-import React, { useMemo } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import React, {useMemo} from "react";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Home from "./pages/Landing/Home";
 import LandingLayout from "./layouts/LandingLayout";
 import Seekers from "./pages/Landing/Seekers";
 import Profile from "./pages/Landing/Profile";
+import Donor from "./components/Landing/Donor";
 
 const App = () => {
     const theme = useMemo(() => {
@@ -49,13 +50,14 @@ const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <BrowserRouter>
                 <Switch>
                     <LandingLayout>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/seekers" component={Seekers} />
-                        <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/donors" component={Donor}/>
+                        <Route exact path="/seekers" component={Seekers}/>
+                        <Route exact path="/profile" component={Profile}/>
                     </LandingLayout>
                 </Switch>
             </BrowserRouter>
@@ -67,7 +69,7 @@ if (document.getElementById("root")) {
     let root = document.getElementById("root");
     ReactDOM.render(
         <React.StrictMode>
-            <App />
+            <App/>
         </React.StrictMode>,
         root
     );

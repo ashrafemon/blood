@@ -31,9 +31,8 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     avatar: {
-        width: '80%',
-        height: '100%',
-        marginLeft: 'auto',
+        width: '100%',
+        height: 'auto',
         borderRadius: '0 !important'
     }
 }))
