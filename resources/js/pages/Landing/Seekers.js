@@ -1,12 +1,12 @@
 import React from 'react'
 import RequestForm from "../../components/Landing/Seeker/RequestForm";
-import Donor from "../../components/Landing/Seeker/Donor";
+import Seeker from "../../components/Landing/Seeker/Seekers";
 
 const Seekers = () => {
     return(
         <>
             <RequestForm/>
-            <Donor/>
+            <Seeker/>
         </>
     )
 }

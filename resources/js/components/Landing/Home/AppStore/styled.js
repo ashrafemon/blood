@@ -1,30 +1,30 @@
 import {makeStyles} from "@mui/styles";
 
-import AppStoreImg from "../../../../assets/images/app-store.png";
+import StoreBg from "../../../../assets/images/store-bg.png";
 
 export const useStyles = makeStyles((theme) => ({
     storeBox: {
-        background: '#DA0A0A',
-        position: 'relative',
-        '&::after': {
-            content: "''",
-            width: 100,
-            height: 100,
-            background: `url(${AppStoreImg}) no-repeat top center`,
-            backgroundSize: 'cover',
-            position: 'absolute',
-            top: 0,
-            right: '20%',
-            zIndex: 11
-        }
+        background: `url(${StoreBg}) no-repeat top center`,
+        height: 500,
+        width: '100%',
+        objectFit: 'cover'
     },
 
 
     avatar: {
         width: '100%',
-        height: '200px',
+        height: '100%',
+        maxWidth: 120,
+        maxHeight: 80,
         borderRadius: '8px',
     },
+
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%'
+    }
 
 
 }))

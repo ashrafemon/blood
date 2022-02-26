@@ -63,6 +63,13 @@ const Navbar = () => {
                             </ListItem>
                         </NavLink>
 
+                        <NavLink to="/donors">
+                            <ListItem>
+                                <ListItemText>Donors</ListItemText>
+                            </ListItem>
+                        </NavLink>
+
+
                         <NavLink to="/seekers">
                             <ListItem>
                                 <ListItemText>Seekers</ListItemText>
