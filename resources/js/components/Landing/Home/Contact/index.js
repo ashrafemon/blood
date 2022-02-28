@@ -12,16 +12,18 @@ import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 const Contact = () => {
     const classes = useStyles();
 
-    return(
+    return (
         <Box py={5} bgcolor='#F9FAFB'>
             <Container maxWidth="xl">
-                <Typography variant="h2" color="primary" pb={5} mb={2} align="center" className={classes.title}>Contact us</Typography>
+                <Typography variant="h2" color="primary" pb={5} mb={2} align="center" className={classes.title}>Contact
+                    us</Typography>
 
                 <Box mb={10}>
                     <Grid container justifyContent="center">
                         <Grid item xs={12} md={5} lg={3}>
                             <Typography variant="body1" color="lightgray" align="center">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam ut convallis elit sem pretium mi cursus diam. Arcu
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam ut convallis elit sem
+                                pretium mi cursus diam. Arcu
                             </Typography>
                         </Grid>
                     </Grid>
@@ -31,7 +33,7 @@ const Contact = () => {
                     <Grid item xl={6}>
                         <Grid container spacing={2}>
 
-                            <Grid item xl={6} spacing={3}>
+                            <Grid item xl={6} xs={12} spacing={3}>
                                 <Card className={classes.contactCard} elevation={0}>
                                     <CardContent>
                                         <RoomOutlinedIcon color='primary' fontSize="large"/>
@@ -49,7 +51,7 @@ const Contact = () => {
                                 </Card>
                             </Grid>
 
-                            <Grid item xl={6} spacing={3}>
+                            <Grid item xl={6} xs={12} spacing={3}>
                                 <Card className={classes.contactCard} elevation={0}>
                                     <CardContent>
                                         <CallOutlinedIcon color='primary' fontSize="large"/>
@@ -69,7 +71,7 @@ const Contact = () => {
                             </Grid>
 
 
-                            <Grid item xl={6} spacing={3}>
+                            <Grid item xl={6} xs={12} spacing={3}>
                                 <Card className={classes.contactCard} elevation={0}>
                                     <CardContent>
                                         <MailOutlineOutlinedIcon color='primary' fontSize="large"/>
@@ -88,7 +90,7 @@ const Contact = () => {
                                 </Card>
                             </Grid>
 
-                            <Grid item xl={6} spacing={3}>
+                            <Grid item xl={6} xs={12} spacing={3}>
                                 <Card className={classes.contactCard} elevation={0}>
                                     <CardContent>
                                         <WatchLaterOutlinedIcon color='primary' fontSize="large"/>
@@ -113,25 +115,25 @@ const Contact = () => {
                         <Card className={classes.contactCard} elevation={0}>
                             <CardContent>
                                 <Grid container spacing={2}>
-                                    <Grid item spacing={2} xl={6}>
-                                        <TextField label="Your Name *" fullWidth size='small' />
+                                    <Grid item spacing={2} xl={6} xs={12}>
+                                        <TextField label="Your Name *" fullWidth size='small'/>
                                     </Grid>
 
-                                    <Grid item spacing={2} xl={6}>
-                                        <TextField label="Your Email *" fullWidth size='small' />
+                                    <Grid item spacing={2} xl={6} xs={12}>
+                                        <TextField label="Your Email *" fullWidth size='small'/>
                                     </Grid>
 
 
-                                    <Grid item spacing={2} xl={12}>
-                                        <TextField label="Your Subject *" fullWidth size='small' />
+                                    <Grid item spacing={2} xl={12} xs={12}>
+                                        <TextField label="Your Subject *" fullWidth size='small'/>
                                     </Grid>
 
-                                    <Grid item spacing={2} xl={12}>
+                                    <Grid item spacing={2} xl={12} xs={12}>
                                         <TextField label="Description" multiline maxRows={6} minRows={6} fullWidth
                                                    variant="outlined" placeholder="Write description"/>
                                     </Grid>
 
-                                    <Grid item spacing={2} xl={12} textAlign='center'>
+                                    <Grid item spacing={2} xl={12} xs={12} textAlign='center'>
                                         <Button variant='contained'>
                                             Send Message
                                         </Button>

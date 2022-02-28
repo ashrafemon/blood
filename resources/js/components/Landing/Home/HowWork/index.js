@@ -21,8 +21,9 @@ const HowWork = () => {
                     </Grid>
                 </Box>
 
-                <Grid container justifyContent="space-between" alignItems="center">
-                    <Grid item lg={2}>
+                <Grid container justifyContent="space-between" alignItems="center" textAlign='center' spacing={2} >
+
+                    <Grid item lg={2} xs={12} textAlign='center'>
                         <Card className={classes.workCard}>
                             <CardContent>
                                 <Avatar src={WorkImg1} className={classes.avatar} />
@@ -33,7 +34,7 @@ const HowWork = () => {
                         </Card>
                     </Grid>
 
-                    <Grid item lg={2}>
+                    <Grid item lg={2} xs={12}>
                         <Card className={classes.workCard2}>
                             <CardContent>
                                 <Avatar src={WorkImg3} className={classes.avatar2} />
@@ -44,7 +45,7 @@ const HowWork = () => {
                         </Card>
                     </Grid>
 
-                    <Grid item lg={2}>
+                    <Grid item lg={2} xs={12}>
                         <Card className={classes.workCard}>
                             <CardContent>
                                 <Avatar src={WorkImg2} className={classes.avatar} />

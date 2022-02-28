@@ -1,11 +1,11 @@
-import {AppBar, Avatar, Button, Container, Grid, Hidden, IconButton, SwipeableDrawer, Toolbar,} from "@mui/material";
+import {AppBar, Avatar, Container, Grid, Hidden, IconButton, SwipeableDrawer, Toolbar,} from "@mui/material";
 import React, {useState} from "react";
 import {useStyles} from "./styled";
 
 import Logo from '../../../../assets/images/logo.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import NavList from "./NavList";
-
+import CloseIcon from '@mui/icons-material/Close';
 const Navbar = () => {
     const classes = useStyles();
 
@@ -25,13 +25,13 @@ const Navbar = () => {
                 <Container maxWidth="xl">
                     <Grid container alignItems='center'>
 
-                        <Grid item lg={1}>
-                            <Button>
-                                <Avatar src={Logo} className={classes.logo}/>
-                            </Button>
+                        <Grid item lg={1} sm={11} xs={11}>
+
+                            <Avatar src={Logo} className={classes.logo}/>
+
                         </Grid>
 
-                        <Grid item lg={11}>
+                        <Grid item lg={11} sm={1} xs={1}>
 
                             <Hidden mdUp>
                                 <IconButton onClick={drawerHandler}>
@@ -44,7 +44,20 @@ const Navbar = () => {
                                     open={open}
                                     onClose={() => drawerHandler(false)}
                                 >
-                                    <NavList/>
+                                    <Grid container>
+                                        <Grid item xs={8}>
+                                            <NavList/>
+                                        </Grid>
+
+                                        <Grid item xs={4}>
+                                            <IconButton onClick={() => drawerHandler(false)}>
+                                                <CloseIcon fontSize="large"/>
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+
+
+
                                 </SwipeableDrawer>
                             </Hidden>
 

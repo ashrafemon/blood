@@ -26,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
         height: 268,
         cursor: 'pointer',
         transition: 'all 1s',
+        margin: 'auto',
 
         '& .MuiCardContent-root': {
             width: '100%',
@@ -49,8 +50,7 @@ export const useStyles = makeStyles((theme) => ({
         height: 268,
         cursor: 'pointer',
         transition: 'all 1s',
-        // position:'relative',
-        // overflow: 'visible',
+        margin: 'auto',
 
         '& .MuiCardContent-root': {
             width: '100%',

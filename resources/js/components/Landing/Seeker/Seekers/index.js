@@ -42,20 +42,20 @@ const Seekers = () => {
     };
 
     return (
-        <Box py={2}>
+        <Box>
             <Container maxWidth="xl">
-                <Grid container>
-                    <Grid item lg={6}>
+                <Grid container spacing={2}>
+                    <Grid item lg={6} xs={12}>
                         <Typography variant='h3' color='primary'>
                             1,223 people are searching for A+ Blood in your area
                         </Typography>
                     </Grid>
 
 
-                    <Grid item lg={6}>
+                    <Grid item lg={6} xs={12}>
                         <Grid container spacing={3}>
                             {/* ===== All District ===== */}
-                            <Grid item lg={2.5}>
+                            <Grid item lg={2.5} xs={6}>
                                 <Autocomplete
                                     disablePortal
                                     renderInput={(params) => <TextField {...params} label="All District"/>}
@@ -64,7 +64,7 @@ const Seekers = () => {
 
 
                             {/* ===== All Area ===== */}
-                            <Grid item lg={2.5}>
+                            <Grid item lg={2.5} xs={6}>
                                 <Autocomplete
                                     disablePortal
                                     renderInput={(params) => <TextField {...params} label="All Area"/>}
@@ -72,7 +72,7 @@ const Seekers = () => {
                             </Grid>
 
                             {/* ===== Blood group ===== */}
-                            <Grid item lg={2.5}>
+                            <Grid item lg={2.5} xs={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Blood Group</InputLabel>
 
@@ -91,7 +91,7 @@ const Seekers = () => {
 
 
                             {/* ===== Gender ===== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Gender</InputLabel>
 
@@ -110,7 +110,7 @@ const Seekers = () => {
 
 
                             {/* ===== Seeker Type ===== */}
-                            <Grid item lg={2.5}>
+                            <Grid item lg={2.5} xs={12}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Seeker Type</InputLabel>
 
@@ -131,7 +131,7 @@ const Seekers = () => {
                 </Grid>
 
 
-                <Grid container spacing={5} my={3}>
+                <Grid container spacing={5} my={3} >
                     <Grid item lg={4}>
                         <Card className={classes.card}>
                             <CardContent>

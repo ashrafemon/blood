@@ -41,7 +41,7 @@ const RequestForm = () => {
                         <Grid container spacing={2}>
 
                             {/* ====== Select District ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <Autocomplete
                                     disablePortal
                                     renderInput={(params) => <TextField {...params} label="Select District"/>}
@@ -50,7 +50,7 @@ const RequestForm = () => {
 
 
                             {/* ====== Select Area ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <Autocomplete
                                     disablePortal
                                     renderInput={(params) => <TextField {...params} label="Select Area"/>}
@@ -58,7 +58,7 @@ const RequestForm = () => {
                             </Grid>
 
                             {/* ====== Select Hospital ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <Autocomplete
                                     disablePortal
                                     renderInput={(params) => <TextField {...params} label="Select Hospital"/>}
@@ -67,7 +67,7 @@ const RequestForm = () => {
 
 
                             {/* ====== Select Blood Group ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Select Blood Group</InputLabel>
 
@@ -85,7 +85,7 @@ const RequestForm = () => {
                             </Grid>
 
                             {/* ====== Select Quantity ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Select Quantity</InputLabel>
 
@@ -104,10 +104,10 @@ const RequestForm = () => {
                             </Grid>
 
                             {/* ====== Date & Time ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DateTimePicker
-                                        renderInput={(props) => <TextField {...props} />}
+                                        renderInput={(props) => <TextField fullWidth {...props} />}
                                         label="Donate Time"
                                         value={value}
                                         onChange={(newValue) => {
@@ -119,7 +119,7 @@ const RequestForm = () => {
 
 
                             {/* ====== Select Gender ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Select Gender</InputLabel>
 
@@ -138,7 +138,7 @@ const RequestForm = () => {
 
 
                             {/* ====== Select Religion ====== */}
-                            <Grid item lg={2}>
+                            <Grid item lg={2} xs={12}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Select Religion</InputLabel>
 
@@ -156,12 +156,12 @@ const RequestForm = () => {
                             </Grid>
 
 
-                            <Grid item lg={4}>
+                            <Grid item lg={4} xs={12}>
                                 <TextField label="Description" multiline maxRows={5} minRows={5} fullWidth
                                            variant="outlined" placeholder="Write description"/>
                             </Grid>
 
-                            <Grid item lg={4}>
+                            <Grid item lg={4} xs={12}>
                                 <Button className={classes.button} variant="contained" color="primary" size="large">Post
                                     Request</Button>
                             </Grid>

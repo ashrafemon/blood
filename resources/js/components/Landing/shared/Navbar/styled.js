@@ -67,9 +67,10 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     drawer: {
+        zIndex: 999999999999,
         "& .MuiDrawer-paper": {
             width: 200,
-            paddingTop: 80,
+            // paddingTop: 80,
 
         },
     },

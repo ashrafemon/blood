@@ -32,7 +32,7 @@ const Campaign = () => {
                         <Card  className={classes.campaignCard}>
                             <CardContent>
                                 <Grid container>
-                                    <Grid item lg={8}>
+                                    <Grid item lg={8} xs={12}>
                                         <Typography variant="h6" margin={2}>
                                             14th Feb, 2022
                                         </Typography>
@@ -58,7 +58,7 @@ const Campaign = () => {
                                         </Typography>
 
                                     </Grid>
-                                    <Grid item lg={4}>
+                                    <Grid item lg={4} xs={12}>
                                         <Avatar src={CampaignImg1} className={classes.avatar}/>
                                     </Grid>
                                 </Grid>
@@ -71,10 +71,10 @@ const Campaign = () => {
                         <Card  className={classes.campaignCard}>
                             <CardContent>
                                 <Grid container>
-                                    <Grid item lg={4}>
+                                    <Grid item lg={4} xs={12}>
                                         <Avatar src={CampaignImg1} className={classes.avatar}/>
                                     </Grid>
-                                    <Grid item lg={8}>
+                                    <Grid item lg={8} xs={12}>
                                         <Typography variant="h6" margin={2}>
                                             14th Feb, 2022
                                         </Typography>

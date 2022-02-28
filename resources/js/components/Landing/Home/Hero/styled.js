@@ -8,8 +8,6 @@ export const useStyles = makeStyles(() => ({
         maxHeight: '100vh',
         position: 'relative',
         overflow: 'hidden'
-
-
     },
     content: {
         width: '100%',
