@@ -54,7 +54,7 @@ class LoginController extends Controller
     public function logout()
     {
         try {
-            auth()->user()->tokens->delete();
+            auth()->user()->tokens()->delete();
 
             return response([
                 'status' => 'success',

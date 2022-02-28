@@ -32,11 +32,11 @@ class BloodRequestController extends Controller
     public function store(BloodSeekerRequest $request)
     {
         try {
-            $bloodRequest = BloodRequest::create([
+            $data = [
                 'user_id' => auth()->id(),
                 'district_id' => $request->district_id,
                 'area_id' => $request->area_id,
-                'hospital' => $request->hospital,
+                'hospital_id' => $request->hospital_id,
                 'blood_group' => $request->blood_group,
                 'emergency' => $request->emergency ?? 'false',
                 'accepted_date' => $request->accepted_date,
@@ -44,7 +44,13 @@ class BloodRequestController extends Controller
                 'religion' => $request->religion,
                 'description' => $request->description,
                 'status' => $request->status ?? 'active',
-            ]);
+            ];
+
+            if($request->has('emergency') && $request->emergency === 'true'){
+                $data['accepted_date'] = today();
+            }
+
+            $bloodRequest = BloodRequest::create($data);
 
             return response([
                 'status' => 'success',

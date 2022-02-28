@@ -8,6 +8,8 @@ use App\Models\Profile;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -41,11 +43,16 @@ class RegisterController extends Controller
                     'available_donate_schedule' => $request->available_donate_schedule,
                 ]);
 
+                $accessToken = $user->createToken('authToken')->plainTextToken;
+
                 return response([
                     'status' => 'success',
                     'statusCode' => 201,
                     'message' => 'Successfully register...',
-                    'data' => $user->load(['profile'])
+                    'data' => [
+                        'token' => 'Bearer '. $accessToken,
+                        'user' => $user->load(['profile'])
+                    ]
                 ]);
             }
 
@@ -57,6 +64,17 @@ class RegisterController extends Controller
 
     public function update()
     {
+        $validator = Validator::make(request()->all(), [
+            'blood_group' => Rule::in(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']),
+            'gender' => Rule::in(['Male', 'Female', 'Other']),
+            'religion' => Rule::in(['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others']),
+            'phone_publicly' => Rule::in(['true', 'false'])
+        ]);
+
+        if($validator->fails()){
+            return validateError($validator->errors());
+        }
+
         try{
             $user = auth()->user();
 

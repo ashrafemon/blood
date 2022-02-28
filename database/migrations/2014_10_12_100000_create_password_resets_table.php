@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone')->index();
             $table->string('email')->index()->nullable();
             $table->enum('status', ['pending', 'completed', 'changed'])->default('pending');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
     }
 

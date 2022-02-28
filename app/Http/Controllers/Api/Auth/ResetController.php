@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\OtpCode;
 use App\Models\PasswordReset;
+use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ResetController extends Controller
@@ -34,6 +36,7 @@ class ResetController extends Controller
 
                 $otpCode = OtpCode::create([
                     'phone' => request('phone'),
+                    'type' => 'reset',
                     'code' => (string)mt_rand(100000, 999999),
                     'validate_till' => now()->addHour()
                 ]);
@@ -66,14 +69,19 @@ class ResetController extends Controller
         }
 
         try{
-            $existResetRequest = PasswordReset::where('phone', request('phone'))->where('status', 'pending')->latest()->first();
+            $existResetRequest = PasswordReset::where('phone', request('phone'))
+                ->where('status', 'pending')
+                ->latest()
+                ->first();
 
             if($existResetRequest){
                 $existOtpCode = OtpCode::where('type', 'reset')
                     ->where('phone', request('phone'))
                     ->where('code', request('code'))
-                    ->where('validate_till', '>', now())
+//                    ->where('validate_till', '>', now())
                     ->first();
+
+
 
                 if($existOtpCode){
                     $existResetRequest->status = 'completed';
@@ -151,7 +159,22 @@ class ResetController extends Controller
         }
 
         try{
-            $existResetRequest = PasswordReset::where('phone', request('phone'))->status('status', 'complete');
+            $existResetRequest = PasswordReset::where('phone', request('phone'))->where('status', 'completed')->first();
+
+            if($existResetRequest){
+                $user = User::where('phone', request('phone'))->first();
+                $user->password = Hash::make(request('password'));
+                $user->update();
+
+                $existResetRequest->status = 'changed';
+                $existResetRequest->update();
+
+                return response([
+                    'status' => 'success',
+                    'statusCode' => 200,
+                    'message' => 'You have successfully reset your password!'
+                ], 200);
+            }
         }catch (Exception $e){
             return serverError($e);
         }

@@ -92,6 +92,10 @@ class DonorController extends Controller
                 });
             }
 
+            if(request()->user('sanctum')){
+                $donors = $donors->whereNot('id', request()->user('sanctum')['id']);
+            }
+
             $donors = $donors->with(['profile'])->whereHas('profile', function ($item) {
                 $item->where('available_donate', 'true');
             })->paginate(12);

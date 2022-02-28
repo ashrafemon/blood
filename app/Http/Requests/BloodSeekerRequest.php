@@ -29,10 +29,11 @@ class BloodSeekerRequest extends FormRequest
     {
         return [
             'district_id' => 'required',
+//            'emergency' => 'required',
             'gender'   => 'required|' . Rule::in(['Male', 'Female', 'Other']),
             'religion' => Rule::in(['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others']),
             'blood_group' => 'required|'. Rule::in(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']),
-            'accepted_date' => 'required|date'
+            'accepted_date' => 'required_if:emergency,=,false|date'
         ];
     }
 
