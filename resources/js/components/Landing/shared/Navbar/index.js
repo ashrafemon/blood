@@ -5,26 +5,27 @@ import {
     Container,
     Dialog,
     DialogContent,
+    Hidden,
+    IconButton,
     List,
     ListItem,
     ListItemAvatar,
     ListItemText,
     Toolbar,
     Typography,
-    useMediaQuery,
 } from "@mui/material";
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {useStyles} from "./styled";
 
 import Logo from '../../../../assets/images/logo.png'
-import {useTheme} from "@mui/styles";
 import {Box} from "@mui/system";
 import Login from "../Modal/Login";
 import SignUp from "../Modal/SignUp";
 import Email from "../Modal/Forget/Email";
 import OTP from "../Modal/Forget/OTP";
 import ChangePassword from "../Modal/Forget/ChangePassword";
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Navbar = () => {
     const classes = useStyles();
@@ -39,8 +40,6 @@ const Navbar = () => {
         setOpen(false);
     };
 
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <AppBar
@@ -51,6 +50,21 @@ const Navbar = () => {
             <Toolbar>
                 <Container maxWidth="xl">
                     <List className={classes.list}>
+
+                        <Hidden mdUp>
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{mr: 2}}
+                            >
+                                <MenuIcon/>
+                            </IconButton>
+                        </Hidden>
+
+
+
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar src={Logo} className={classes.logo}/>
@@ -134,45 +148,8 @@ const Navbar = () => {
 
                                     <OTP/>
 
-                                    <ChangePassword />
+                                    <ChangePassword/>
 
-
-                                    {/*<Avatar src={LoginLogo} className={classes.loginLogo}/>*/}
-
-                                    {/*<TextField*/}
-                                    {/*    margin="normal"*/}
-                                    {/*    id="name"*/}
-                                    {/*    label="Email *"*/}
-                                    {/*    type="email"*/}
-                                    {/*    fullWidth*/}
-                                    {/*    variant="outlined"*/}
-                                    {/*/>*/}
-
-
-                                    {/*<TextField*/}
-                                    {/*    margin="normal"*/}
-                                    {/*    id="password"*/}
-                                    {/*    label="Password *"*/}
-                                    {/*    type="password"*/}
-                                    {/*    fullWidth*/}
-                                    {/*    variant="outlined"*/}
-                                    {/*/>*/}
-
-                                    {/*<Box textAlign='end' my={2}>*/}
-                                    {/*    <Button  variant="text" >Forgot password?</Button>*/}
-                                    {/*</Box>*/}
-
-
-                                    {/*<Button onClick={handleClose} variant='contained' fullWidth>Login</Button>*/}
-
-
-                                    {/*<Box textAlign='center' my={2}>*/}
-                                    {/*    <Typography>*/}
-                                    {/*        OR*/}
-                                    {/*    </Typography>*/}
-
-                                    {/*    <Button  variant="text" >Sign up</Button>*/}
-                                    {/*</Box>*/}
 
                                 </DialogContent>
 
