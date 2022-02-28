@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BloodSeekerRequest;
 use App\Models\BloodRequest;
+use App\Models\Hospital;
 use Exception;
 
 class BloodRequestController extends Controller
@@ -36,7 +37,7 @@ class BloodRequestController extends Controller
                 'user_id' => auth()->id(),
                 'district_id' => $request->district_id,
                 'area_id' => $request->area_id,
-                'hospital_id' => $request->hospital_id,
+                'hospital' => $request->hospital,
                 'blood_group' => $request->blood_group,
                 'emergency' => $request->emergency ?? 'false',
                 'accepted_date' => $request->accepted_date,
