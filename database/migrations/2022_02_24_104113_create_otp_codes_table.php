@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
+        Schema::create('otp_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('phone')->index();
-            $table->string('email')->index()->nullable();
-            $table->enum('status', ['pending', 'completed', 'changed'])->default('pending');
-            $table->timestamp('created_at')->nullable();
+            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->string('code');
+            $table->enum('type', ['register', 'reset'])->default('register');
+            $table->date('validate_till');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('otp_codes');
     }
 };

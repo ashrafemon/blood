@@ -17,10 +17,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [];
+
+
+    public const ROLES = [
+        'super_admin' => 'SUPER_ADMIN',
+        'admin' => 'ADMIN',
+        'user' => 'USER'
     ];
 
     /**
@@ -41,4 +44,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function blood_requests()
+    {
+        return $this->hasMany(BloodRequest::class);
+    }
 }
