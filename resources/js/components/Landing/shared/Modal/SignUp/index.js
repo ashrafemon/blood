@@ -1,131 +1,90 @@
 import React, {useState} from "react";
 import {useStyles} from "./styled";
 import {Box} from "@mui/system";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
-import {Autocomplete, DatePicker, LocalizationProvider} from "@mui/lab";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {Avatar, Button, Step, StepLabel, Stepper, Typography} from "@mui/material";
+import GeneralInfo from "./GeneralInfo";
+import PersonalInfo from "./PersonalInfo";
+
+import Logo from "../../../../../assets/images/login-logo.png"
+import Complete from "./Complete";
+
+
+const steps = ['General Information', 'Personal Information', 'Completed Signup'];
+
+function stepContent(step) {
+    switch (step) {
+        case 0:
+            return <GeneralInfo/>;
+        case 1:
+            return <PersonalInfo/>;
+        case 2:
+            return <Complete/>;
+    }
+}
+
 const SignUp = () => {
     const classes = useStyles();
 
-    const [gender, setGender] = useState();
-    const handleChange = (event) => {
-        setGender(event.target.value);
-    };
+    const [activeStep, setActiveStep] = useState(0);
 
-    const [dob, setDob] = useState(null);
+    const handleNext = () => {
+        setActiveStep(activeStep + 1);
+    };
 
     return (
         <Box>
-
-
-
-            {/* For Name */}
-            <TextField
-                margin="normal"
-                id="name"
-                label="Name *"
-                type="text"
-                fullWidth
-                variant="outlined"
-            />
-
-            {/* For Phone */}
-            <TextField
-                margin="normal"
-                id="name"
-                label="Phone *"
-                type="text"
-                fullWidth
-                variant="outlined"
-            />
-
-            {/* For Gender */}
-            <FormControl fullWidth margin="normal">
-                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={gender}
-                    label="Gender"
-                    onChange={handleChange}
-                >
-                    <MenuItem value={'male'}>Male</MenuItem>
-                    <MenuItem value={'female'}>Female</MenuItem>
-                    <MenuItem value={'other'}>Other</MenuItem>
-                </Select>
-            </FormControl>
-
-
-            {/* For Religion */}
-            <FormControl fullWidth margin="normal">
-                <InputLabel id="demo-simple-select-label">Religion</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={gender}
-                    label="Religion"
-                    onChange={handleChange}
-                >
-                    <MenuItem value={'muslim'}>Muslim</MenuItem>
-                    <MenuItem value={'hindu'}>Hindu</MenuItem>
-                    <MenuItem value={'buddhist'}>Buddhist</MenuItem>
-                    <MenuItem value={'christian'}>Christian</MenuItem>
-                    <MenuItem value={'other'}>Other</MenuItem>
-                </Select>
-            </FormControl>
-
-            {/* For DOB */}
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-
-                    label="Date of Birth"
-
-                    onChange={(newValue) => {
-                        setDob(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} fullWidth margin='normal' />}
-                />
-            </LocalizationProvider>
-
-            {/* For  District*/}
-            <Box my={2}>
-                <Autocomplete
-                    margin='normal'
-                    disablePortal
-                    id="combo-box-demo"
-                    renderInput={(params) => <TextField {...params} label="District" />}
-                />
-            </Box>
-
-
-            {/* For  District*/}
-            <Autocomplete
-                disablePortal
-                id=""
-                renderInput={(params) => <TextField {...params} label="Area" />}
-            />
-
-
-            {/* For Password */}
-            <TextField
-                margin="normal"
-                id="password"
-                label="Password *"
-                type="password"
-                fullWidth
-                variant="outlined"
-            />
-
-            <Button variant='contained' fullWidth>Sign Up</Button>
-
-
-            <Box textAlign='center' my={2}>
-                <Typography>
-                    OR
+            <Box textAlign='center'>
+                <Typography variant='h2'>
+                    Please Sign up
                 </Typography>
 
-                <Button variant="text">Login</Button>
+                <Avatar src={Logo} className={classes.loginLogo}/>
             </Box>
+
+
+            <Stepper activeStep={activeStep}>
+                {steps.map((label) => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+
+            <Box>
+                {stepContent(activeStep)}
+
+                <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    fullWidth
+                >
+                    {activeStep === steps.length - 1 ? 'Complete' : 'Next'}
+                </Button>
+            </Box>
+
+            {/*<Box>*/}
+            {/*    {activeStep === steps.length ? (*/}
+            {/*        <Box>*/}
+            {/*            /!*<Avatar src={Congratulation}/>*!/*/}
+            {/*            <Typography>*/}
+            {/*                hello*/}
+            {/*            </Typography>*/}
+            {/*        </Box>*/}
+
+            {/*    ) : (*/}
+            {/*        <Box>*/}
+            {/*            {stepContent(activeStep)}*/}
+
+            {/*            <Button*/}
+            {/*                variant="contained"*/}
+            {/*                onClick={handleNext}*/}
+            {/*                fullWidth*/}
+            {/*            >*/}
+            {/*                {activeStep === steps.length - 1 ? 'Complete' : 'Next'}*/}
+            {/*            </Button>*/}
+            {/*        </Box>*/}
+            {/*    )}*/}
+            {/*</Box>*/}
         </Box>
     );
 };

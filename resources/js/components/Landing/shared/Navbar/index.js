@@ -11,6 +11,10 @@ const Navbar = () => {
 
     const [open, setOpen] = useState(false);
 
+    const drawerHandler = (status) => {
+        setOpen(status);
+    };
+
     return (
         <AppBar
             position="fixed"
@@ -30,16 +34,15 @@ const Navbar = () => {
                         <Grid item lg={11}>
 
                             <Hidden mdUp>
-                                <IconButton  onClick={() => setOpen(true)}>
+                                <IconButton onClick={drawerHandler}>
                                     <MenuIcon fontSize="large"/>
                                 </IconButton>
 
                                 <SwipeableDrawer
                                     className={classes.drawer}
-                                    anchor="left"
+                                    anchor="right"
                                     open={open}
-                                    onClose={() => setOpen(false)}
-                                    onOpen={() => {}}
+                                    onClose={() => drawerHandler(false)}
                                 >
                                     <NavList/>
                                 </SwipeableDrawer>

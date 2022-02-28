@@ -8,6 +8,8 @@ export const useStyles = makeStyles(() => ({
         maxHeight: '100vh',
         position: 'relative',
         overflow: 'hidden'
+
+
     },
     content: {
         width: '100%',
@@ -21,7 +23,17 @@ export const useStyles = makeStyles(() => ({
 
     heroTitle: {
         fontSize: '78px !important',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+
+        "@media(max-width: 600px)": {
+            fontSize: '24px !important',
+        },
+    },
+
+    heroDescription: {
+        "@media(max-width: 600px)": {
+            fontSize: '10px !important',
+        },
     },
 
     avatar: {

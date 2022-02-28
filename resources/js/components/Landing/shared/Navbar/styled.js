@@ -37,6 +37,11 @@ export const useStyles = makeStyles((theme) => ({
                 fontSize: 18,
             },
         },
+
+        "@media(max-width: 600px)": {
+            flexDirection: "column",
+            alignItems: "start",
+        },
     },
     logo:{
         borderRadius: '0 !important',
@@ -47,15 +52,8 @@ export const useStyles = makeStyles((theme) => ({
     },
 
 
-    loginLogo:{
-        borderRadius: '0 !important',
-        margin: 'auto',
-        width: '200px',
-        height: '100px',
-
-        '& .MuiAvatar-img': {
-            objectFit: 'contain !important'
-        }
+    modal: {
+        zIndex: 9999999999,
     },
 
     loginBtn: {
@@ -70,9 +68,10 @@ export const useStyles = makeStyles((theme) => ({
 
     drawer: {
         "& .MuiDrawer-paper": {
-            width: 300,
-            paddingTop: 200,
+            width: 200,
+            paddingTop: 80,
 
         },
     },
+
 }));

@@ -38,14 +38,6 @@ const NavList = () => {
 
     return (
         <List className={classes.list}>
-
-
-            {/*<ListItem>*/}
-            {/*    <ListItemAvatar>*/}
-            {/*        <Avatar src={Logo} className={classes.logo}/>*/}
-            {/*    </ListItemAvatar>*/}
-            {/*</ListItem>*/}
-
             <NavLink to="/">
                 <ListItem>
                     <ListItemText>Home</ListItemText>
@@ -106,24 +98,20 @@ const NavList = () => {
                 </Button>
 
 
-                <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-
-                    <Box textAlign='center' my={2}>
-                        <Typography variant='h3'>
-                            Please Sign in
-                        </Typography>
-                    </Box>
-
+                <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth className={classes.modal}>
                     <DialogContent>
-                        <Login/>
 
-                        <SignUp/>
+                            {/*<Login/>*/}
 
-                        <Email/>
+                            <SignUp/>
 
-                        <OTP/>
+                            {/*<Email/>*/}
 
-                        <ChangePassword/>
+                            {/*<OTP/>*/}
+
+                            {/*<ChangePassword/>*/}
+
+
 
 
                     </DialogContent>

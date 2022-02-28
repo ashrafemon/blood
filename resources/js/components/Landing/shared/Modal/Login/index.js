@@ -1,13 +1,24 @@
 import React from "react";
 import {useStyles} from "./styled";
 import {Box} from "@mui/system";
-import {Button, TextField, Typography} from "@mui/material";
+import {Avatar, Button, TextField, Typography} from "@mui/material";
+
+import LoginLogo from "../../../../../assets/images/login-logo.png"
 
 const Login = () => {
     const classes = useStyles();
 
     return (
         <Box>
+
+            <Box textAlign='center' my={2}>
+                <Typography variant='h3'>
+                    Please Sign in
+                </Typography>
+
+                <Avatar src={LoginLogo} className={classes.loginLogo}/>
+            </Box>
+
             <TextField
                 margin="normal"
                 id="name"

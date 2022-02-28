@@ -36,6 +36,7 @@ const Hero = () => {
                     <Grid container>
                         <Grid item xs={12} lg={6}>
                             <Typography variant="h4" color="white" mb={3}>Donates</Typography>
+
                             <Box mb={3}>
                                 <Grid container>
                                     <Grid item xs={12} lg={8}>
@@ -45,7 +46,8 @@ const Hero = () => {
                                     </Grid>
                                 </Grid>
                             </Box>
-                            <Typography variant="h4" color="white" mb={5}>
+
+                            <Typography variant="h4" color="white" mb={5} className={classes.heroDescription}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam ut convallis elit sem
                                 pretium mi
                                 cursus diam. Arcu, vitae nulla accumsan re iaculis.
