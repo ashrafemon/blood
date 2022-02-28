@@ -67,4 +67,12 @@ export const useStyles = makeStyles((theme) => ({
         textTransform: "capitalize !important",
         fontSize: 18,
     },
+
+    drawer: {
+        "& .MuiDrawer-paper": {
+            width: 300,
+            paddingTop: 200,
+
+        },
+    },
 }));
