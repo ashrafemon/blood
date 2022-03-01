@@ -12,13 +12,17 @@ class BloodRequestController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum'], ['only' => ['store']]);
+//        $this->middleware(['auth:sanctum'], ['only' => ['store']]);
     }
 
     public function index()
     {
         try {
-            $bloodRequests = BloodRequest::with(['user.profile', 'hospital', 'district', 'area'])->where('status', 'active')->paginate(12);
+            $bloodRequests = BloodRequest::with(['user.profile', 'district', 'area'])
+                ->where('status', 'active')
+                ->where('accepted_date', '>=', today())
+                ->latest()
+                ->paginate(12);
 
             return response([
                 'status' => 'success',
@@ -34,12 +38,13 @@ class BloodRequestController extends Controller
     {
         try {
             $data = [
-                'user_id' => auth()->id(),
+//                'user_id' => auth()->id(),
+                'user_id' => 1,
                 'district_id' => $request->district_id,
                 'area_id' => $request->area_id,
                 'hospital' => $request->hospital,
                 'blood_group' => $request->blood_group,
-                'emergency' => $request->emergency ?? 'false',
+                'emergency' => $request->emergency ? 'true':'false',
                 'accepted_date' => $request->accepted_date,
                 'gender' => $request->gender,
                 'religion' => $request->religion,
@@ -47,7 +52,7 @@ class BloodRequestController extends Controller
                 'status' => $request->status ?? 'active',
             ];
 
-            if($request->has('emergency') && $request->emergency === 'true'){
+            if($request->has('emergency') && $request->emergency === true){
                 $data['accepted_date'] = today();
             }
 
@@ -57,7 +62,7 @@ class BloodRequestController extends Controller
                 'status' => 'success',
                 'statusCode' => 201,
                 'message' => 'Your request for blood has been posted',
-                'data' => $bloodRequest->load(['user.profile', 'hospital', 'district', 'area'])
+                'data' => $bloodRequest->load(['user.profile', 'district', 'area'])
             ], 201);
         } catch (Exception $e) {
             return serverError($e);
@@ -67,7 +72,7 @@ class BloodRequestController extends Controller
     public function show($id)
     {
         try {
-            $bloodRequest = BloodRequest::with(['user.profile', 'hospital', 'district', 'area'])
+            $bloodRequest = BloodRequest::with(['user.profile', 'district', 'area'])
                 ->where('id', $id)
                 ->where('status', 'active')
                 ->first();

@@ -8,6 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
+
 class BloodSeekerRequest extends FormRequest
 {
     /**
@@ -33,7 +34,7 @@ class BloodSeekerRequest extends FormRequest
             'gender'   => 'required|' . Rule::in(['Male', 'Female', 'Other']),
             'religion' => Rule::in(['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others']),
             'blood_group' => 'required|'. Rule::in(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']),
-            'accepted_date' => 'required_if:emergency,=,false|date'
+            'accepted_date' => 'required_if:emergency,=,false'
         ];
     }
 

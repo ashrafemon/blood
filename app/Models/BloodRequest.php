@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Location\Area;
 use App\Models\Location\District;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,8 @@ class BloodRequest extends Model
     protected $casts = [
         'accepted_date' => 'datetime',
     ];
+
+    protected $appends = ['formatted_acceptable_date'];
 
     public function user()
     {
@@ -32,8 +35,13 @@ class BloodRequest extends Model
         return $this->belongsTo(Area::class);
     }
 
-    public function hospital()
+//    public function hospital()
+//    {
+//        return $this->belongsTo(Hospital::class);
+//    }
+
+    public function getFormattedAcceptableDateAttribute()
     {
-        return $this->belongsTo(Hospital::class);
+        return Carbon::parse($this->accepted_date)->format('H:i A, d M Y');
     }
 }

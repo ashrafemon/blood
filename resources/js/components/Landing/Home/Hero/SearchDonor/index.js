@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react'
 import {Button, CardContent, Grid, TextField} from "@mui/material";
-import {Box} from "@mui/system";
 import Autocomplete from '@mui/material/Autocomplete';
 import {SiteCard} from "../../../../../styles/globalStyles";
 import {useStyles} from "./styled";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchAreasByDistrict, fetchDistricts} from "../../../../../store/actions/siteActions";
 import {FETCH_AREAS} from "../../../../../store/types";
-import bloodGroups from "../../../../../constants/bloodGroups";
 import {searchDonors} from "../../../../../store/actions/donorActions";
 import {useHistory} from "react-router-dom";
+import {bloodGroup} from "../../../../../constants/_data";
 
 const SearchDonor = () => {
     const classes = useStyles()
+
     const dispatch = useDispatch()
     const history = useHistory()
     const {districts, areas} = useSelector((state) => state.site)
@@ -21,7 +21,7 @@ const SearchDonor = () => {
         dispatch(fetchDistricts())
     }, [dispatch])
 
-    const [form,setForm] = useState({
+    const [form, setForm] = useState({
         district_id: null,
         area_id: null,
         gender: null,
@@ -38,17 +38,17 @@ const SearchDonor = () => {
     })
 
     const fieldChangeHandler = (field, value) => {
-        setErrors((prevState)=> ({
+        setErrors((prevState) => ({
             ...prevState,
-            [field]: {text: '',show: false}
+            [field]: {text: '', show: false}
         }))
         setForm((prevState) => ({
             ...prevState,
             [field]: value
         }))
 
-        if(field === 'district_id'){
-            if(value) dispatch(fetchAreasByDistrict(value.id))
+        if (field === 'district_id') {
+            if (value) dispatch(fetchAreasByDistrict(value.id))
             else dispatch({
                 type: FETCH_AREAS,
                 payload: []
@@ -59,19 +59,19 @@ const SearchDonor = () => {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        if(form.district_id && form.blood_group){
+        if (form.district_id && form.blood_group) {
             let formData = {
                 district_id: form.district_id.id,
                 blood_group: form.blood_group
             }
 
-            dispatch(searchDonors(formData,  () => {
+            dispatch(searchDonors(formData, () => {
                 history.push('/donors')
             }))
         }
     }
 
-    return(
+    return (
         <SiteCard>
             <CardContent>
                 <form onSubmit={submitHandler}>
@@ -85,7 +85,7 @@ const SearchDonor = () => {
                                 fullWidth
                                 onChange={(e, data) => fieldChangeHandler('district_id', data)}
                                 renderInput={(params) =>
-                                    <TextField {...params} label="Select District" />
+                                    <TextField {...params} label="Select District"/>
                                 }
                             />
 
@@ -98,18 +98,18 @@ const SearchDonor = () => {
                                 fullWidth
                                 onChange={(e, data) => fieldChangeHandler('area_id', data)}
                                 renderInput={(params) =>
-                                    <TextField {...params} label="Select Areas" />
+                                    <TextField {...params} label="Select Areas"/>
                                 }
                             />
                         </Grid>
 
                         <Grid item xs={12} lg={4}>
                             <Autocomplete
-                                options={bloodGroups}
+                                options={bloodGroup}
                                 fullWidth
                                 onChange={(e, data) => fieldChangeHandler('blood_group', data)}
                                 renderInput={(params) =>
-                                    <TextField {...params} label="Blood Group Needed" />
+                                    <TextField {...params} label="Blood Group Needed"/>
                                 }
                             />
                         </Grid>
@@ -118,7 +118,7 @@ const SearchDonor = () => {
                             <Autocomplete
                                 disablePortal
                                 // options={top100Films}
-                                renderInput={(params) => <TextField {...params} fullWidth label="Gender" />}
+                                renderInput={(params) => <TextField {...params} fullWidth label="Gender"/>}
                             />
                         </Grid>
 
@@ -126,12 +126,13 @@ const SearchDonor = () => {
                             <Autocomplete
                                 disablePortal
                                 // options={top100Films}
-                                renderInput={(params) => <TextField {...params} fullWidth label="Religion" />}
+                                renderInput={(params) => <TextField {...params} fullWidth label="Religion"/>}
                             />
                         </Grid>
 
                         <Grid item xs={12} lg={12}>
-                            <Button type="submit" className={classes.button} variant="contained" color="primary" fullWidth>Search Donor</Button>
+                            <Button type="submit" className={classes.button} variant="contained" color="primary"
+                                    fullWidth>Search Donor</Button>
                         </Grid>
 
                     </Grid>

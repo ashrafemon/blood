@@ -50,3 +50,26 @@ export const fetchAreasByDistrict = (data) => dispatch => {
         })
         .catch(err => console.log(err))
 }
+
+export const fetchHospitals = () => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.site.hospitals, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            if(res.status === 'success'){
+                dispatch({
+                    type: types.FETCH_HOSPITALS,
+                    payload: res.data
+                })
+            }
+            dispatch(toggleSiteLoading(false))
+        })
+        .catch(err => console.log(err))
+}

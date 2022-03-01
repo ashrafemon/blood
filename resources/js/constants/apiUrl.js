@@ -9,6 +9,11 @@ const ApiUrl = {
     site: {
         districts: ROOT_URL + 'site/districts',
         areasByDistrict: ROOT_URL + 'site/areas-by-district/:districtId',
+        hospitals: ROOT_URL + 'site/hospitals',
+    },
+    seeker:{
+        index: ROOT_URL + 'blood-requests',
+        show: ROOT_URL + 'blood-requests/:id',
     }
 }
 

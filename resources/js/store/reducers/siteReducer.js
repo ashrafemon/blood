@@ -8,7 +8,13 @@ const initialState = {
     siteLoading: false,
 
     districts: [],
-    areas: []
+    areas: [],
+
+    hospitals: [],
+
+    bloodRequests: {},
+    bloodRequest: {},
+    bloodRequestDialog: false
 }
 
 const siteReducer = (state = initialState, action) => {
@@ -47,6 +53,26 @@ const siteReducer = (state = initialState, action) => {
             return {
                 ...state,
                 areas: action.payload
+            }
+        case types.FETCH_HOSPITALS:
+            return {
+                ...state,
+                hospitals: action.payload
+            }
+        case types.FETCH_BLOOD_REQUESTS:
+            return {
+                ...state,
+                bloodRequests: action.payload
+            }
+        case types.FETCH_BLOOD_REQUEST:
+            return {
+                ...state,
+                bloodRequest: action.payload
+            }
+        case types.TOGGLE_BLOOD_REQUEST_DIALOG:
+            return {
+                ...state,
+                bloodRequestDialog: action.payload
             }
         default:
             return state

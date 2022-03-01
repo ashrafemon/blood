@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('hospital')->nullable();
             $table->enum('blood_group', ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'])->nullable();
             $table->enum('emergency', ['true', 'false'])->default('false');
-            $table->date('accepted_date')->nullable();
+            $table->dateTime('accepted_date')->nullable();
             $table->enum('gender', ['Male', 'Female', 'Other'])->nullable();
             $table->enum('religion', ['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others'])->nullable();
             $table->longText('description')->nullable();
