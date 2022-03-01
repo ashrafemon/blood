@@ -6,9 +6,15 @@ import Home from "./pages/Landing/Home";
 import LandingLayout from "./layouts/LandingLayout";
 import Seekers from "./pages/Landing/Seekers";
 import Profile from "./pages/Landing/Profile";
-import Donor from "./components/Landing/Donor";
+import {Provider, useSelector} from "react-redux";
+import store from "./store";
+import Donors from "./pages/Landing/Donors";
+import { BallTriangle } from  'react-loader-spinner'
+import Loader from "./components/shared/Loader";
 
 const App = () => {
+    const {siteLoading} = useSelector(state => state.site)
+
     const theme = useMemo(() => {
         return createTheme({
             typography: {
@@ -51,11 +57,14 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
+
+            {siteLoading && <Loader />}
+
             <BrowserRouter>
                 <Switch>
                     <LandingLayout>
                         <Route exact path="/" component={Home}/>
-                        <Route exact path="/donors" component={Donor}/>
+                        <Route exact path="/donors" component={Donors}/>
                         <Route exact path="/seekers" component={Seekers}/>
                         <Route exact path="/profile" component={Profile}/>
                     </LandingLayout>
@@ -68,9 +77,11 @@ const App = () => {
 if (document.getElementById("root")) {
     let root = document.getElementById("root");
     ReactDOM.render(
-        <React.StrictMode>
-            <App/>
-        </React.StrictMode>,
+        <Provider store={store}>
+            <React.StrictMode>
+                <App/>
+            </React.StrictMode>
+        </Provider>,
         root
     );
 }
