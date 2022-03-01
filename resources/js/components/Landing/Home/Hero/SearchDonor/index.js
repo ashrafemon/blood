@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Button, CardContent, Grid, TextField} from "@mui/material";
 import {Box} from "@mui/system";
 import Autocomplete from '@mui/material/Autocomplete';
@@ -7,6 +7,15 @@ import {useStyles} from "./styled";
 
 const SearchDonor = () => {
     const classes = useStyles()
+
+    const [form, setForm] = useState({
+        district_id: null,
+        area_id: null,
+        hospital: null,
+        blood_group: null,
+        gender: null,
+        religion: null,
+    })
 
     return(
         <SiteCard>
