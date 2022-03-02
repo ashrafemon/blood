@@ -34,7 +34,7 @@ export const useStyles = makeStyles(() => ({
 
     counterCard: {
         borderRadius: '7px !important',
-        zIndex: 999,
+        zIndex: 111,
         position: 'relative',
         '& .MuiCardContent-root': {
             padding: '30px !important'

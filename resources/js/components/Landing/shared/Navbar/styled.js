@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
         "& .MuiToolbar-root": {
             minHeight: "90px !important",
         },
-        zIndex: 9999,
+        zIndex: 1111,
         backgroundColor: '#fff'
     },
 
@@ -53,7 +53,7 @@ export const useStyles = makeStyles((theme) => ({
 
 
     modal: {
-        zIndex: 9999999999,
+        zIndex: 1112,
     },
 
     loginBtn: {
@@ -74,5 +74,14 @@ export const useStyles = makeStyles((theme) => ({
 
         },
     },
+
+    profileImg: {
+        cursor: 'pointer',
+
+    } ,
+
+    profile: {
+        zIndex: 9999999999999999999,
+    }
 
 }));

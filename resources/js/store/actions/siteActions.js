@@ -6,6 +6,9 @@ export const toggleSiteLoading = (status = false) => ({
     payload: status
 })
 
+
+
+
 export const fetchDistricts = () => dispatch => {
     dispatch(toggleSiteLoading(true))
     fetch(ApiUrl.site.districts, {

@@ -3,8 +3,6 @@ import {Box} from "@mui/system";
 import {
     Avatar,
     Button,
-    Card,
-    CardContent,
     Container,
     Dialog,
     DialogActions,
@@ -23,18 +21,14 @@ import {useStyles} from "./styled";
 import {Autocomplete} from "@mui/lab";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-
-import BloodDrop from "../../../../assets/images/blood-drop-2.png";
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import TransgenderOutlinedIcon from '@mui/icons-material/TransgenderOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import SeekerItem from "./SeekerItem";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchDonors} from "../../../../store/actions/donorActions";
 import {fetchBloodRequests} from "../../../../store/actions/seekerActions";
-import Donor from "../../Donor";
 import {FETCH_BLOOD_REQUEST, TOGGLE_BLOOD_REQUEST_DIALOG} from "../../../../store/types";
+
 const Seekers = () => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(false);
@@ -53,7 +47,6 @@ const Seekers = () => {
             payload: false
         })
     };
-
 
 
     const {bloodRequests, bloodRequest, bloodRequestDialog} = useSelector((state) => state.site)
@@ -142,7 +135,6 @@ const Seekers = () => {
                     </Grid>
 
 
-
                 </DialogContent>
 
                 <DialogActions>
@@ -153,6 +145,7 @@ const Seekers = () => {
             </Dialog>
 
             <Container maxWidth="xl">
+
                 {/*<Grid container spacing={2}>*/}
                 {/*    <Grid item lg={6} xs={12}>*/}
                 {/*        <Typography variant='h3' color='primary'>*/}
@@ -240,10 +233,10 @@ const Seekers = () => {
                 {/*</Grid>*/}
 
 
-                <Grid container spacing={5} my={3} >
+                <Grid container spacing={5} my={3}>
                     {bloodRequests?.data?.map((data, i) => (
                         <Grid item lg={4} sm={6} xs={12} key={i}>
-                            <SeekerItem item={data} />
+                            <SeekerItem item={data}/>
                         </Grid>
                     ))}
 

@@ -14,6 +14,11 @@ const ApiUrl = {
     seeker:{
         index: ROOT_URL + 'blood-requests',
         show: ROOT_URL + 'blood-requests/:id',
+    },
+    auth:{
+        login: ROOT_URL + 'auth/login',
+        register: ROOT_URL + 'auth/register',
+        logout: ROOT_URL + 'auth/logout'
     }
 }
 

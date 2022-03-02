@@ -44,9 +44,13 @@ const SeekerItem = ({item}) => {
                     </Grid>
 
                     <Grid item lg={4}>
-                        <Avatar src={BloodDrop} className={classes.bloodIcon}/>
+                        <Box>
+                            <Typography variant='h4'>
+                                {item?.blood_group}
+                            </Typography>
+                            {/*<Avatar src={BloodDrop} className={classes.bloodIcon}/>*/}
+                        </Box>
                     </Grid>
-
 
                     <Grid item lg={12}>
 
