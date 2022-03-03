@@ -33,8 +33,6 @@ class RegisterRequest extends FormRequest
             'phone'    => 'required|regex:/(01[3-9]\d{8})$/|unique:users',
             'password' => 'required|min:6|confirmed',
             'role'     => Rule::in(['SUPER_ADMIN', 'ADMIN', 'USER']),
-//            'gender'   => 'required|' . Rule::in(['Male', 'Female', 'Other']),
-//            'dob'      => 'required|date',
         ];
     }
 

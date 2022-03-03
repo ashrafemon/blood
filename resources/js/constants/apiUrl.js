@@ -18,7 +18,9 @@ const ApiUrl = {
     auth:{
         login: ROOT_URL + 'auth/login',
         register: ROOT_URL + 'auth/register',
-        logout: ROOT_URL + 'auth/logout'
+        update: ROOT_URL + 'auth/update',
+        logout: ROOT_URL + 'auth/logout',
+        me: ROOT_URL + 'auth/me'
     }
 }
 

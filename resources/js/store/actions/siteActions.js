@@ -7,8 +7,6 @@ export const toggleSiteLoading = (status = false) => ({
 })
 
 
-
-
 export const fetchDistricts = () => dispatch => {
     dispatch(toggleSiteLoading(true))
     fetch(ApiUrl.site.districts, {
@@ -76,3 +74,15 @@ export const fetchHospitals = () => dispatch => {
         })
         .catch(err => console.log(err))
 }
+
+
+//
+// export const toggleRegistrationForm = (status = false) => ({
+//     type: types.TOGGLE_REGISTER_FORM,
+//     payload: status
+// })
+//
+// export const toggleLoginForm = (status = false) => ({
+//     type: types.TOGGLE_LOGIN_FORM,
+//     payload: status
+// })

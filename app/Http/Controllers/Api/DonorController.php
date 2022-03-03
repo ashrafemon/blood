@@ -13,8 +13,8 @@ class DonorController extends Controller
     public function index()
     {
         try {
-            $donors = User::with(['profile'])->where('role', User::ROLES['user'])->whereHas('profile', function ($item) {
-                $item->where('available_donate', 'true');
+            $donors = User::with(['profile.district', 'profile.area'])->where('role', User::ROLES['user'])->whereHas('profile', function ($item) {
+                $item->where('available_donate', true);
             })->paginate(12);
 
             return response([
@@ -97,7 +97,7 @@ class DonorController extends Controller
             }
 
             $donors = $donors->with(['profile'])->whereHas('profile', function ($item) {
-                $item->where('available_donate', 'true');
+                $item->where('available_donate', true);
             })->paginate(12);
 
             return response([

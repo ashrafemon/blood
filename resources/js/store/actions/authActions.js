@@ -2,12 +2,16 @@ import ApiUrl from "../../constants/apiUrl";
 import {toggleSiteLoading} from "./siteActions";
 import * as types from "../types";
 
+export const validateAuthErrors = (data) => ({
+    type: types.TOGGLE_VALIDATE_ERRORS,
+    payload: data
+})
 
 export const login = (data, cb = () => {
-}) => dispatch => {
+}) => async dispatch => {
     dispatch(toggleSiteLoading(true))
 
-    fetch(ApiUrl.auth.login, {
+    await fetch(ApiUrl.auth.login, {
         method: "POST",
         headers: {
             Accept: 'application/json',
@@ -31,11 +35,16 @@ export const login = (data, cb = () => {
                     }
                 })
 
-
                 dispatch({
                     type: types.TOGGLE_DIALOG,
                     payload: false
                 })
+
+                dispatch(validateAuthErrors({}))
+
+                cb()
+            }else if(res.status === 'validate_error'){
+                dispatch(validateAuthErrors(res.data))
             }
 
             dispatch(toggleSiteLoading(false))
@@ -43,7 +52,6 @@ export const login = (data, cb = () => {
         })
         .catch(err => console.log(err))
 }
-
 
 
 export const register = (data, cb = () => {
@@ -61,7 +69,7 @@ export const register = (data, cb = () => {
     })
         .then(res => res.json())
         .then(res => {
-            console.log("res",res)
+            console.log("res", res)
             if (res.status === 'success') {
 
                 dispatch({
@@ -69,6 +77,51 @@ export const register = (data, cb = () => {
                     payload: true
                 })
 
+                localStorage.setItem("token", res.data.token);
+
+                dispatch({
+                    type: types.LOGIN,
+                    payload: {
+                        token: res.data.token,
+                        currentUser: res.data.data,
+                        isAuthenticate: true,
+                    }
+                })
+
+                dispatch(validateAuthErrors({}))
+
+                cb()
+            }else if(res.status === 'validate_error'){
+                dispatch(validateAuthErrors(res.data))
+            }
+            dispatch(toggleSiteLoading(false))
+        })
+        .catch(err => console.log(err))
+}
+
+
+export const fetchMe = () => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.auth.me, {
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.FETCH_USER,
+                    payload: {
+                        isAuthenticate: true,
+                        currentUser: res.data,
+                    }
+                })
             }
 
             dispatch(toggleSiteLoading(false))
@@ -77,6 +130,44 @@ export const register = (data, cb = () => {
         .catch(err => console.log(err))
 }
 
+
+export const update = (data, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.auth.update, {
+        method: "PATCH",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+        body: JSON.stringify(data),
+
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log("res", res)
+            if (res.status === 'success') {
+
+                dispatch({
+                    type: types.UPDATE_USER,
+                    payload: {
+                        currentUser: res.data,
+                        isAuthenticate: true,
+                    }
+                })
+
+                cb()
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+            cb()
+
+        })
+        .catch(err => console.log(err))
+}
 
 
 export const logout = (cb = () => {

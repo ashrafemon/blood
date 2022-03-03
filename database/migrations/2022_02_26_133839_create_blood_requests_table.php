@@ -21,7 +21,7 @@ return new class extends Migration
 //            $table->unsignedInteger('hospital_id')->nullable();
             $table->string('hospital')->nullable();
             $table->enum('blood_group', ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'])->nullable();
-            $table->enum('emergency', ['true', 'false'])->default('false');
+            $table->boolean('emergency')->default(false);
             $table->dateTime('accepted_date')->nullable();
             $table->enum('gender', ['Male', 'Female', 'Other'])->nullable();
             $table->enum('religion', ['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others'])->nullable();

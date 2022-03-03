@@ -8,8 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {bloodGroup, gender, religion} from "../../../../constants/_data";
 import {fetchAreasByDistrict, fetchDistricts} from "../../../../store/actions/siteActions";
 import {FETCH_AREAS} from "../../../../store/types";
+import {update} from "../../../../store/actions/authActions";
 
-const PersonalInfo = () => {
+const PersonalInfo = (props) => {
     const classes = useStyles();
 
     const {districts, areas} = useSelector((state) => state.site)
@@ -47,15 +48,30 @@ const PersonalInfo = () => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        // dispatch(register(form))
-        //
-        // props.handleNext()
+
+
+        const formData = {...form};
+
+
+
+        if (formData.district_id && formData.district_id.hasOwnProperty("id")) {
+            formData["district_id"] = formData.district_id.id;
+        }
+
+        if (formData.area_id && formData.area_id.hasOwnProperty("id")) {
+            formData["area_id"] = formData.area_id.id;
+        }
+
+
+        dispatch(update(formData, () => props.handleNext()))
+
+
 
     }
 
     return (
         <Box>
-            <form onSubmit={submitHandler}>
+            <form id="form-step1" onSubmit={submitHandler}>
                 <Autocomplete
                     disablePortal
                     className={classes.autoComplete}
@@ -124,7 +140,7 @@ const PersonalInfo = () => {
                         <DatePicker
                             className={classes.datePicker}
                             renderInput={(props) => <TextField fullWidth {...props} />}
-                            label="Donate Time"
+                            label="Date of Birth"
                             value={form.dob}
                             onChange={(newValue) =>
                                 fieldChangeHandler(

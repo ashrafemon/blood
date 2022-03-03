@@ -23,7 +23,7 @@ class RegisterController extends Controller
                 'phone' => $request->phone,
                 'password' => Hash::make($request->password),
                 'role' => $request->role ?? 'USER',
-                'verify' => $request->verify ?? 'true',
+                'verify' => $request->verify ?? true,
                 'status' => $request->status ?? 'active'
             ]);
 
@@ -38,9 +38,9 @@ class RegisterController extends Controller
                     'area_id' => $request->area_id,
                     'address' => $request->address,
                     'avatar' => $request->avatar,
-                    'phone_publicly' => $request->phone_publicly ?? 'false',
-                    'emergency_donate' => $request->emergency_donate ?? 'false',
-                    'available_donate' => $request->available_donate ?? 'false',
+                    'phone_publicly' => $request->phone_publicly ?? false,
+                    'emergency_donate' => $request->emergency_donate ?? false,
+                    'available_donate' => $request->available_donate ?? false,
                     'available_donate_schedule' => $request->available_donate_schedule,
                 ]);
 
@@ -69,7 +69,9 @@ class RegisterController extends Controller
             'blood_group' => Rule::in(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']),
             'gender' => Rule::in(['Male', 'Female', 'Other']),
             'religion' => Rule::in(['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others']),
-            'phone_publicly' => Rule::in(['true', 'false'])
+            'phone_publicly' => Rule::in([true, false]),
+            'emergency_donate' => Rule::in([true, false]),
+            'available_donate' => Rule::in([true, false]),
         ]);
 
         if($validator->fails()){
@@ -92,6 +94,7 @@ class RegisterController extends Controller
             $user->profile->avatar = request('avatar') ?? $user->profile->avatar;
             $user->profile->phone_publicly = request('phone_publicly') ?? $user->profile->phone_publicly;
             $user->profile->available_donate = request('available_donate') ?? $user->profile->available_donate;
+            $user->profile->emergency_donate = request('emergency_donate') ?? $user->profile->emergency_donate;
             $user->profile->available_donate_schedule = request('available_donate_schedule') ?? $user->profile->available_donate_schedule;
             $user->push();
 

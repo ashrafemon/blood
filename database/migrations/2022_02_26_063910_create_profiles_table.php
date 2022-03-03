@@ -25,9 +25,9 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
 
-            $table->enum('phone_publicly', ['true', 'false'])->default('false');
-            $table->enum('emergency_donate', ['true', 'false'])->default('false');
-            $table->enum('available_donate', ['true', 'false'])->default('false');
+            $table->boolean('phone_publicly')->default(false);
+            $table->boolean('available_donate')->default(false);
+            $table->boolean('emergency_donate')->default(false);
             $table->json('available_donate_schedule')->nullable();
 
             $table->timestamps();

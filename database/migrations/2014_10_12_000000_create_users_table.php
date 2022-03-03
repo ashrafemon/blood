@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
 
             $table->enum('role', ['SUPER_ADMIN', 'ADMIN', 'USER'])->default('USER');
-            $table->enum('verify', ['true', 'false'])->default('true');
+            $table->boolean('verify')->default(true);
             $table->enum('status', ['active', 'pending', 'suspend', 'inactive'])->default('active');
 
             $table->timestamp('email_verified_at')->nullable();

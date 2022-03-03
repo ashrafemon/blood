@@ -16,11 +16,8 @@ const initialState = {
     bloodRequest: {},
     bloodRequestDialog: false,
 
-    token: null,
-    currentUser: null,
-    isAuthenticated: false,
 
-    toggleDialog: false
+    toggleDialog: false,
 
 }
 
@@ -81,31 +78,24 @@ const siteReducer = (state = initialState, action) => {
                 ...state,
                 bloodRequestDialog: action.payload
             }
-        case types.LOGIN:
-            return {
-                ...state,
-                token: action.payload,
-                isAuthenticate: action.payload.isAuthenticate,
-                currentUser: action.payload.currentUser,
-            }
-        case types.LOGOUT:
-            return {
-                ...state,
-                token: null,
-                isAuthenticate: false,
-                currentUser: null,
-            }
-        case types.REGISTRATION:
-            return {
-                ...state,
-                registered: action.payload
-            }
 
         case types.TOGGLE_DIALOG:
             return {
                 ...state,
                 toggleDialog: action.payload
             }
+
+        case types.TOGGLE_REGISTER_FORM:
+            return {
+                ...state,
+                toggleRegister: action.payload
+            }
+        case types.TOGGLE_LOGIN_FORM:
+            return {
+                ...state,
+                toggleLogin: action.payload
+            }
+
         default:
             return state
     }

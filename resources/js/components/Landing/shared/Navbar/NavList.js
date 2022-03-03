@@ -9,38 +9,35 @@ import {
     ListItemIcon,
     ListItemText,
     Menu,
-    MenuItem, Typography,
+    MenuItem,
+    Typography,
 } from "@mui/material";
-import React, {useState} from "react";
-import {NavLink} from "react-router-dom";
+import React from "react";
+import {NavLink, useHistory} from "react-router-dom";
 import {useStyles} from "./styled";
 import Login from "../../Auth/Login";
 
 import profileImg from "../../../../assets/images/login-logo.png"
 import {useDispatch, useSelector} from "react-redux";
-import {TOGGLE_DIALOG} from "../../../../store/types";
+import {AUTH_FORM_TYPE, TOGGLE_DIALOG} from "../../../../store/types";
 import {Logout} from "@mui/icons-material";
 import {logout} from "../../../../store/actions/authActions";
 import {Box} from "@mui/system";
 import Registration from "../../Auth/Registration";
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import Email from "../../Auth/Recovery/Email";
+import OTP from "../../Auth/Recovery/OTP";
+import ChangePassword from "../../Auth/Recovery/ChangePassword";
+
 
 const NavList = () => {
     const classes = useStyles();
 
     const {toggleDialog} = useSelector(state => state.site)
+    const {authFormType} = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const getToken = localStorage.getItem('token')
-
-
-    const [show, setShow] = useState(false)
-
-    // const handleClose = () => {
-    //     dispatch({
-    //         type: TOGGLE_DIALOG,
-    //         payload: false,
-    //     })
-    // };
 
     const showDialog = () => {
         dispatch({
@@ -48,6 +45,21 @@ const NavList = () => {
             payload: true
         })
 
+        dispatch({
+            type: AUTH_FORM_TYPE,
+            payload: 'login'
+        })
+    }
+    const closeDialog = () => {
+        dispatch({
+            type: TOGGLE_DIALOG,
+            payload: false
+        })
+
+        dispatch({
+            type: AUTH_FORM_TYPE,
+            payload: 'login'
+        })
     }
 
     const destroy = () => {
@@ -55,9 +67,30 @@ const NavList = () => {
     }
 
     const showRegistration = () => {
-        setShow(true)
+        if (authFormType === 'login') {
+            dispatch({
+                type: AUTH_FORM_TYPE,
+                payload: 'register'
+            })
+        } else if (authFormType === 'register') {
+            dispatch({
+                type: AUTH_FORM_TYPE,
+                payload: 'login'
+            })
+        } else if (authFormType === 'forgot') {
+            dispatch({
+                type: AUTH_FORM_TYPE,
+                payload: 'login'
+            })
+        }
     }
 
+
+    let history = useHistory();
+    const routeChange = () => {
+        let path = `/profile`;
+        history.push(path);
+    }
 
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -121,13 +154,6 @@ const NavList = () => {
 
             <ListItem>
                 {getToken ? (
-
-                    // <IconButton
-                    //     size="small"
-                    // >
-                    //     <Avatar src={profileImg}/>
-                    // </IconButton>
-
                     <>
 
                         <IconButton
@@ -151,7 +177,7 @@ const NavList = () => {
                             transformOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                         >
-                            <MenuItem>
+                            <MenuItem onClick={routeChange}>
                                 <Avatar/> Profile
                             </MenuItem>
 
@@ -177,27 +203,25 @@ const NavList = () => {
 
                 <Dialog open={toggleDialog} onClose={handleClose} maxWidth="sm" fullWidth className={classes.modal}>
                     <DialogContent>
-
-
-
-                        { show ? <Registration /> : <Login/> }
+                        <Box textAlign='end'>
+                            <IconButton onClick={closeDialog}>
+                                <CloseOutlinedIcon/>
+                            </IconButton>
+                        </Box>
+                        {authFormType === 'login' && <Login/>}
+                        {authFormType === 'register' && <Registration/>}
+                        {authFormType === 'forgot' && <Email/>}
+                        {authFormType === 'otp' && <OTP/>}
+                        {authFormType === 'password' && <ChangePassword/>}
 
                         <Box textAlign='center' my={2}>
-                            <Typography>
+                            <Typography mb={1}>
                                 OR
                             </Typography>
 
-                            <Button variant="text" onClick={showRegistration}>{show ? 'Login' : 'Sign Up'}</Button>
+                            <Button variant="text"
+                                    onClick={showRegistration}>{authFormType === 'login' ? 'Sign Up' : 'Login'}</Button>
                         </Box>
-
-                        {/*<Registration/>*/}
-
-                        {/*<Email/>*/}
-
-                        {/*<OTP/>*/}
-
-                        {/*<ChangePassword/>*/}
-
 
                     </DialogContent>
 

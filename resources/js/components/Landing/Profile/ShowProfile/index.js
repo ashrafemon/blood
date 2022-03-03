@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Box} from "@mui/system";
-import {Avatar, Button, Card, CardContent, Container, Grid, IconButton, Switch, Typography} from "@mui/material";
+import {Avatar, Button, Card, CardContent, Container, Grid, IconButton, Stack, Switch, Typography} from "@mui/material";
 import {useStyles} from "./styled";
 import EditIcon from '@mui/icons-material/Edit';
 import bloodDropIcon from '../../../../assets/images/blood-drop-white.png';
@@ -9,10 +9,75 @@ import ProfileImg from '../../../../assets/images/profile-img.png';
 
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import MarkunreadIcon from '@mui/icons-material/Markunread';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchMe, update} from "../../../../store/actions/authActions";
 
 
 const ShowProfile = () => {
     const classes = useStyles()
+
+    const {currentUser} = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+    const [days] = useState(['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'])
+
+    useEffect(() => {
+        dispatch(fetchMe())
+    }, [dispatch])
+
+
+    const [form, setForm] = useState({
+        phone_publicly: false,
+        available_donate: false,
+        emergency_donate: false,
+        available_donate_schedule: []
+    })
+
+    const changeHandler = (field, value) => {
+        setForm((prevState) => ({
+            ...prevState,
+            [field]: value
+        }))
+
+        dispatch(update({[field]: value}))
+    }
+
+    useEffect(() => {
+        if (currentUser && Object.keys(currentUser).length > 0) {
+            setForm((prevState) => ({
+                phone_publicly: currentUser?.profile?.phone_publicly,
+                available_donate: currentUser?.profile?.available_donate,
+                emergency_donate: currentUser?.profile?.emergency_donate,
+                available_donate_schedule: currentUser?.profile.available_donate_schedule || []
+            }))
+        }
+    }, [currentUser])
+
+    const isAvailable = (day) => {
+        if(form && form.available_donate_schedule){
+            return form.available_donate_schedule.includes(day) ? classes.selectedButton : ''
+        }else{
+            return ''
+        }
+    }
+
+    const setAvailableDay = (day) => {
+        let availableDonateDates = [...form.available_donate_schedule]
+
+        if(availableDonateDates.includes(day)){
+            availableDonateDates = availableDonateDates.filter((item) => item !== day)
+        }else{
+            availableDonateDates.push(day)
+        }
+
+        dispatch(update({available_donate_schedule: availableDonateDates}, () => {
+            setForm((prevState) => ({
+                ...prevState,
+                available_donate_schedule: availableDonateDates
+            }))
+        }))
+    }
+
+
     const label = {inputProps: {'aria-label': 'Switch demo'}};
     return (
         <Box py={15}>
@@ -23,11 +88,11 @@ const ShowProfile = () => {
                         <Grid container>
                             <Grid item lg={6}>
                                 <Typography variant='h2'>
-                                    John Doe
+                                    {currentUser?.name}
                                 </Typography>
 
                                 <Typography variant='h6' color='primary'>
-                                    #B12DS34
+                                    #{currentUser?.id}
                                 </Typography>
                             </Grid>
 
@@ -46,7 +111,7 @@ const ShowProfile = () => {
                                         <Avatar src={bloodDropIcon} className={classes.cardIcon}/>
 
                                         <Typography color='white' variant='h5'>
-                                            B+
+                                            {currentUser?.profile?.blood_group}
                                         </Typography>
 
                                         <Typography color='white' variant='h5'>
@@ -77,10 +142,14 @@ const ShowProfile = () => {
                             </Grid>
 
                             <Grid item lg={3}>
-                                +880-017-95929461
+                                {currentUser?.phone}
                             </Grid>
                             <Grid item lg={3}>
-                                <Switch {...label} defaultChecked/>
+                                <Switch
+                                    {...label}
+                                    checked={form.phone_publicly}
+                                    onChange={(e, value) => changeHandler('phone_publicly', value)}
+                                />
                             </Grid>
                         </Grid>
 
@@ -91,34 +160,39 @@ const ShowProfile = () => {
                             </Grid>
 
                             <Grid item lg={3}>
-                                johndoe@gmail.com
+                                {currentUser?.email}
                             </Grid>
 
                         </Grid>
 
-                        <Grid container my={2}>
+                        <Box>
+                            <Grid container my={2} alignItems="center">
 
-                            <Grid item lg={3}>
-                                <Typography variant='h4'>
-                                    Available To Donate
-                                </Typography>
-
-                                <Box mt={2}>
-                                    <Button variant='contained' className={classes.button}>
-                                        mon
-                                    </Button>
-
-                                    <Button variant='outlined' className={classes.button}>
-                                        Thus
-                                    </Button>
-                                </Box>
-
-                            </Grid>
-                            <Grid item lg={1}>
-                                <Switch {...label} defaultChecked/>
+                                <Grid item lg={3}>
+                                    <Typography variant='h4'>
+                                        Available To Donate
+                                    </Typography>
+                                </Grid>
+                                <Grid item lg={1}>
+                                    <Switch
+                                        {...label}
+                                        checked={form.available_donate}
+                                        onChange={(e, value) => changeHandler('available_donate', value)}
+                                    />
+                                </Grid>
                             </Grid>
 
-                        </Grid>
+                            {form.available_donate && (
+                                <Stack direction="row" spacing={2}>
+                                    {days.map((item, i) => (
+                                        <Box className={`${classes.button} ${isAvailable(item)}`} key={i} onClick={() => setAvailableDay(item)}>
+                                            {item}
+                                        </Box>
+                                    ))}
+
+                                </Stack>
+                            )}
+                        </Box>
 
 
                         <Grid container my={2} alignItems='center'>
@@ -130,7 +204,11 @@ const ShowProfile = () => {
 
                             </Grid>
                             <Grid item lg={1}>
-                                <Switch {...label} defaultChecked/>
+                                <Switch
+                                    {...label}
+                                    checked={form.emergency_donate}
+                                    onChange={(e, value) => changeHandler('emergency_donate', value)}
+                                />
                             </Grid>
 
                         </Grid>

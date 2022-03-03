@@ -28,12 +28,22 @@ export const useStyles = makeStyles((theme) => ({
 
 
     button: {
-        marginLeft: 10,
-        width: 60,
-        height: 60,
-        fontSize: 12,
-        borderRadius: '50%'
+        fontSize: 14,
+        maxWidth: 45,
+        maxHeight: 45,
+        minHeight: 45,
+        minWidth: 45,
+        border: '1px solid ' + theme.palette.primary.main,
+        borderRadius: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: 'pointer'
+    },
 
+    selectedButton: {
+        backgroundColor: theme.palette.primary.main,
+        color: '#fff'
     },
 
 

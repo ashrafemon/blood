@@ -38,13 +38,12 @@ class BloodRequestController extends Controller
     {
         try {
             $data = [
-//                'user_id' => auth()->id(),
-                'user_id' => 1,
+                'user_id' => auth()->id(),
                 'district_id' => $request->district_id,
                 'area_id' => $request->area_id,
                 'hospital' => $request->hospital,
                 'blood_group' => $request->blood_group,
-                'emergency' => $request->emergency ? 'true':'false',
+                'emergency' => $request->emergency,
                 'accepted_date' => $request->accepted_date,
                 'gender' => $request->gender,
                 'religion' => $request->religion,

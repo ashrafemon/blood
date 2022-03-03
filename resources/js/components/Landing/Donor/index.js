@@ -1,15 +1,12 @@
 import React from 'react'
-import {Box} from "@mui/system";
-import {Avatar, Button, Card, CardContent, Container, Grid, IconButton, Tooltip, Typography} from "@mui/material";
+import {Avatar, Card, CardContent, Grid, IconButton, Tooltip, Typography} from "@mui/material";
 import {useStyles} from "./styled";
 import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import BloodDrop2 from '../../../assets/images/blood-drop-2.png';
 
 const Donor = ({item}) => {
     const classes = useStyles()
-    console.log(item)
 
     return (
         <Card>
