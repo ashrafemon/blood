@@ -21,7 +21,9 @@ export const fetchBloodRequests = (cb = () => {
                     type: types.FETCH_BLOOD_REQUESTS,
                     payload: res.data
                 })
+                cb()
             }
+
 
             dispatch(toggleSiteLoading(false))
         })
@@ -64,7 +66,7 @@ export const requestSeeker = (data, cb = () => {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-
+            Authorization: localStorage.getItem("token")
         },
         body: JSON.stringify(data)
     })

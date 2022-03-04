@@ -1,27 +1,51 @@
 import React, {useEffect, useState} from 'react'
 import {Box} from "@mui/system";
-import {Avatar, Button, Card, CardContent, Container, Grid, IconButton, Stack, Switch, Typography} from "@mui/material";
+import {
+    Avatar,
+    Card,
+    CardContent,
+    Container,
+    Dialog,
+    DialogContent,
+    Grid,
+    IconButton,
+    Stack,
+    Switch, Tooltip,
+    Typography
+} from "@mui/material";
 import {useStyles} from "./styled";
 import EditIcon from '@mui/icons-material/Edit';
 import bloodDropIcon from '../../../../assets/images/blood-drop-white.png';
 import SafHand from '../../../../assets/images/safe-hand.png';
-import ProfileImg from '../../../../assets/images/profile-img.png';
+import DefaultAvatar from '../../../../assets/images/default_avatar.gif';
 
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import MarkunreadIcon from '@mui/icons-material/Markunread';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMe, update} from "../../../../store/actions/authActions";
+import {AUTH_FORM_TYPE, TOGGLE_PROFILE_DIALOG} from "../../../../store/types";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import ProfileEdit from "../ProfileEdit";
 
 
 const ShowProfile = () => {
     const classes = useStyles()
 
     const {currentUser} = useSelector((state) => state.auth)
+    const {toggleProfileDialog} = useSelector((state) => state.site)
+
     const dispatch = useDispatch()
     const [days] = useState(['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'])
 
     useEffect(() => {
         dispatch(fetchMe())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch({
+            type: AUTH_FORM_TYPE,
+            payload: 'showProfile'
+        })
     }, [dispatch])
 
 
@@ -53,9 +77,9 @@ const ShowProfile = () => {
     }, [currentUser])
 
     const isAvailable = (day) => {
-        if(form && form.available_donate_schedule){
+        if (form && form.available_donate_schedule) {
             return form.available_donate_schedule.includes(day) ? classes.selectedButton : ''
-        }else{
+        } else {
             return ''
         }
     }
@@ -63,9 +87,9 @@ const ShowProfile = () => {
     const setAvailableDay = (day) => {
         let availableDonateDates = [...form.available_donate_schedule]
 
-        if(availableDonateDates.includes(day)){
+        if (availableDonateDates.includes(day)) {
             availableDonateDates = availableDonateDates.filter((item) => item !== day)
-        }else{
+        } else {
             availableDonateDates.push(day)
         }
 
@@ -78,11 +102,20 @@ const ShowProfile = () => {
     }
 
 
+    const toggleDialog = (status) => {
+        dispatch({
+            type: TOGGLE_PROFILE_DIALOG,
+            payload: status
+        })
+    }
+
     const label = {inputProps: {'aria-label': 'Switch demo'}};
     return (
         <Box py={15}>
             <Container maxWidth="xl">
                 <Grid container spacing={2}>
+
+
                     <Grid item lg={6}>
 
                         <Grid container>
@@ -97,9 +130,11 @@ const ShowProfile = () => {
                             </Grid>
 
                             <Grid item lg={6}>
-                                <IconButton color='primary'>
-                                    <EditIcon/>
-                                </IconButton>
+                                <Tooltip title='Edit Profile'>
+                                    <IconButton color='primary' onClick={() => toggleDialog(true)}>
+                                        <EditIcon/>
+                                    </IconButton>
+                                </Tooltip>
                             </Grid>
                         </Grid>
 
@@ -185,7 +220,8 @@ const ShowProfile = () => {
                             {form.available_donate && (
                                 <Stack direction="row" spacing={2}>
                                     {days.map((item, i) => (
-                                        <Box className={`${classes.button} ${isAvailable(item)}`} key={i} onClick={() => setAvailableDay(item)}>
+                                        <Box className={`${classes.button} ${isAvailable(item)}`} key={i}
+                                             onClick={() => setAvailableDay(item)}>
                                             {item}
                                         </Box>
                                     ))}
@@ -217,10 +253,38 @@ const ShowProfile = () => {
                     </Grid>
 
                     <Grid item lg={6}>
-                        <Avatar src={ProfileImg} className={classes.profileImg}/>
+                        <Avatar src={DefaultAvatar} className={classes.profileImg}/>
                     </Grid>
-                </Grid>
 
+
+                    <Dialog
+                        open={toggleProfileDialog}
+                        maxWidth="sm"
+                        fullWidth
+                        className={classes.modal}
+                        onClose={() => toggleDialog(false)}
+                    >
+                        <DialogContent>
+                            <Grid container alignItems='center'>
+                                <Grid item lg={11}>
+
+                                    <Typography variant='h4'>
+                                        Update Your Profile
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item lg={1}>
+                                    <IconButton onClick={() => toggleDialog(false)}>
+                                        <CloseOutlinedIcon/>
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+
+                            <ProfileEdit/>
+                        </DialogContent>
+                    </Dialog>
+
+                </Grid>
             </Container>
         </Box>
     )

@@ -66,22 +66,26 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 18,
     },
 
+
+    authLogo:{
+        borderRadius: '0 !important',
+        margin: 'auto',
+        width: '200px',
+        height: '100px',
+
+        '& .MuiAvatar-img': {
+            objectFit: 'contain !important'
+        }
+    },
+
     drawer: {
         zIndex: 999999999999,
         "& .MuiDrawer-paper": {
             width: 200,
-            // paddingTop: 80,
-
         },
     },
 
-    profileImg: {
-        cursor: 'pointer',
 
-    } ,
 
-    profile: {
-        zIndex: 9999999999999999999,
-    }
 
 }));

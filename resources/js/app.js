@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import React, {useMemo} from "react";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import Home from "./pages/Landing/Home";
 import LandingLayout from "./layouts/LandingLayout";
 import Seekers from "./pages/Landing/Seekers";
@@ -9,11 +9,11 @@ import Profile from "./pages/Landing/Profile";
 import {Provider, useSelector} from "react-redux";
 import store from "./store";
 import Donors from "./pages/Landing/Donors";
-import { BallTriangle } from  'react-loader-spinner'
 import Loader from "./components/shared/Loader";
 
 const App = () => {
     const {siteLoading} = useSelector(state => state.site)
+    const token = localStorage.getItem('token')
 
     const theme = useMemo(() => {
         return createTheme({
@@ -58,7 +58,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
             <CssBaseline/>
 
-            {siteLoading && <Loader />}
+            {siteLoading && <Loader/>}
 
             <BrowserRouter>
                 <Switch>
@@ -66,10 +66,17 @@ const App = () => {
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/donors" component={Donors}/>
                         <Route exact path="/seekers" component={Seekers}/>
-                        <Route exact path="/profile" component={Profile}/>
+                        {/*<Route exact path="/profile" component={Profile}/>*/}
+
+                        <Route exact path="/profile">
+                            {token ? <Profile /> : <Redirect to="/" /> }
+                        </Route>
+
                     </LandingLayout>
                 </Switch>
             </BrowserRouter>
+
+
         </ThemeProvider>
     );
 };

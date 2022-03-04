@@ -27,13 +27,18 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $data = [
             'name'     => 'required|min: 3',
-            'email'    => 'email|unique:users',
             'phone'    => 'required|regex:/(01[3-9]\d{8})$/|unique:users',
             'password' => 'required|min:6|confirmed',
             'role'     => Rule::in(['SUPER_ADMIN', 'ADMIN', 'USER']),
         ];
+
+        if(request()->has('email') && request('email')){
+            $data['email'] = 'email|unique:users';
+        }
+
+        return $data;
     }
 
     protected function failedValidation(Validator $validator)

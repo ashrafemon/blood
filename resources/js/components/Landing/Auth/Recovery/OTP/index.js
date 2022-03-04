@@ -1,44 +1,68 @@
-import React from "react";
+import React, {useState} from "react";
 import {useStyles} from "./styled";
 import {Box} from "@mui/system";
-import {Avatar, Button, TextField, Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {AUTH_FORM_TYPE} from "../../../../../store/types";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import OTPInput from "otp-input-react";
+import {resetVerifyOtp} from "../../../../../store/actions/authActions";
 
 const OTP = () => {
     const classes = useStyles();
+    const {phone} = useSelector(state => state.auth)
 
-   const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    const showForm = () => {
-        dispatch({
-            type: AUTH_FORM_TYPE,
-            payload: 'password'
+    const [otp, setOtp] = useState('')
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        let phoneNum = null;
+        Object.values(phone).map((item) => {
+            phoneNum = item
         })
+
+        let data = {
+            code : otp,
+            phone: phoneNum
+        }
+
+        dispatch(resetVerifyOtp(data, ()=>{
+            dispatch({
+                type: AUTH_FORM_TYPE,
+                payload: 'password'
+            })
+        }))
     }
 
-    return (<Box textAlign='center'>
-
-        <Avatar className={classes.avatar}/>
-
-        <Typography variant='h3'>
-            We have sent a code to your phone number
-        </Typography>
 
 
-        {/* For Phone */}
-        <TextField
-            margin="normal"
-            id="name"
-            label="Phone *"
-            type="text"
-            fullWidth
-            variant="outlined"
-        />
+    return (
+        <form onSubmit={submitHandler}>
+            <Box textAlign='center'>
+                <Typography variant='h3'>
+                    We have sent a code to your phone number
+                </Typography>
 
-        <Button variant='contained' onClick={showForm} fullWidth>Validate OTP</Button>
 
-    </Box>);
+                <OTPInput
+                    className={classes.otp}
+                    inputClassName={classes.otpInput}
+                    autoFocus
+                    OTPLength={6}
+                    otpType="number"
+                    disabled={false}
+                    value={otp}
+                    onChange={setOtp}
+                />
+            </Box>
+
+            <Button variant='contained' type='submit' fullWidth>Validate OTP</Button>
+
+        </form>
+
+    );
 };
 
 export default OTP;

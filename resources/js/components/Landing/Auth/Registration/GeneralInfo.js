@@ -73,7 +73,9 @@ const GeneralInfo = (props) => {
 
         let emailValidate = null
 
-        if (form.email.length > 0) {
+
+
+        if (form.email && form.email.length > 0) {
             if (!validator.isEmail(form.email)) {
                 setErrors((prevState) => ({
                     ...prevState,

@@ -48,15 +48,6 @@ const Registration = () => {
 
     return (
         <Box>
-            <Box textAlign='center'>
-                <Typography variant='h2'>
-                    Please Sign up
-                </Typography>
-
-                <Avatar src={Logo} className={classes.loginLogo}/>
-            </Box>
-
-
             <Stepper activeStep={activeStep}>
                 {steps.map((label) => (
                     <Step key={label}>

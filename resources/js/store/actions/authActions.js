@@ -43,7 +43,7 @@ export const login = (data, cb = () => {
                 dispatch(validateAuthErrors({}))
 
                 cb()
-            }else if(res.status === 'validate_error'){
+            } else if (res.status === 'validate_error') {
                 dispatch(validateAuthErrors(res.data))
             }
 
@@ -91,7 +91,7 @@ export const register = (data, cb = () => {
                 dispatch(validateAuthErrors({}))
 
                 cb()
-            }else if(res.status === 'validate_error'){
+            } else if (res.status === 'validate_error') {
                 dispatch(validateAuthErrors(res.data))
             }
             dispatch(toggleSiteLoading(false))
@@ -192,6 +192,105 @@ export const logout = (cb = () => {
                 dispatch({
                     type: types.LOGOUT
                 })
+
+                cb()
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}
+
+
+export const resetRequestByPhone = (data, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.auth.request, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.RESET_REQUEST,
+                    payload: {
+                        phone: res.data.phone
+                    }
+                })
+
+                cb()
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}
+
+export const resetVerifyOtp = (data, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.auth.otpVerify, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(res => res.json())
+        .then(res => {
+
+
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.RESET_OTP_VERIFY,
+                    payload: {
+                        phone: res.data.phone
+                    }
+                })
+
+                cb()
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}
+export const resetPassword = (data, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.auth.resetPassword, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(res => res.json())
+        .then(res => {
+
+
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.RESET_PASSWORD,
+                    payload: {
+                        message: res.message
+                    }
+                })
+
+                cb()
             }
 
             dispatch(toggleSiteLoading(false))

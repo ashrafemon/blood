@@ -26,7 +26,9 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
 
-
+    modal: {
+        zIndex: 1112,
+    },
     button: {
         fontSize: 14,
         maxWidth: 45,

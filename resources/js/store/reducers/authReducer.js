@@ -6,7 +6,8 @@ const initialState = {
     isAuthenticated: false,
     toggleDialog: false,
     validateErrors: {},
-    authFormType: 'login'
+    authFormType: 'login',
+    phone: null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -58,6 +59,21 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 authFormType: action.payload
+            }
+        case types.RESET_REQUEST:
+            return {
+                ...state,
+                phone: action.payload
+            }
+        case types.RESET_OTP_VERIFY:
+            return {
+                ...state,
+                phone: action.payload
+            }
+        case types.RESET_PASSWORD:
+            return {
+                ...state,
+                message: action.payload.message
             }
         default:
             return state

@@ -8,17 +8,11 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    FormControl,
     Grid,
     IconButton,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField,
     Typography
 } from "@mui/material";
 import {useStyles} from "./styled";
-import {Autocomplete} from "@mui/lab";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
@@ -26,16 +20,12 @@ import TransgenderOutlinedIcon from '@mui/icons-material/TransgenderOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import SeekerItem from "./SeekerItem";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchBloodRequests} from "../../../../store/actions/seekerActions";
+import {fetchBloodRequest, fetchBloodRequests} from "../../../../store/actions/seekerActions";
 import {FETCH_BLOOD_REQUEST, TOGGLE_BLOOD_REQUEST_DIALOG} from "../../../../store/types";
 
 const Seekers = () => {
     const classes = useStyles()
-    const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
     const handleClose = () => {
         dispatch({
@@ -58,91 +48,7 @@ const Seekers = () => {
 
     return (
         <Box>
-            <Dialog open={bloodRequestDialog} onClose={handleClose}>
 
-                <DialogContent>
-
-                    <DialogTitle> Seeker requests</DialogTitle>
-
-                    <Grid container>
-                        <Grid item lg={4}>
-                            <Avatar className={classes.seekerImg}/>
-                        </Grid>
-
-                        <Grid item lg={8}>
-                            <Grid container alignItems='center'>
-
-                                <Grid item lg={8}>
-                                    <Typography variant='h4'>
-                                        Shashwata Chowdhury
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item lg={4}>
-                                    <IconButton color='primary'>
-                                        <MailOutlineIcon/>
-                                    </IconButton>
-
-                                    <IconButton color='primary'>
-                                        <LocalPhoneIcon/>
-                                    </IconButton>
-                                </Grid>
-
-
-                                <Grid item lg={12} my={1}>
-
-                                    <Typography>
-                                        <RoomOutlinedIcon/>
-                                        Labaid HospitalScience Lab, Dhaka 1205
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item lg={12} my={1}>
-
-
-                                    <Typography>
-                                        <WatchLaterOutlinedIcon/>
-                                        Time: 02.00 PM, 19 January 2022
-                                    </Typography>
-
-                                </Grid>
-
-                                <Grid item lg={12} my={1}>
-                                    <Typography>
-                                        <TransgenderOutlinedIcon/>
-                                        Female, Muslim
-                                    </Typography>
-                                </Grid>
-
-                            </Grid>
-
-
-                        </Grid>
-
-                        <Grid item lg={12}>
-                            <Box my={2}>
-                                <Typography variant='h3'>
-                                    Description
-                                </Typography>
-                            </Box>
-
-
-                            <Typography variant='body1'>
-                                I need blood for my father. He is an cancer paitent and needs to
-                                operate immediately.
-                            </Typography>
-                        </Grid>
-                    </Grid>
-
-
-                </DialogContent>
-
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Donate</Button>
-                </DialogActions>
-
-            </Dialog>
 
             <Container maxWidth="xl">
 

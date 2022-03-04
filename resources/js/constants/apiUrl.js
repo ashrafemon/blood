@@ -20,6 +20,10 @@ const ApiUrl = {
         register: ROOT_URL + 'auth/register',
         update: ROOT_URL + 'auth/update',
         logout: ROOT_URL + 'auth/logout',
+        request: ROOT_URL + 'auth/reset-request',
+        otpVerify: ROOT_URL + 'auth/reset-otp-verify',
+        resetPassword: ROOT_URL + 'auth/reset-new-password',
+
         me: ROOT_URL + 'auth/me'
     }
 }

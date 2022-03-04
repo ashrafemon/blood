@@ -87,15 +87,6 @@ const Login = () => {
 
     return (
         <Box>
-
-            <Box textAlign='center' my={2}>
-                <Typography variant='h3'>
-                    Please Sign in
-                </Typography>
-
-                <Avatar src={LoginLogo} className={classes.loginLogo}/>
-            </Box>
-
             <form onSubmit={submitHandler}>
                 <TextField
                     error={errors.phone.show}

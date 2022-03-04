@@ -12,7 +12,7 @@ class BloodRequestController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware(['auth:sanctum'], ['only' => ['store']]);
+        $this->middleware(['auth:sanctum'], ['only' => ['store']]);
     }
 
     public function index()

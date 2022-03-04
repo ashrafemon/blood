@@ -8,7 +8,9 @@ import {fetchAreasByDistrict, fetchDistricts} from "../../../../../store/actions
 import {FETCH_AREAS} from "../../../../../store/types";
 import {searchDonors} from "../../../../../store/actions/donorActions";
 import {useHistory} from "react-router-dom";
-import {bloodGroup} from "../../../../../constants/_data";
+import {bloodGroup, gender, religion} from "../../../../../constants/_data";
+import {isRequiredValidate, lengthValidate, phoneValidation} from "../../../../../utils/validateHelpers";
+import {login} from "../../../../../store/actions/authActions";
 
 const SearchDonor = () => {
     const classes = useStyles()
@@ -31,10 +33,7 @@ const SearchDonor = () => {
 
     const [errors, setErrors] = useState({
         district_id: {text: '', show: false},
-        area_id: {text: '', show: false},
-        gender: {text: '', show: false},
         blood_group: {text: '', show: false},
-        religion: {text: '', show: false}
     })
 
     const fieldChangeHandler = (field, value) => {
@@ -59,12 +58,24 @@ const SearchDonor = () => {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        if (form.district_id && form.blood_group) {
-            let formData = {
-                district_id: form.district_id.id,
-                blood_group: form.blood_group
-            }
+        let formData = {...form};
 
+        if (formData.district_id && formData.district_id.hasOwnProperty("id")) {
+            formData["district_id"] = formData.district_id.id;
+        }
+
+        if (formData.area_id && formData.area_id.hasOwnProperty("id")) {
+            formData["area_id"] = formData.area_id.id;
+        }
+
+
+
+        let districtValidate = isRequiredValidate(form.district_id, 'district_id', setErrors, 'District is required')
+
+        let bloodValidate = isRequiredValidate(form.blood_group, 'blood_group', setErrors, 'Blood is required')
+
+
+        if (!districtValidate && !bloodValidate) {
             dispatch(searchDonors(formData, () => {
                 history.push('/donors')
             }))
@@ -75,7 +86,7 @@ const SearchDonor = () => {
         <SiteCard>
             <CardContent>
                 <form onSubmit={submitHandler}>
-                    <Grid container spacing={3} alignItems="center">
+                    <Grid container spacing={3}>
 
                         <Grid item xs={12} lg={4}>
 
@@ -83,9 +94,10 @@ const SearchDonor = () => {
                                 options={districts}
                                 getOptionLabel={option => option.name}
                                 fullWidth
+
                                 onChange={(e, data) => fieldChangeHandler('district_id', data)}
                                 renderInput={(params) =>
-                                    <TextField {...params} label="Select District"/>
+                                    <TextField {...params} error={errors.district_id.show} helperText={errors.district_id.text} label="Select District"/>
                                 }
                             />
 
@@ -93,6 +105,7 @@ const SearchDonor = () => {
 
                         <Grid item xs={12} lg={4}>
                             <Autocomplete
+
                                 options={areas}
                                 getOptionLabel={option => option.name}
                                 fullWidth
@@ -109,24 +122,30 @@ const SearchDonor = () => {
                                 fullWidth
                                 onChange={(e, data) => fieldChangeHandler('blood_group', data)}
                                 renderInput={(params) =>
-                                    <TextField {...params} label="Blood Group Needed"/>
+                                    <TextField {...params} error={errors.blood_group.show} helperText={errors.blood_group.text} label="Blood Group Needed"/>
                                 }
                             />
                         </Grid>
 
                         <Grid item xs={12} lg={4}>
                             <Autocomplete
-                                disablePortal
-                                // options={top100Films}
-                                renderInput={(params) => <TextField {...params} fullWidth label="Gender"/>}
+                                options={gender}
+                                fullWidth
+                                onChange={(e, data) => fieldChangeHandler('gender', data)}
+                                renderInput={(params) =>
+                                    <TextField {...params} label="Gender"/>
+                                }
                             />
                         </Grid>
 
                         <Grid item xs={12} lg={4}>
                             <Autocomplete
-                                disablePortal
-                                // options={top100Films}
-                                renderInput={(params) => <TextField {...params} fullWidth label="Religion"/>}
+                                options={religion}
+                                fullWidth
+                                onChange={(e, data) => fieldChangeHandler('religion', data)}
+                                renderInput={(params) =>
+                                    <TextField {...params} label="Religion"/>
+                                }
                             />
                         </Grid>
 

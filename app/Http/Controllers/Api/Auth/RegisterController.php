@@ -83,6 +83,7 @@ class RegisterController extends Controller
 
             $user->name = request('name') ?? $user->name;
             $user->status = request('status') ?? $user->status;
+            $user->email = request('email') ?? $user->email;
 
             $user->profile->blood_group = request('blood_group') ?? $user->profile->blood_group;
             $user->profile->gender = request('gender') ?? $user->profile->gender;

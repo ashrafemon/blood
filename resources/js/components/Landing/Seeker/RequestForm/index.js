@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {Box} from "@mui/system";
-import {Button, Card, CardContent, Container, Divider, Grid, Switch, TextField} from "@mui/material";
+import {Button, Card, CardContent, Container, Divider, Grid, Stack, Switch, TextField, Typography} from "@mui/material";
 import {useStyles} from "./styled";
 import {Autocomplete, DateTimePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAreasByDistrict, fetchDistricts, fetchHospitals} from "../../../../store/actions/siteActions";
-import {FETCH_AREAS} from "../../../../store/types";
+import {fetchAreasByDistrict, fetchDistricts} from "../../../../store/actions/siteActions";
+import {FETCH_AREAS, TOGGLE_DIALOG} from "../../../../store/types";
 import {bloodGroup, gender, religion} from "../../../../constants/_data";
 import {fetchBloodRequests, requestSeeker} from "../../../../store/actions/seekerActions";
 
@@ -15,7 +15,7 @@ const RequestForm = () => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
-    const {districts, areas, hospitals} = useSelector((state) => state.site)
+    const {districts, areas} = useSelector((state) => state.site)
 
     useEffect(() => {
         dispatch(fetchDistricts())
@@ -71,6 +71,7 @@ const RequestForm = () => {
         }))
     }
 
+    let token = localStorage.getItem('token')
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -84,14 +85,18 @@ const RequestForm = () => {
             formData["area_id"] = formData.area_id.id;
         }
 
-        if (formData.hospital && formData.hospital.hasOwnProperty("id")) {
-            formData["hospital"] = formData.hospital.id;
-        }
 
-        dispatch(requestSeeker(formData, () => {
-            resetForm()
-            dispatch(fetchBloodRequests())
-        }))
+        if (!token) {
+            dispatch({
+                type: TOGGLE_DIALOG,
+                payload: true
+            })
+        } else {
+            dispatch(requestSeeker(formData, () => {
+                resetForm()
+                dispatch(fetchBloodRequests())
+            }))
+        }
     }
 
 
@@ -101,12 +106,16 @@ const RequestForm = () => {
                 <Card elevation={0} className={classes.requestCard}>
                     <form onSubmit={submitHandler}>
                         <CardContent>
+                            <Stack direction='row' alignItems='center'>
+                                <Typography>Emergency</Typography>
 
-                            <Switch
-                                checked={form.emergency}
-                                onChange={(e, value) => fieldChangeHandler('emergency', e.target.checked)}
-                                inputProps={{'aria-label': 'controlled'}}
-                            />
+                                <Switch
+                                    checked={form.emergency}
+                                    onChange={(e, value) => fieldChangeHandler('emergency', e.target.checked)}
+                                    inputProps={{'aria-label': 'controlled'}}
+                                />
+                            </Stack>
+
                             <Divider/>
                             <br/>
 
@@ -143,15 +152,6 @@ const RequestForm = () => {
 
                                 {/* ====== Select Hospital ====== */}
                                 <Grid item lg={2} xs={12}>
-                                    {/*<Autocomplete*/}
-                                    {/*    options={hospitals}*/}
-                                    {/*    getOptionLabel={option => option.name}*/}
-                                    {/*    fullWidth*/}
-                                    {/*    onChange={(e, data) => fieldChangeHandler('hospital', data)}*/}
-                                    {/*    renderInput={(params) =>*/}
-                                    {/*        <TextField {...params} label="Select Hospital"/>*/}
-                                    {/*    }*/}
-                                    {/*/>*/}
                                     <TextField
                                         fullWidth
                                         value={form.hospital}
@@ -177,10 +177,6 @@ const RequestForm = () => {
 
 
                                 {/* ====== Date & Time ====== */}
-                                {/*{form.emergency === 'false' && (*/}
-                                {/*   */}
-                                {/*)}*/}
-
                                 {!form.emergency && (
                                     <Grid item lg={2} xs={12}>
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -198,7 +194,6 @@ const RequestForm = () => {
                                         </LocalizationProvider>
                                     </Grid>
                                 )}
-
 
 
                                 {/* ====== Select Gender ====== */}
@@ -249,6 +244,7 @@ const RequestForm = () => {
                                         Request</Button>
                                 </Grid>
                             </Grid>
+
 
                         </CardContent>
                     </form>

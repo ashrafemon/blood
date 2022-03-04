@@ -12,23 +12,24 @@ import {
     MenuItem,
     Typography,
 } from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 import {useStyles} from "./styled";
 import Login from "../../Auth/Login";
 
-import profileImg from "../../../../assets/images/login-logo.png"
+import profileImg from "../../../../assets/images/default_avatar.gif"
+import LoginLogo from "../../../../assets/images/login-logo.png"
 import {useDispatch, useSelector} from "react-redux";
 import {AUTH_FORM_TYPE, TOGGLE_DIALOG} from "../../../../store/types";
 import {Logout} from "@mui/icons-material";
 import {logout} from "../../../../store/actions/authActions";
 import {Box} from "@mui/system";
-import Registration from "../../Auth/Registration";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import Email from "../../Auth/Recovery/Email";
+import Registration from "../../Auth/Registration";
 import OTP from "../../Auth/Recovery/OTP";
 import ChangePassword from "../../Auth/Recovery/ChangePassword";
-
+import RecoverEmail from "../../Auth/Recovery/Email";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const NavList = () => {
     const classes = useStyles();
@@ -50,6 +51,7 @@ const NavList = () => {
             payload: 'login'
         })
     }
+
     const closeDialog = () => {
         dispatch({
             type: TOGGLE_DIALOG,
@@ -63,7 +65,7 @@ const NavList = () => {
     }
 
     const destroy = () => {
-        dispatch(logout())
+        dispatch(logout(() => routeChange('/')))
     }
 
     const showRegistration = () => {
@@ -87,17 +89,18 @@ const NavList = () => {
 
 
     let history = useHistory();
-    const routeChange = () => {
-        let path = `/profile`;
-        history.push(path);
+    const routeChange = (route) => {
+        history.push(route);
     }
 
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -169,16 +172,17 @@ const NavList = () => {
 
                         <Menu
                             anchorEl={anchorEl}
-                            id="account-menu"
                             open={open}
                             onClose={handleClose}
                             onClick={handleClose}
-                            className={classes.profile}
                             transformOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                         >
-                            <MenuItem onClick={routeChange}>
-                                <Avatar/> Profile
+                            <MenuItem onClick={() => routeChange('/profile')}>
+                                <ListItemIcon>
+                                    <AccountCircleIcon fontSize="small"/>
+                                </ListItemIcon>
+                                Profile
                             </MenuItem>
 
                             <MenuItem onClick={destroy}>
@@ -203,14 +207,28 @@ const NavList = () => {
 
                 <Dialog open={toggleDialog} onClose={handleClose} maxWidth="sm" fullWidth className={classes.modal}>
                     <DialogContent>
+
                         <Box textAlign='end'>
                             <IconButton onClick={closeDialog}>
                                 <CloseOutlinedIcon/>
                             </IconButton>
                         </Box>
+
+                        <Box textAlign='center' my={2}>
+                            <Typography variant='h2'>
+                                {authFormType === 'login' && 'Please Sign In'}
+                                {authFormType === 'register' && 'Please Sign Up'}
+                                {authFormType === 'forgot' && 'Forgot Password'}
+                                {authFormType === 'otp' && 'Verify OTP'}
+                                {authFormType === 'password' && 'Set Your New Password'}
+                            </Typography>
+                            <Avatar src={LoginLogo} className={classes.authLogo}/>
+                        </Box>
+
+
                         {authFormType === 'login' && <Login/>}
                         {authFormType === 'register' && <Registration/>}
-                        {authFormType === 'forgot' && <Email/>}
+                        {authFormType === 'forgot' && <RecoverEmail/>}
                         {authFormType === 'otp' && <OTP/>}
                         {authFormType === 'password' && <ChangePassword/>}
 

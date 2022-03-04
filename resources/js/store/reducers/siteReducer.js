@@ -18,6 +18,7 @@ const initialState = {
 
 
     toggleDialog: false,
+    toggleProfileDialog: false,
 
 }
 
@@ -83,6 +84,11 @@ const siteReducer = (state = initialState, action) => {
             return {
                 ...state,
                 toggleDialog: action.payload
+            }
+        case types.TOGGLE_PROFILE_DIALOG:
+            return {
+                ...state,
+                toggleProfileDialog: action.payload
             }
 
         case types.TOGGLE_REGISTER_FORM:
