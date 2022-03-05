@@ -126,6 +126,12 @@ const NavList = () => {
                 </ListItem>
             </NavLink>
 
+            <NavLink to="/post">
+                <ListItem>
+                    <ListItemText>Post</ListItemText>
+                </ListItem>
+            </NavLink>
+
             <NavLink to="/campaign">
                 <ListItem>
                     <ListItemText>Campaign</ListItemText>

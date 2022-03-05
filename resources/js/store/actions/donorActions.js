@@ -42,7 +42,10 @@ export const searchDonors = (data, cb = () => {
             if(res.status === 'success'){
                 dispatch({
                     type: types.SEARCH_DONORS,
-                    payload: res.data
+                    payload: {
+                        searchDonorsData: res.data,
+                        formData: data
+                    }
                 })
                 cb()
             }

@@ -30,7 +30,7 @@ class DonorController extends Controller
     public function show($id)
     {
         try {
-            $donor = User::with(['profile'])->where('id', $id)->where('role', User::ROLES['user'])->first();
+            $donor = User::with(['profile.district', 'profile.area'])->where('id', $id)->where('role', User::ROLES['user'])->first();
 
             if ($donor) {
                 return response([
@@ -48,12 +48,20 @@ class DonorController extends Controller
 
     public function searchDonor()
     {
-        $validator = Validator::make(request()->all(), [
+        $data = [
             'district_id' => 'required',
-            'gender' => Rule::in(['Male', 'Female', 'Other']),
             'blood_group' => 'required|' . Rule::in(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']),
-            'religion' => Rule::in(['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others'])
-        ]);
+        ];
+
+        if(request()->has('religion') && request('religion')){
+            $data['religion'] = Rule::in(['Muslims', 'Hindus', 'Buddhists', 'Christians', 'Others']);
+        }
+
+        if(request()->has('gender') && request('gender')){
+            $data['religion'] = Rule::in(['Male', 'Female', 'Other']);
+        }
+
+        $validator = Validator::make(request()->all(), $data);
 
         if ($validator->fails()) {
             return validateError($validator->errors());

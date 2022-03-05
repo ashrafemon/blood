@@ -9,8 +9,7 @@ import {FETCH_AREAS} from "../../../../../store/types";
 import {searchDonors} from "../../../../../store/actions/donorActions";
 import {useHistory} from "react-router-dom";
 import {bloodGroup, gender, religion} from "../../../../../constants/_data";
-import {isRequiredValidate, lengthValidate, phoneValidation} from "../../../../../utils/validateHelpers";
-import {login} from "../../../../../store/actions/authActions";
+import {isRequiredValidate} from "../../../../../utils/validateHelpers";
 
 const SearchDonor = () => {
     const classes = useStyles()
@@ -26,9 +25,9 @@ const SearchDonor = () => {
     const [form, setForm] = useState({
         district_id: null,
         area_id: null,
-        gender: null,
+        gender: '',
         blood_group: null,
-        religion: null
+        religion: ''
     })
 
     const [errors, setErrors] = useState({
@@ -69,7 +68,6 @@ const SearchDonor = () => {
         }
 
 
-
         let districtValidate = isRequiredValidate(form.district_id, 'district_id', setErrors, 'District is required')
 
         let bloodValidate = isRequiredValidate(form.blood_group, 'blood_group', setErrors, 'Blood is required')
@@ -97,7 +95,8 @@ const SearchDonor = () => {
 
                                 onChange={(e, data) => fieldChangeHandler('district_id', data)}
                                 renderInput={(params) =>
-                                    <TextField {...params} error={errors.district_id.show} helperText={errors.district_id.text} label="Select District"/>
+                                    <TextField {...params} error={errors.district_id.show}
+                                               helperText={errors.district_id.text} label="Select District"/>
                                 }
                             />
 
@@ -122,7 +121,8 @@ const SearchDonor = () => {
                                 fullWidth
                                 onChange={(e, data) => fieldChangeHandler('blood_group', data)}
                                 renderInput={(params) =>
-                                    <TextField {...params} error={errors.blood_group.show} helperText={errors.blood_group.text} label="Blood Group Needed"/>
+                                    <TextField {...params} error={errors.blood_group.show}
+                                               helperText={errors.blood_group.text} label="Blood Group Needed"/>
                                 }
                             />
                         </Grid>

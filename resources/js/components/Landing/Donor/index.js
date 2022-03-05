@@ -1,60 +1,63 @@
 import React from 'react'
-import {Avatar, Card, CardContent, Grid, IconButton, Tooltip, Typography} from "@mui/material";
+import {Avatar, Card, IconButton, Stack, Tooltip, Typography} from "@mui/material";
 import {useStyles} from "./styled";
 import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+import {Box} from "@mui/system";
+import RoomIcon from '@mui/icons-material/Room';
+
 
 const Donor = ({item}) => {
     const classes = useStyles()
 
     return (
-        <Card>
-            <CardContent>
-                <Grid container>
+        <Card elevation={0} className={classes.card} p={0}>
 
-                    <Grid item lg={4}>
-                        <Avatar src={item?.profile?.avatar} className={classes.donorImg}/>
-                    </Grid>
+            <Stack direction='row' justifyContent='space-around' alignItems='center' borderBottom='1px solid red' p={2}>
+                <Avatar src={item?.profile?.avatar} className={classes.avatar}/>
 
-                    <Grid item lg={4}>
-                        <Typography variant='h4'>
-                            {item?.name}
-                        </Typography>
+                <Box>
+                    <Typography variant='h3'>
+                        {item?.name}
+                    </Typography>
 
+                    <Tooltip title='Message'>
                         <IconButton color='primary'>
                             <LocalPostOfficeOutlinedIcon/>
                         </IconButton>
+                    </Tooltip>
 
-                        {item?.profile?.phone_publicly === 'true' && (
-                            <Tooltip title={item?.phone}>
-                                <IconButton color='primary'>
-                                    <LocalPhoneOutlinedIcon/>
-                                </IconButton>
-                            </Tooltip>
-                        )}
+                    {item?.profile?.phone_publicly === 'true' && (
+                        <Tooltip title={item?.phone}>
+                            <IconButton color='primary'>
+                                <LocalPhoneOutlinedIcon/>
+                            </IconButton>
+                        </Tooltip>
+                    )}
 
-                    </Grid>
 
-                    <Grid item lg={4}>
-                        <Typography>{item?.profile?.blood_group}</Typography>
-                        {/*<Avatar src={BloodDrop2} className={classes.bloodIcon}/>*/}
-                    </Grid>
+                </Box>
 
-                    <Grid item lg={4} textAlign='center'>
-                        <RoomOutlinedIcon color='primary' fontSize='large'/>
-                    </Grid>
+                <Box className={classes.bloodGroupIcon}>
+                    <Typography variant='h4' color='white'>
+                        {item?.profile?.blood_group}
+                    </Typography>
+                </Box>
+            </Stack>
 
-                    <Grid item lg={8}>
-                        <Typography variant='body1'>
-                            {item?.profile?.area?.name}, <br/>
-                            {item?.profile?.district?.name} Bangladesh
-                        </Typography>
-                    </Grid>
+            <Stack direction='row' alignItems='center' p={2}>
+                <Box mx={6}>
+                    <RoomIcon fontSize='large' color='primary'/>
+                </Box>
 
-                </Grid>
+                <Typography variant='h5'>
+                    {item?.profile?.area?.name} {item?.profile?.district?.name}
+                </Typography>
 
-            </CardContent>
+            </Stack>
+
+
+
         </Card>
     )
 }

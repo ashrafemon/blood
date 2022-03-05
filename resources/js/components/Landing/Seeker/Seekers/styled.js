@@ -1,27 +1,35 @@
 import {makeStyles} from "@mui/styles";
 import EmergencyImg from "../../../../assets/images/emergency.png";
+import BloodDropImg from "../../../../assets/images/blood-drop-3.png";
 
 export const useStyles = makeStyles((theme) => ({
-    seekerImg:{
-        width: '80px',
-        height: '80px',
+    avatar:{
+        width: 80,
+        height: 80,
         borderRadius: '10px !important',
-        margin: 'auto',
-
         '& .MuiAvatar-img': {
             objectFit: 'contain !important'
         }
     },
 
-    bloodIcon:{
-        width: '50px',
-        height: '50px',
-        borderRadius: '0 !important',
-        margin: 'auto',
-
+    dialogAvatar:{
+        width: 60,
+        height: 60,
+        marginTop: 10,
         '& .MuiAvatar-img': {
             objectFit: 'contain !important'
         }
+    },
+
+    bloodGroupIcon: {
+        width: 60,
+        height: 60,
+        background: `url(${BloodDropImg}) no-repeat top center`,
+        backgroundSize: 'contain',
+        display: "flex",
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     card: {

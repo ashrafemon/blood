@@ -35,8 +35,16 @@ Route::prefix('v1')->group(function(){
     Route::post('/search-donors', [\App\Http\Controllers\Api\DonorController::class, 'searchDonor']);
 
     Route::apiResource('/blood-requests', \App\Http\Controllers\Api\BloodRequestController::class)->only(['index', 'store', 'show']);
+    Route::post('/filter-blood-requests', [\App\Http\Controllers\Api\BloodRequestController::class, 'filterSeekerRequest']);
+    Route::get('/my-blood-requests', [\App\Http\Controllers\Api\BloodRequestController::class, 'authUserBloodRequests'])->middleware('auth:sanctum');
 
     Route::post('/file-uploader', [\App\Http\Controllers\Api\HelperController::class, 'fileUploader']);
+
+    Route::middleware('auth:sanctum')->group(function (){
+        Route::post('commit-donate', [\App\Http\Controllers\Api\DonateController::class, 'accept']);
+        Route::patch('donate-update/{id}', [\App\Http\Controllers\Api\DonateController::class, 'update']);
+        Route::get('show-donate/{id}', [\App\Http\Controllers\Api\DonateController::class, 'show']);
+    });
 
     Route::prefix('site')->group(function (){
         Route::get('/districts', [\App\Http\Controllers\Api\SiteController::class, 'districts']);

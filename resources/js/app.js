@@ -10,6 +10,7 @@ import {Provider, useSelector} from "react-redux";
 import store from "./store";
 import Donors from "./pages/Landing/Donors";
 import Loader from "./components/shared/Loader";
+import Post from "./pages/Landing/Post";
 
 const App = () => {
     const {siteLoading} = useSelector(state => state.site)
@@ -66,7 +67,7 @@ const App = () => {
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/donors" component={Donors}/>
                         <Route exact path="/seekers" component={Seekers}/>
-                        {/*<Route exact path="/profile" component={Profile}/>*/}
+                        <Route exact path="/post" component={Post}/>
 
                         <Route exact path="/profile">
                             {token ? <Profile /> : <Redirect to="/" /> }

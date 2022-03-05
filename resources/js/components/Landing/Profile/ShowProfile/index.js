@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {Box} from "@mui/system";
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Avatar,
+    Button,
     Card,
     CardContent,
     Container,
@@ -10,7 +14,8 @@ import {
     Grid,
     IconButton,
     Stack,
-    Switch, Tooltip,
+    Switch,
+    Tooltip,
     Typography
 } from "@mui/material";
 import {useStyles} from "./styled";
@@ -26,12 +31,15 @@ import {fetchMe, update} from "../../../../store/actions/authActions";
 import {AUTH_FORM_TYPE, TOGGLE_PROFILE_DIALOG} from "../../../../store/types";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import ProfileEdit from "../ProfileEdit";
+import AddIcon from '@mui/icons-material/Add';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Address from "../Address";
 
 
 const ShowProfile = () => {
     const classes = useStyles()
 
-    const {currentUser} = useSelector((state) => state.auth)
+    const {currentUser, authFormType} = useSelector((state) => state.auth)
     const {toggleProfileDialog} = useSelector((state) => state.site)
 
     const dispatch = useDispatch()
@@ -41,12 +49,8 @@ const ShowProfile = () => {
         dispatch(fetchMe())
     }, [dispatch])
 
-    useEffect(() => {
-        dispatch({
-            type: AUTH_FORM_TYPE,
-            payload: 'showProfile'
-        })
-    }, [dispatch])
+
+
 
 
     const [form, setForm] = useState({
@@ -102,22 +106,25 @@ const ShowProfile = () => {
     }
 
 
-    const toggleDialog = (status) => {
+    const toggleDialog = (status, content) => {
         dispatch({
             type: TOGGLE_PROFILE_DIALOG,
             payload: status
         })
+
+        dispatch({
+            type: AUTH_FORM_TYPE,
+            payload: content
+        })
+
     }
 
     const label = {inputProps: {'aria-label': 'Switch demo'}};
     return (
-        <Box py={15}>
+        <Box py={5}>
             <Container maxWidth="xl">
                 <Grid container spacing={2}>
-
-
                     <Grid item lg={6}>
-
                         <Grid container>
                             <Grid item lg={6}>
                                 <Typography variant='h2'>
@@ -131,7 +138,7 @@ const ShowProfile = () => {
 
                             <Grid item lg={6}>
                                 <Tooltip title='Edit Profile'>
-                                    <IconButton color='primary' onClick={() => toggleDialog(true)}>
+                                    <IconButton color='primary' onClick={() => toggleDialog(true, 'profile')}>
                                         <EditIcon/>
                                     </IconButton>
                                 </Tooltip>
@@ -249,6 +256,31 @@ const ShowProfile = () => {
 
                         </Grid>
 
+                        <Box>
+                            <Typography>
+                                Address
+                            </Typography>
+
+                            <Typography>
+                                {currentUser?.profile?.address}
+                            </Typography>
+                        </Box>
+
+
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon/>}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            >
+                                <Typography>Manage Address</Typography>
+
+                            </AccordionSummary>
+
+                            <AccordionDetails>
+
+                            </AccordionDetails>
+                        </Accordion>
 
                     </Grid>
 
@@ -280,7 +312,9 @@ const ShowProfile = () => {
                                 </Grid>
                             </Grid>
 
-                            <ProfileEdit/>
+                            {authFormType === 'profile' && <ProfileEdit/>}
+                            {authFormType === 'address' && <Address/>}
+
                         </DialogContent>
                     </Dialog>
 

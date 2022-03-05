@@ -3,11 +3,15 @@ import {
     Avatar,
     Button,
     Card,
-    CardContent, Dialog, DialogActions,
+    CardContent,
+    Dialog,
+    DialogActions,
     DialogContent,
-    DialogTitle,
-    Grid,
+    Divider,
     IconButton,
+    List,
+    ListItem,
+    Stack,
     Typography
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -46,83 +50,78 @@ const SeekerItem = ({item}) => {
     return (
         <Card className={`${item.emergency === 'true' ? classes.cardEmergency : classes.card}`}>
             <CardContent>
-                <Grid container alignItems='center'>
-                    <Grid item lg={4}>
-                        <Avatar className={classes.seekerImg}/>
-                    </Grid>
+                <Stack direction='row' justifyContent='space-around'>
+                    <Avatar className={classes.avatar}/>
 
-                    <Grid item lg={4} textAlign='center'>
+                    <IconButton color='primary'>
+                        <MailOutlineIcon/>
+                    </IconButton>
 
-                        <IconButton color='primary'>
-                            <MailOutlineIcon/>
-                        </IconButton>
+                    <IconButton color='primary'>
+                        <LocalPhoneIcon/>
+                    </IconButton>
 
+                    <Box className={classes.bloodGroupIcon}>
+                        <Typography>
+                            {item?.blood_group}
+                        </Typography>
+                    </Box>
+                </Stack>
 
-                        <IconButton color='primary'>
-                            <LocalPhoneIcon/>
-                        </IconButton>
-                    </Grid>
+                <List>
+                    <ListItem>
+                        <Typography variant='h4'>
+                            {item?.user?.name}
+                        </Typography>
+                    </ListItem>
 
-                    <Grid item lg={4}>
-                        <Box>
-                            <Typography variant='h4'>
-                                {item?.blood_group}
-                            </Typography>
-                            {/*<Avatar src={BloodDrop} className={classes.bloodIcon}/>*/}
-                        </Box>
-                    </Grid>
-
-                    <Grid item lg={12}>
-
-                        <Box my={2}>
-                            <Typography variant='h4'>
-                                {item?.profile?.name}
-                            </Typography>
-                        </Box>
-
-                        <Box mb={1}>
-                            <Typography variant='h6'>
-                                {item?.hospital}
-                            </Typography>
-                        </Box>
-
+                    <ListItem>
                         <Typography variant='body1'>
-                            {item?.area?.name} <br/>
+                            {item?.hospital}
+                        </Typography>
+                    </ListItem>
+
+                    <ListItem>
+                        <Typography variant='body2'>
+                            Location: {item?.area?.name}, {item?.district?.name}
+                        </Typography>
+                    </ListItem>
+
+                    <ListItem>
+                        <Typography variant='body2'>
                             Time: {item?.formatted_acceptable_date}
                         </Typography>
-                    </Grid>
+                    </ListItem>
 
-                    <Grid item lg={12}>
+                    <ListItem>
+                        <Button variant='text' color='primary' onClick={() => viewItem(item.id)}>
+                            View details <ArrowRightAltIcon/>
+                        </Button>
+                    </ListItem>
+
+                </List>
+
+
+                <Dialog open={bloodRequestDialog} onClose={closeDialog}>
+
+                    <DialogContent>
                         <Box my={1}>
-                            <Button variant='text' color='primary' onClick={() => viewItem(item.id)}>
-                                View details <ArrowRightAltIcon/>
-                            </Button>
+                            <Typography variant='h4'>Seeker requests</Typography>
                         </Box>
 
-                    </Grid>
+                        <Divider/>
 
+                        <Stack direction='row' justifyContent='space-around'>
+                            <Avatar className={classes.dialogAvatar}/>
 
-                    <Dialog open={bloodRequestDialog} onClose={closeDialog}>
+                            <List>
+                                <ListItem>
+                                    <Stack direction='row' alignItems='center' justifyContent='space-between'>
+                                        <Typography variant='h4'>
+                                            {bloodRequest?.user?.name}
+                                        </Typography>
 
-                        <DialogContent>
-
-                            <DialogTitle> Seeker requests</DialogTitle>
-
-                            <Grid container>
-                                <Grid item lg={4}>
-                                    <Avatar className={classes.seekerImg}/>
-                                </Grid>
-
-                                <Grid item lg={8}>
-                                    <Grid container alignItems='center'>
-
-                                        <Grid item lg={8}>
-                                            <Typography variant='h4'>
-                                                {bloodRequest?.user?.name}
-                                            </Typography>
-                                        </Grid>
-
-                                        <Grid item lg={4}>
+                                        <Box>
                                             <IconButton color='primary'>
                                                 <MailOutlineIcon/>
                                             </IconButton>
@@ -130,65 +129,52 @@ const SeekerItem = ({item}) => {
                                             <IconButton color='primary'>
                                                 <LocalPhoneIcon/>
                                             </IconButton>
-                                        </Grid>
+                                        </Box>
 
+                                    </Stack>
+                                </ListItem>
 
-                                        <Grid item lg={12} my={1}>
-
-                                            <Typography>
-                                                <RoomOutlinedIcon/>
-                                                {bloodRequest?.hospital}, {bloodRequest?.area?.name} {bloodRequest?.district?.name}
-                                            </Typography>
-                                        </Grid>
-
-                                        <Grid item lg={12} my={1}>
-
-
-                                            <Typography>
-                                                <WatchLaterOutlinedIcon/>
-                                                Time: {bloodRequest?.accepted_date}
-                                            </Typography>
-
-                                        </Grid>
-
-                                        <Grid item lg={12} my={1}>
-                                            <Typography>
-                                                <TransgenderOutlinedIcon/>
-                                                {bloodRequest?.gender}, {bloodRequest?.religion}
-                                            </Typography>
-                                        </Grid>
-
-                                    </Grid>
-
-
-                                </Grid>
-
-                                <Grid item lg={12}>
-                                    <Box my={2}>
-                                        <Typography variant='h3'>
-                                            Description
-                                        </Typography>
-                                    </Box>
-
-
-                                    <Typography variant='body1'>
-                                        {bloodRequest?.description}
+                                <ListItem>
+                                    <Typography>
+                                        <RoomOutlinedIcon mr={2}/>
+                                        {bloodRequest?.hospital}, {bloodRequest?.area?.name} {bloodRequest?.district?.name}
                                     </Typography>
-                                </Grid>
-                            </Grid>
+                                </ListItem>
 
 
-                        </DialogContent>
+                                <ListItem>
+                                    <Typography>
+                                        <WatchLaterOutlinedIcon mr={2}/>
+                                        Time: {bloodRequest?.accepted_date}
+                                    </Typography>
+                                </ListItem>
 
-                        <DialogActions>
-                            <Button onClick={closeDialog}>Close</Button>
-                            <Button >Donate</Button>
-                        </DialogActions>
+                                <ListItem>
+                                    <Typography>
+                                        <TransgenderOutlinedIcon mr={2}/>
+                                        {bloodRequest?.gender}, {bloodRequest?.religion}
+                                    </Typography>
+                                </ListItem>
+                            </List>
+                        </Stack>
 
-                    </Dialog>
+                        <Box my={2}>
+                            <Typography variant='h3'>
+                                Description
+                            </Typography>
 
+                            <Typography variant='body1'>
+                                {bloodRequest?.description}
+                            </Typography>
+                        </Box>
+                    </DialogContent>
 
-                </Grid>
+                    <DialogActions>
+                        <Button onClick={closeDialog}>Close</Button>
+                        <Button variant='contained'>Donate</Button>
+                    </DialogActions>
+
+                </Dialog>
 
             </CardContent>
         </Card>

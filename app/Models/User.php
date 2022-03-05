@@ -55,4 +55,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(BloodRequest::class);
     }
+
+    public function donates()
+    {
+        return $this->hasMany(Donate::class);
+    }
+
+    public function donate_ratings()
+    {
+        return $this->hasMany(DonorRating::class);
+    }
+
+    public function donor_ratings()
+    {
+        return $this->hasMany(DonorRating::class);
+    }
 }

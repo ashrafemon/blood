@@ -44,4 +44,9 @@ class BloodRequest extends Model
     {
         return Carbon::parse($this->accepted_date)->format('H:i A, d M Y');
     }
+
+    public function donates()
+    {
+        return $this->hasMany(Donate::class);
+    }
 }

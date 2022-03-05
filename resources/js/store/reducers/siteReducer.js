@@ -3,9 +3,11 @@ import * as types from '../types'
 const initialState = {
     donors: {},
     donor: {},
-    searchDonors: {},
+    searchDonorsData: {},
     donorDialog: false,
     siteLoading: false,
+
+    formData: {},
 
     districts: [],
     areas: [],
@@ -37,7 +39,8 @@ const siteReducer = (state = initialState, action) => {
         case types.SEARCH_DONORS:
             return {
                 ...state,
-                searchDonors: action.payload
+                searchDonorsData: action.payload.searchDonorsData,
+                formData: action.payload.formData
             }
         case types.TOGGLE_DONOR_DIALOG:
             return {
