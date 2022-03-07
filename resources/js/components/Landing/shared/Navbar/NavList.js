@@ -1,5 +1,5 @@
 import {
-    Avatar,
+    Avatar, Badge,
     Button,
     Dialog,
     DialogContent,
@@ -20,7 +20,7 @@ import Login from "../../Auth/Login";
 import profileImg from "../../../../assets/images/default_avatar.gif"
 import LoginLogo from "../../../../assets/images/login-logo.png"
 import {useDispatch, useSelector} from "react-redux";
-import {AUTH_FORM_TYPE, TOGGLE_DIALOG} from "../../../../store/types";
+import {AUTH_FORM_TYPE, TOGGLE_DIALOG, TOGGLE_DROPDOWN} from "../../../../store/types";
 import {Logout} from "@mui/icons-material";
 import {logout} from "../../../../store/actions/authActions";
 import {Box} from "@mui/system";
@@ -30,11 +30,11 @@ import OTP from "../../Auth/Recovery/OTP";
 import ChangePassword from "../../Auth/Recovery/ChangePassword";
 import RecoverEmail from "../../Auth/Recovery/Email";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 const NavList = () => {
     const classes = useStyles();
 
-    const {toggleDialog} = useSelector(state => state.site)
+    const {toggleDialog, toggleDropdown, toggleDropdownMenu} = useSelector(state => state.site)
     const {authFormType} = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
@@ -93,16 +93,29 @@ const NavList = () => {
         history.push(route);
     }
 
+    const menuOpen = (menu)=>{
+        if (menu === 'notification'){
+            dispatch({
+                type: TOGGLE_DROPDOWN,
+                payload: {
+                    toggleDropdown: true,
+                    toggleDropdownMenu: 'notification'
+                }
+            })
+        } else if (menu === 'profile'){
+            dispatch({
+                type: TOGGLE_DROPDOWN,
+                payload: {
+                    toggleDropdown: true,
+                    toggleDropdownMenu: 'profile'
+                }
+            })
+        }
+    }
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
 
     const handleClose = () => {
-        setAnchorEl(null);
+
     };
 
     return (
@@ -161,28 +174,46 @@ const NavList = () => {
                 </ListItem>
             </NavLink>
 
+            { getToken && (
+                <ListItem>
+                    <IconButton
+                        onClick={()=> menuOpen('notification')}
+                    >
+                        <Badge badgeContent={4} color="primary">
+                            <NotificationsNoneIcon color="action" />
+                        </Badge>
+                    </IconButton>
+
+
+                    <Menu
+                        anchorEl={toggleDropdown}
+                        open={toggleDropdown}
+                        onClose={handleClose}
+                    >
+                        <MenuItem onClick={() => routeChange('/profile')}>
+                           Someone Accept Request
+                        </MenuItem>
+                    </Menu>
+
+
+                </ListItem>
+            )}
+
+
             <ListItem>
                 {getToken ? (
                     <>
 
                         <IconButton
-                            onClick={handleClick}
-                            size="small"
-                            sx={{ml: 2}}
-                            aria-controls={open ? 'account-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
+                            onClick={()=> menuOpen('profile')}
                         >
                             <Avatar src={profileImg}/>
                         </IconButton>
 
                         <Menu
-                            anchorEl={anchorEl}
-                            open={open}
+                            anchorEl={toggleDropdown}
+                            open={toggleDropdown}
                             onClose={handleClose}
-                            onClick={handleClose}
-                            transformOrigin={{horizontal: 'right', vertical: 'top'}}
-                            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                         >
                             <MenuItem onClick={() => routeChange('/profile')}>
                                 <ListItemIcon>

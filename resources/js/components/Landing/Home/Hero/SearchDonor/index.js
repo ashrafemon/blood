@@ -25,9 +25,9 @@ const SearchDonor = () => {
     const [form, setForm] = useState({
         district_id: null,
         area_id: null,
-        gender: '',
+        gender: null,
         blood_group: null,
-        religion: ''
+        religion: null
     })
 
     const [errors, setErrors] = useState({
@@ -92,7 +92,6 @@ const SearchDonor = () => {
                                 options={districts}
                                 getOptionLabel={option => option.name}
                                 fullWidth
-
                                 onChange={(e, data) => fieldChangeHandler('district_id', data)}
                                 renderInput={(params) =>
                                     <TextField {...params} error={errors.district_id.show}
@@ -104,7 +103,6 @@ const SearchDonor = () => {
 
                         <Grid item xs={12} lg={4}>
                             <Autocomplete
-
                                 options={areas}
                                 getOptionLabel={option => option.name}
                                 fullWidth

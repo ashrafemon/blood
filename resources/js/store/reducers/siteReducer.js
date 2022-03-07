@@ -14,13 +14,20 @@ const initialState = {
 
     hospitals: [],
 
-    bloodRequests: {},
+    bloodRequests: [],
     bloodRequest: {},
     bloodRequestDialog: false,
 
 
     toggleDialog: false,
     toggleProfileDialog: false,
+
+    toggleDropdownMenu: null,
+    toggleDropdown: false,
+
+
+    expandContent: '',
+    expandStatus: false,
 
 }
 
@@ -47,6 +54,12 @@ const siteReducer = (state = initialState, action) => {
                 ...state,
                 donorDialog: action.payload
             }
+        case types.TOGGLE_DROPDOWN:
+            return {
+                ...state,
+                toggleDropdown: action.payload.toggleDropdown,
+                toggleDropdownMenu: action.payload.toggleDropdownMenu,
+            }
         case types.TOGGLE_SITE_LOADING:
             return {
                 ...state,
@@ -68,6 +81,11 @@ const siteReducer = (state = initialState, action) => {
                 hospitals: action.payload
             }
         case types.FETCH_BLOOD_REQUESTS:
+            return {
+                ...state,
+                bloodRequests: action.payload
+            }
+        case types.FILTER_BLOOD_REQUESTS:
             return {
                 ...state,
                 bloodRequests: action.payload
@@ -103,6 +121,12 @@ const siteReducer = (state = initialState, action) => {
             return {
                 ...state,
                 toggleLogin: action.payload
+            }
+        case types.EXPAND_DATA:
+            return {
+                ...state,
+                expandContent: action.payload.expandContent,
+                expandStatus: action.payload.expandStatus
             }
 
         default:

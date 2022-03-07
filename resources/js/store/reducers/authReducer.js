@@ -8,6 +8,7 @@ const initialState = {
     validateErrors: {},
     authFormType: 'login',
     phone: null,
+    history: [],
 }
 
 const authReducer = (state = initialState, action) => {
@@ -74,6 +75,16 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 message: action.payload.message
+            }
+        case types.FILE_UPLOAD:
+            return {
+                ...state,
+                message: action.payload.message
+            }
+        case types.FETCH_POST_HISTORY:
+            return {
+                ...state,
+                history: action.payload
             }
         default:
             return state

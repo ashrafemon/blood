@@ -11,4 +11,7 @@ export const useStyles = makeStyles((theme) => ({
             objectFit: 'contain !important'
         }
     },
+    input: {
+        display: 'none'
+    }
 }))

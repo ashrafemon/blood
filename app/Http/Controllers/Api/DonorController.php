@@ -58,7 +58,7 @@ class DonorController extends Controller
         }
 
         if(request()->has('gender') && request('gender')){
-            $data['religion'] = Rule::in(['Male', 'Female', 'Other']);
+            $data['gender'] = Rule::in(['Male', 'Female', 'Other']);
         }
 
         $validator = Validator::make(request()->all(), $data);

@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {Box} from "@mui/system";
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
     Avatar,
-    Button,
     Card,
-    CardContent,
-    Container,
-    Dialog,
-    DialogContent,
+    CardContent, Dialog, DialogContent,
     Grid,
     IconButton,
+    List,
+    ListItem,
     Stack,
     Switch,
     Tooltip,
@@ -20,21 +15,14 @@ import {
 } from "@mui/material";
 import {useStyles} from "./styled";
 import EditIcon from '@mui/icons-material/Edit';
-import bloodDropIcon from '../../../../assets/images/blood-drop-white.png';
-import SafHand from '../../../../assets/images/safe-hand.png';
-import DefaultAvatar from '../../../../assets/images/default_avatar.gif';
-
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import MarkunreadIcon from '@mui/icons-material/Markunread';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMe, update} from "../../../../store/actions/authActions";
 import {AUTH_FORM_TYPE, TOGGLE_PROFILE_DIALOG} from "../../../../store/types";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import EmailIcon from '@mui/icons-material/Email';
+import DonateHistory from "../History/DonateHistory";
 import ProfileEdit from "../ProfileEdit";
-import AddIcon from '@mui/icons-material/Add';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Address from "../Address";
-
+import CloseIcon from '@mui/icons-material/Close';
 
 const ShowProfile = () => {
     const classes = useStyles()
@@ -48,9 +36,6 @@ const ShowProfile = () => {
     useEffect(() => {
         dispatch(fetchMe())
     }, [dispatch])
-
-
-
 
 
     const [form, setForm] = useState({
@@ -119,207 +104,186 @@ const ShowProfile = () => {
 
     }
 
-    const label = {inputProps: {'aria-label': 'Switch demo'}};
     return (
-        <Box py={5}>
-            <Container maxWidth="xl">
-                <Grid container spacing={2}>
-                    <Grid item lg={6}>
-                        <Grid container>
-                            <Grid item lg={6}>
-                                <Typography variant='h2'>
-                                    {currentUser?.name}
-                                </Typography>
-
-                                <Typography variant='h6' color='primary'>
-                                    #{currentUser?.id}
-                                </Typography>
-                            </Grid>
-
-                            <Grid item lg={6}>
-                                <Tooltip title='Edit Profile'>
-                                    <IconButton color='primary' onClick={() => toggleDialog(true, 'profile')}>
-                                        <EditIcon/>
-                                    </IconButton>
-                                </Tooltip>
-                            </Grid>
+        <Box>
+            <List>
+                <ListItem>
+                    <Grid container>
+                        <Grid item lg={10}>
+                            <Typography variant='h2'>
+                                {currentUser?.name}
+                            </Typography>
                         </Grid>
 
+                        <Grid item lg={2}>
+                            <Tooltip title='Edit Profile'>
+                                <IconButton color='primary' onClick={() => toggleDialog(true, 'profile')}>
+                                    <EditIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
+                </ListItem>
 
-                        <Card className={classes.card} elevation={0}>
-                            <CardContent>
-                                <Grid container alignItem='center'>
-                                    <Grid item lg={6}>
-                                        <Avatar src={bloodDropIcon} className={classes.cardIcon}/>
+                <ListItem>
+                    <Card className={classes.card} elevation={0}>
+                        <CardContent>
+                            <Stack direction='row' alignItems='center' justifyContent='space-around'>
+                                <Box>
+                                    <Avatar/>
 
-                                        <Typography color='white' variant='h5'>
-                                            {currentUser?.profile?.blood_group}
-                                        </Typography>
+                                    <Typography color='white' variant='h5'>
+                                        {currentUser?.profile?.blood_group}
+                                        <br/>
+                                        Group
+                                    </Typography>
+                                </Box>
 
-                                        <Typography color='white' variant='h5'>
-                                            Group
-                                        </Typography>
-                                    </Grid>
+                                <Box>
+                                    <Avatar/>
+
+                                    <Typography color='white' variant='h5'>
+                                        {currentUser?.profile?.blood_group}
+                                        <br/>
+                                        Life Saved
+                                    </Typography>
+                                </Box>
+
+                            </Stack>
+
+                        </CardContent>
+                    </Card>
+                </ListItem>
 
 
-                                    <Grid item lg={6}>
-                                        <Avatar src={SafHand} className={classes.cardIcon}/>
+                <ListItem>
+                    <Grid container alignItems='center'>
+                        <Grid item lg={1}>
+                            <LocalPhoneIcon/>
+                        </Grid>
 
-                                        <Typography color='white' variant='h5'>
-                                            5
-                                        </Typography>
-
-                                        <Typography color='white' variant='h5'>
-                                            Life Saved
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-
-                            </CardContent>
-                        </Card>
-
-                        <Grid container my={1} alignItems='center'>
-                            <Grid item lg={1}>
-                                <LocalPhoneIcon/>
-                            </Grid>
-
-                            <Grid item lg={3}>
+                        <Grid item lg={9}>
+                            <Typography variant='h4'>
                                 {currentUser?.phone}
-                            </Grid>
-                            <Grid item lg={3}>
-                                <Switch
-                                    {...label}
-                                    checked={form.phone_publicly}
-                                    onChange={(e, value) => changeHandler('phone_publicly', value)}
-                                />
-                            </Grid>
+                            </Typography>
                         </Grid>
 
+                        <Grid item lg={2}>
+                            <Switch
+                                checked={form.phone_publicly}
+                                onChange={(e, value) => changeHandler('phone_publicly', value)}
+                            />
+                        </Grid>
+                    </Grid>
+                </ListItem>
 
-                        <Grid container my={1}>
+
+                {currentUser?.email && (
+                    <ListItem>
+                        <Grid container alignItems='center'>
                             <Grid item lg={1}>
-                                <MarkunreadIcon/>
+                                <EmailIcon/>
                             </Grid>
 
-                            <Grid item lg={3}>
-                                {currentUser?.email}
-                            </Grid>
-
-                        </Grid>
-
-                        <Box>
-                            <Grid container my={2} alignItems="center">
-
-                                <Grid item lg={3}>
-                                    <Typography variant='h4'>
-                                        Available To Donate
-                                    </Typography>
-                                </Grid>
-                                <Grid item lg={1}>
-                                    <Switch
-                                        {...label}
-                                        checked={form.available_donate}
-                                        onChange={(e, value) => changeHandler('available_donate', value)}
-                                    />
-                                </Grid>
-                            </Grid>
-
-                            {form.available_donate && (
-                                <Stack direction="row" spacing={2}>
-                                    {days.map((item, i) => (
-                                        <Box className={`${classes.button} ${isAvailable(item)}`} key={i}
-                                             onClick={() => setAvailableDay(item)}>
-                                            {item}
-                                        </Box>
-                                    ))}
-
-                                </Stack>
-                            )}
-                        </Box>
-
-
-                        <Grid container my={2} alignItems='center'>
-
-                            <Grid item lg={3}>
+                            <Grid item lg={9}>
                                 <Typography variant='h4'>
-                                    Emergency Donate
+                                    {currentUser?.email}
                                 </Typography>
-
                             </Grid>
-                            <Grid item lg={1}>
-                                <Switch
-                                    {...label}
-                                    checked={form.emergency_donate}
-                                    onChange={(e, value) => changeHandler('emergency_donate', value)}
-                                />
-                            </Grid>
+                        </Grid>
+                    </ListItem>
+                )}
 
+
+                <ListItem>
+                    <Grid container alignItems='center'>
+                        <Grid item lg={10}>
+                            <Typography variant='h4'>
+                                Available To Donate
+                            </Typography>
                         </Grid>
 
-                        <Box>
-                            <Typography>
-                                Address
-                            </Typography>
-
-                            <Typography>
-                                {currentUser?.profile?.address}
-                            </Typography>
-                        </Box>
-
-
-                        <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon/>}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography>Manage Address</Typography>
-
-                            </AccordionSummary>
-
-                            <AccordionDetails>
-
-                            </AccordionDetails>
-                        </Accordion>
-
+                        <Grid item lg={2}>
+                            <Switch
+                                checked={form.available_donate}
+                                onChange={(e, value) => changeHandler('available_donate', value)}
+                            />
+                        </Grid>
                     </Grid>
+                </ListItem>
 
-                    <Grid item lg={6}>
-                        <Avatar src={DefaultAvatar} className={classes.profileImg}/>
+                {form.available_donate && (
+                    <ListItem>
+                        <Stack direction="row" spacing={2}>
+                            {days.map((item, i) => (
+                                <Box className={`${classes.button} ${isAvailable(item)}`} key={i}
+                                     onClick={() => setAvailableDay(item)}>
+                                    {item}
+                                </Box>
+                            ))}
+                        </Stack>
+                    </ListItem>
+                )}
+
+                <ListItem>
+                    <Grid container alignItems='center'>
+                        <Grid item lg={10}>
+                            <Typography variant='h4'>
+                                Emergency Donate
+                            </Typography>
+                        </Grid>
+
+                        <Grid item lg={2}>
+                            <Switch
+                                checked={form.emergency_donate}
+                                onChange={(e, value) => changeHandler('emergency_donate', value)}
+                            />
+                        </Grid>
                     </Grid>
+                </ListItem>
+
+                <ListItem>
+                    <Typography variant='h4'>
+                        Address:
+                    </Typography>
+
+                    <Typography variant='body1'>
+                        Address, address
+                    </Typography>
+                </ListItem>
+            </List>
 
 
-                    <Dialog
-                        open={toggleProfileDialog}
-                        maxWidth="sm"
-                        fullWidth
-                        className={classes.modal}
-                        onClose={() => toggleDialog(false)}
-                    >
-                        <DialogContent>
-                            <Grid container alignItems='center'>
-                                <Grid item lg={11}>
+                <Dialog
+                    open={toggleProfileDialog}
+                    maxWidth="sm"
+                    fullWidth
+                    className={classes.modal}
+                    onClose={() => toggleDialog(false)}
+                >
+                    <DialogContent>
+                        <Grid container alignItems='center'>
+                            <Grid item lg={11}>
 
-                                    <Typography variant='h4'>
-                                        Update Your Profile
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item lg={1}>
-                                    <IconButton onClick={() => toggleDialog(false)}>
-                                        <CloseOutlinedIcon/>
-                                    </IconButton>
-                                </Grid>
+                                <Typography variant='h4'>
+                                    Update Your Profile
+                                </Typography>
                             </Grid>
 
-                            {authFormType === 'profile' && <ProfileEdit/>}
-                            {authFormType === 'address' && <Address/>}
+                            <Grid item lg={1}>
+                                <IconButton onClick={() => toggleDialog(false)}>
+                                    <CloseIcon/>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
 
-                        </DialogContent>
-                    </Dialog>
+                        {authFormType === 'profile' && <ProfileEdit/>}
 
-                </Grid>
-            </Container>
+                    </DialogContent>
+                </Dialog>
+
+            {/*</Grid>*/}
+            {/*</Container>*/}
         </Box>
     )
 }

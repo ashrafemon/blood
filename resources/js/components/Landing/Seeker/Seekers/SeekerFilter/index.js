@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchAreasByDistrict, fetchDistricts} from "../../../../../store/actions/siteActions";
 import {bloodGroup, gender, religion, seekerType} from "../../../../../constants/_data";
 import {FETCH_AREAS} from "../../../../../store/types";
+import {update} from "../../../../../store/actions/authActions";
+import {seekerFilter} from "../../../../../store/actions/seekerActions";
 
 const SeekerFilter = () => {
 
@@ -18,11 +20,11 @@ const SeekerFilter = () => {
     }, [dispatch])
 
     const [form, setForm] = useState({
-        district_id: formData?.district_id || null,
-        area_id: formData?.area_id || null,
-        blood_group: formData?.blood_group || null,
-        gender: formData?.gender || null,
-        seekerType: formData?.seekerType || null,
+        district_id: null,
+        area_id:  null,
+        blood_group: null,
+        gender: null,
+        seekerType: null,
     });
 
 
@@ -39,6 +41,8 @@ const SeekerFilter = () => {
                 payload: []
             })
         }
+
+        dispatch(seekerFilter({[field]: value}))
     }
 
 
@@ -101,7 +105,7 @@ const SeekerFilter = () => {
                         options={seekerType}
                         fullWidth
                         value={form.seekerType}
-                        onChange={(e, data) => fieldChangeHandler('religion', data)}
+                        onChange={(e, data) => fieldChangeHandler('seeker_type', data)}
                         renderInput={(params) =>
                             <TextField {...params} label="Seeker Type"/>
                         }

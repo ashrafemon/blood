@@ -81,3 +81,62 @@ export const requestSeeker = (data, cb = () => {
         })
         .catch(err => console.log(err))
 }
+
+
+export const seekerFilter = (data, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.seeker.filter, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            if(res.status === 'success'){
+                dispatch({
+                    type: types.FILTER_BLOOD_REQUESTS,
+                    payload: res.data
+                })
+                cb()
+            }
+            dispatch(toggleSiteLoading(false))
+        })
+        .catch(err => console.log(err))
+}
+
+
+export const donation = (data, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+
+
+    fetch(ApiUrl.seeker.commit, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+        body: JSON.stringify(data)
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            // if(res.status === 'success'){
+            //     dispatch({
+            //         type: types.FILTER_BLOOD_REQUESTS,
+            //         payload: res.data
+            //     })
+            //     cb()
+            // }
+            dispatch(toggleSiteLoading(false))
+        })
+        .catch(err => console.log(err))
+}

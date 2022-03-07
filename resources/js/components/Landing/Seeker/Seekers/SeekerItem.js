@@ -20,7 +20,7 @@ import {Box} from "@mui/system";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import {useStyles} from "./styled";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchBloodRequest} from "../../../../store/actions/seekerActions";
+import {donation, fetchBloodRequest} from "../../../../store/actions/seekerActions";
 import {TOGGLE_BLOOD_REQUEST_DIALOG} from "../../../../store/types";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
@@ -45,6 +45,16 @@ const SeekerItem = ({item}) => {
             type: TOGGLE_BLOOD_REQUEST_DIALOG,
             payload: false
         })
+    }
+
+    const donateHandler = (id) => {
+
+        let data = {
+            blood_request_id: id,
+            status: 'committed'
+        }
+
+        dispatch(donation(data))
     }
 
     return (
@@ -171,7 +181,7 @@ const SeekerItem = ({item}) => {
 
                     <DialogActions>
                         <Button onClick={closeDialog}>Close</Button>
-                        <Button variant='contained'>Donate</Button>
+                        <Button variant='contained' onClick={() => donateHandler(item.id)}>Donate</Button>
                     </DialogActions>
 
                 </Dialog>

@@ -76,13 +76,36 @@ export const fetchHospitals = () => dispatch => {
 }
 
 
-//
-// export const toggleRegistrationForm = (status = false) => ({
-//     type: types.TOGGLE_REGISTER_FORM,
-//     payload: status
-// })
-//
-// export const toggleLoginForm = (status = false) => ({
-//     type: types.TOGGLE_LOGIN_FORM,
-//     payload: status
-// })
+export const upload = (data, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.uploader.image, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log("res", res)
+            // if (res.status === 'success') {
+            //
+            //     dispatch({
+            //         type: types.UPDATE_USER,
+            //         payload: {
+            //             currentUser: res.data,
+            //             isAuthenticate: true,
+            //         }
+            //     })
+            // }
+
+            dispatch(toggleSiteLoading(false))
+
+
+        })
+        .catch(err => console.log(err))
+}

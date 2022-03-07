@@ -64,9 +64,6 @@ const Seekers = () => {
                 </Grid>
 
 
-
-
-
                 <Grid container spacing={5} my={3}>
                     {bloodRequests?.data?.map((data, i) => (
                         <Grid item lg={4} sm={6} xs={12} key={i}>

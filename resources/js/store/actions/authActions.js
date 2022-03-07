@@ -170,6 +170,7 @@ export const update = (data, cb = () => {
 }
 
 
+
 export const logout = (cb = () => {
 }) => dispatch => {
     dispatch(toggleSiteLoading(true))
@@ -266,6 +267,7 @@ export const resetVerifyOtp = (data, cb = () => {
         })
         .catch(err => console.log(err))
 }
+
 export const resetPassword = (data, cb = () => {
 }) => dispatch => {
     dispatch(toggleSiteLoading(true))
@@ -291,6 +293,34 @@ export const resetPassword = (data, cb = () => {
                 })
 
                 cb()
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}
+
+
+export const fetchPostHistory = () => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.auth.post, {
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log('post', res)
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.FETCH_POST_HISTORY,
+                    payload: res.data.data
+                })
             }
 
             dispatch(toggleSiteLoading(false))

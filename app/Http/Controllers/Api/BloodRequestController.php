@@ -114,7 +114,7 @@
                     $bloodRequest = $bloodRequest->where('religion', request('religion'));
                 }
 
-                $bloodRequest = $bloodRequest->where('status', 'active')
+                $bloodRequest = $bloodRequest->with(['user.profile','district', 'area'])->where('status', 'active')
                     ->where('accepted_date', '>=', today())
                     ->latest()
                     ->paginate(12);
