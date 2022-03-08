@@ -76,32 +76,36 @@ export const fetchHospitals = () => dispatch => {
 }
 
 
-export const upload = (data, cb = () => {
+export const upload = (data, cb = (prop) => {
 }) => dispatch => {
     dispatch(toggleSiteLoading(true))
+
+    let formData = new FormData()
+    formData.append('file', data)
 
     fetch(ApiUrl.uploader.image, {
         method: "POST",
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: formData,
 
     })
         .then(res => res.json())
         .then(res => {
             console.log("res", res)
-            // if (res.status === 'success') {
-            //
-            //     dispatch({
-            //         type: types.UPDATE_USER,
-            //         payload: {
-            //             currentUser: res.data,
-            //             isAuthenticate: true,
-            //         }
-            //     })
-            // }
+            if (res.status === 'success') {
+
+                // dispatch({
+                //     type: types.UPDATE_USER,
+                //     payload: {
+                //         currentUser: res.data,
+                //         isAuthenticate: true,
+                //     }
+                // })
+
+                cb(res.data)
+            }
 
             dispatch(toggleSiteLoading(false))
 

@@ -5,13 +5,20 @@ import {toggleSiteLoading} from "./siteActions";
 export const fetchBloodRequests = (cb = () => {
 }) => dispatch => {
     dispatch(toggleSiteLoading(true))
+    const token = localStorage.getItem('token') || null
+
+    let headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    }
+
+    if(token){
+        headers['Authorization'] = token
+    }
 
     fetch(ApiUrl.seeker.index, {
         method: "GET",
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
+        headers: headers,
     })
         .then(res => res.json())
         .then(res => {

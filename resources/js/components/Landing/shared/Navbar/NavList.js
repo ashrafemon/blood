@@ -1,5 +1,6 @@
 import {
-    Avatar, Badge,
+    Avatar,
+    Badge,
     Button,
     Dialog,
     DialogContent,
@@ -8,8 +9,7 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Menu,
-    MenuItem,
+    Popover,
     Typography,
 } from "@mui/material";
 import React, {useState} from "react";
@@ -20,8 +20,7 @@ import Login from "../../Auth/Login";
 import profileImg from "../../../../assets/images/default_avatar.gif"
 import LoginLogo from "../../../../assets/images/login-logo.png"
 import {useDispatch, useSelector} from "react-redux";
-import {AUTH_FORM_TYPE, TOGGLE_DIALOG, TOGGLE_DROPDOWN} from "../../../../store/types";
-import {Logout} from "@mui/icons-material";
+import {AUTH_FORM_TYPE, TOGGLE_DIALOG} from "../../../../store/types";
 import {logout} from "../../../../store/actions/authActions";
 import {Box} from "@mui/system";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
@@ -30,15 +29,16 @@ import OTP from "../../Auth/Recovery/OTP";
 import ChangePassword from "../../Auth/Recovery/ChangePassword";
 import RecoverEmail from "../../Auth/Recovery/Email";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import {Logout} from "@mui/icons-material";
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+
 const NavList = () => {
     const classes = useStyles();
 
-    const {toggleDialog, toggleDropdown, toggleDropdownMenu} = useSelector(state => state.site)
-    const {authFormType} = useSelector(state => state.auth)
+    const {toggleDialog} = useSelector(state => state.site)
+    const {authFormType, currentUser, notificationList} = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
-    const getToken = localStorage.getItem('token')
 
     const showDialog = () => {
         dispatch({
@@ -93,30 +93,38 @@ const NavList = () => {
         history.push(route);
     }
 
-    const menuOpen = (menu)=>{
-        if (menu === 'notification'){
-            dispatch({
-                type: TOGGLE_DROPDOWN,
-                payload: {
-                    toggleDropdown: true,
-                    toggleDropdownMenu: 'notification'
-                }
-            })
-        } else if (menu === 'profile'){
-            dispatch({
-                type: TOGGLE_DROPDOWN,
-                payload: {
-                    toggleDropdown: true,
-                    toggleDropdownMenu: 'profile'
-                }
-            })
-        }
+    const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+
+    const showProfile = (event) => {
+        setProfileAnchorEl(event.currentTarget);
+    };
+
+    const hideProfile = () => {
+        setProfileAnchorEl(null);
+    };
+
+    const profileOpen = Boolean(profileAnchorEl);
+    const profileId = profileOpen ? 'profile-popover' : undefined;
+
+    const [notifyAnchorEl, setNotifyAnchorEl] = useState(null);
+
+    const showNotify = (event) => {
+        setNotifyAnchorEl(event.currentTarget);
+    };
+
+    const hideNotify = () => {
+        setNotifyAnchorEl(null);
+    };
+
+    const notifyOpen = Boolean(notifyAnchorEl);
+    const notifyId = notifyOpen ? 'notify-popover' : undefined;
+
+
+    const donateProfile = (id) => {
+        let url = '/donor-profile/:id'
+        history.push(url.replace(':id', id))
     }
 
-
-    const handleClose = () => {
-
-    };
 
     return (
         <List className={classes.list}>
@@ -174,26 +182,46 @@ const NavList = () => {
                 </ListItem>
             </NavLink>
 
-            { getToken && (
+            {currentUser && (
                 <ListItem>
                     <IconButton
-                        onClick={()=> menuOpen('notification')}
+                        onClick={showNotify}
                     >
                         <Badge badgeContent={4} color="primary">
-                            <NotificationsNoneIcon color="action" />
+                            <NotificationsNoneOutlinedIcon color="action"/>
                         </Badge>
                     </IconButton>
 
+                    <Popover
+                        id={notifyId}
+                        open={notifyOpen}
+                        anchorEl={notifyAnchorEl}
+                        onClose={hideNotify}
 
-                    <Menu
-                        anchorEl={toggleDropdown}
-                        open={toggleDropdown}
-                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
                     >
-                        <MenuItem onClick={() => routeChange('/profile')}>
-                           Someone Accept Request
-                        </MenuItem>
-                    </Menu>
+                        {notificationList?.map((item, i) => (
+                            <>
+                                <List key={i}>
+
+                                    <ListItem onClick={() => donateProfile(item?.id)}>
+                                        <Typography>
+                                            {item?.user?.name} Has been Accept Your Request.
+                                        </Typography>
+                                    </ListItem>
+
+                                </List>
+                            </>
+                        ))}
+
+                    </Popover>
 
 
                 </ListItem>
@@ -201,34 +229,50 @@ const NavList = () => {
 
 
             <ListItem>
-                {getToken ? (
+                {currentUser ? (
                     <>
-
                         <IconButton
-                            onClick={()=> menuOpen('profile')}
+                            onClick={showProfile}
                         >
-                            <Avatar src={profileImg}/>
+                            <Avatar src={currentUser ? currentUser?.profile?.avatar : profileImg} />
                         </IconButton>
 
-                        <Menu
-                            anchorEl={toggleDropdown}
-                            open={toggleDropdown}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={() => routeChange('/profile')}>
-                                <ListItemIcon>
-                                    <AccountCircleIcon fontSize="small"/>
-                                </ListItemIcon>
-                                Profile
-                            </MenuItem>
+                        <Popover
+                            id={profileId}
+                            open={profileOpen}
+                            anchorEl={profileAnchorEl}
+                            onClose={hideProfile}
 
-                            <MenuItem onClick={destroy}>
-                                <ListItemIcon>
-                                    <Logout fontSize="small"/>
-                                </ListItemIcon>
-                                Logout
-                            </MenuItem>
-                        </Menu>
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                        >
+                            <List>
+                                <NavLink to="/profile">
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <AccountCircleIcon/>
+                                        </ListItemIcon>
+                                        Profile
+                                    </ListItem>
+                                </NavLink>
+
+
+                                <ListItem onClick={destroy} className={classes.logoutBtn}>
+                                    <ListItemIcon>
+                                        <Logout fontSize="small"/>
+                                    </ListItemIcon>
+                                    Logout
+                                </ListItem>
+
+
+                            </List>
+                        </Popover>
                     </>
                 ) : (
                     <Button
@@ -242,7 +286,7 @@ const NavList = () => {
                 )}
 
 
-                <Dialog open={toggleDialog} onClose={handleClose} maxWidth="sm" fullWidth className={classes.modal}>
+                <Dialog open={toggleDialog} onClose={closeDialog} maxWidth="sm" fullWidth className={classes.modal}>
                     <DialogContent>
 
                         <Box textAlign='end'>

@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useStyles} from "./styled";
 import {Box} from "@mui/system";
-import {Avatar, Button, TextField, Typography} from "@mui/material";
-import LoginLogo from "../../../../assets/images/login-logo.png"
+import {Button, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {login, validateAuthErrors} from "../../../../store/actions/authActions";
 import {isRequiredValidate, lengthValidate, phoneValidation} from "../../../../utils/validateHelpers";
@@ -35,6 +34,7 @@ const Login = () => {
             [field]: value
         }))
     }
+
 
     const submitHandler = e => {
         e.preventDefault();
@@ -111,10 +111,11 @@ const Login = () => {
                     value={form.password}
                     onChange={e => filedChangeHandler('password', e.target.value)}
                     helperText={errors.password.text}
+
                 />
 
                 <Box textAlign='end' my={2}>
-                    <Button variant="text" onClick={showForm} >Forgot password?</Button>
+                    <Button variant="text" onClick={showForm}>Forgot password?</Button>
                 </Box>
 
                 <Button type='submit' variant='contained' fullWidth>Login</Button>

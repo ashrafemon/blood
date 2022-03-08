@@ -1,41 +1,54 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Avatar, Card, CardContent, Grid, List, ListItem, Stack, Typography} from "@mui/material";
 import {useStyles} from "./styled";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchDonateHistory} from "../../../../../store/actions/authActions";
 
 const DonateHistory = () => {
     const classes = useStyles()
+
+    const {donateHistory} = useSelector((state) => state.auth)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchDonateHistory())
+    }, [dispatch])
+
     return (
         <Grid container>
-            <Grid item lg={4} sm={6} xs={12}>
-                <Card className={classes.card}>
-                    <CardContent>
-                        <Stack direction='row'>
-                            <Avatar className={classes.avatar}/>
+            {donateHistory?.map((item, i) => (
+                <Grid item lg={4} sm={6} xs={12} key={i}>
+                    <Card className={classes.card}>
+                        <CardContent>
+                            <Stack direction='row'>
+                                <Avatar className={classes.avatar}/>
 
-                            <List>
-                                <ListItem>
-                                    <Typography>
-                                        Name
-                                    </Typography>
-                                </ListItem>
+                                <List>
+                                    <ListItem>
+                                        <Typography>
+                                            Blood Group: {item?.blood_request?.blood_group}
+                                        </Typography>
+                                    </ListItem>
 
-                                <ListItem>
-                                    <Typography>
-                                        Location
-                                    </Typography>
-                                </ListItem>
+                                    <ListItem>
+                                        <Typography>
+                                            Location
+                                        </Typography>
+                                    </ListItem>
 
-                                <ListItem>
-                                    <Typography>
-                                        Donation
-                                    </Typography>
-                                </ListItem>
+                                    <ListItem>
+                                        <Typography>
+                                            Donation
+                                        </Typography>
+                                    </ListItem>
 
-                            </List>
-                        </Stack>
-                    </CardContent>
-                </Card>
-            </Grid>
+                                </List>
+                            </Stack>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            ))}
         </Grid>
     )
 }

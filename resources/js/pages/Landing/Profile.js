@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import ShowProfile from "../../components/Landing/Profile/ShowProfile";
 import Wrapper from "../../components/Landing/shared/Wrapper";
 import {Avatar, Container, Grid, IconButton, Stack, Typography} from "@mui/material";
@@ -7,26 +7,43 @@ import DonateHistory from "../../components/Landing/Profile/History/DonateHistor
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import {useDispatch, useSelector} from "react-redux";
-
-import {EXPAND_DATA} from "../../store/types";
 import PostHistory from "../../components/Landing/Profile/History/PostHistory";
 
-const Profile = () => {
+import profileImg from "../../assets/images/profile-img.png"
+import {makeStyles} from "@mui/styles";
+import {Rating} from "@mui/lab";
 
-    const {expandContent, expandStatus} = useSelector(status => status.site)
+const useStyles = makeStyles((theme) => ({
+    avatar: {
+        width: '100%',
+        minHeight: 400,
+        margin: 'auto',
+        borderRadius: 15,
+    }
+}))
+
+const Profile = () => {
+    const classes = useStyles();
+
+
+    const {currentUser} = useSelector(status => status.auth)
 
     const dispatch = useDispatch()
 
-    const clickHandler = (content, status) => {
-        dispatch({
-            type: EXPAND_DATA,
 
-            payload: {
-                expandContent: content,
-                expandStatus: status,
-            }
-        })
+    const [show, setShow] = useState({
+        isShow: false,
+        content: ''
+    })
+
+    const toggleHistoryHandler = (content) => {
+        setShow(prevState => ({
+            ...prevState,
+            isShow: !show.isShow,
+            content: content
+        }))
     }
+
 
     return (
         <Wrapper>
@@ -36,7 +53,24 @@ const Profile = () => {
                         <ShowProfile/>
                     </Grid>
                     <Grid item lg={4} sm={6} xs={12}>
-                        <Avatar/>
+                        <Avatar src={currentUser ? currentUser?.profile?.avatar : profileImg}
+                                className={classes.avatar}/>
+
+                        <Stack direction='row' justifyContent='space-around' my={2}>
+
+                            <Typography variant='h3'>
+                                Rating
+                            </Typography>
+
+                            <Rating value={2.5} readOnly/>
+
+
+                            <Typography variant='h4'>
+                                4/5
+                            </Typography>
+
+
+                        </Stack>
                     </Grid>
 
                     <Grid item lg={12}>
@@ -46,12 +80,12 @@ const Profile = () => {
                                 Donate History
                             </Typography>
 
-                            <IconButton onClick={() => clickHandler('donateHistory', true)}>
-                                {expandContent ==='donateHistory' && expandStatus === true ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+                            <IconButton onClick={() => toggleHistoryHandler('donate')}>
+                                {show.isShow && show.content === 'donate' ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
                             </IconButton>
                         </Stack>
 
-                        {expandContent === 'donateHistory' && <DonateHistory/>}
+                        {show.isShow && show.content === 'donate' && <DonateHistory/>}
 
                     </Grid>
 
@@ -62,12 +96,12 @@ const Profile = () => {
                                 Seeker History
                             </Typography>
 
-                            <IconButton onClick={() => clickHandler('seekerHistory', true)}>
-                                {expandContent === 'seekerHistory' && expandStatus === true ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+                            <IconButton onClick={() => toggleHistoryHandler('seekerHistory')}>
+                                {show.isShow && show.content === 'seekerHistory' ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
                             </IconButton>
                         </Stack>
 
-                        {expandContent === 'seekerHistory' && <PostHistory/>}
+                        {show.isShow && show.content === 'seekerHistory' && <PostHistory/>}
 
                     </Grid>
                 </Grid>

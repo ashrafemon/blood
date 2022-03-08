@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Donate;
 use App\Models\DonorRating;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -23,17 +22,23 @@ class DonateController extends Controller
         }
 
         try{
-            $donate = Donate::create([
-                'blood_request_id' => request('blood_request_id'),
-                'user_id' => auth()->id(),
-                'status' => request('status')
-            ]);
+            $alreadyCommitted = Donate::where('blood_request_id', request('blood_request_id'))->where('user_id', auth()->id())->where('status', 'committed')->count();
 
-            return response([
-                'status' => 'success',
-                'statusCode' => 201,
-                'message' => 'You commit to donate successfully',
-                            ], 201);
+            if($alreadyCommitted > 0) {
+                return itemNotFound('You already committed to donate', 400);
+            }else{
+                $donate = Donate::create([
+                                             'blood_request_id' => request('blood_request_id'),
+                                             'user_id' => auth()->id(),
+                                             'status' => request('status')
+                                         ]);
+
+                return response([
+                                    'status' => 'success',
+                                    'statusCode' => 201,
+                                    'message' => 'You commit to donate successfully',
+                                ], 201);
+            }
         }catch (\Exception $e){
             return serverError($e);
         }
@@ -103,6 +108,40 @@ class DonateController extends Controller
             }else{
                 return itemNotFound('You have no access to update or item not found');
             }
+        }catch (\Exception $e){
+            return serverError($e);
+        }
+    }
+
+
+    public function donateNotifications()
+    {
+        try{
+            $notifications = Donate::with(['user'])->whereHas('blood_request', function ($query){
+                $query->where('user_id', auth()->id());
+            })->where('user_id','!=', auth()->id())->get();
+
+
+            return response([
+                'status' => 'success',
+                'statusCode' => 200,
+                'data' => $notifications
+                            ], 200);
+        }catch (\Exception $e){
+            return serverError($e);
+        }
+    }
+
+    public function donateHistory()
+    {
+        try {
+            $donateHistory = Donate::with(['user', 'blood_request'])->where('user_id', auth()->id())->where('status', 'received')->paginate(6);
+
+            return response([
+                'status' => 'success',
+                'statusCode' => 200,
+                'data' => $donateHistory
+                            ], 200);
         }catch (\Exception $e){
             return serverError($e);
         }

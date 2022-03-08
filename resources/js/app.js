@@ -1,20 +1,23 @@
 import ReactDOM from "react-dom";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo} from "react";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import Home from "./pages/Landing/Home";
 import LandingLayout from "./layouts/LandingLayout";
 import Seekers from "./pages/Landing/Seekers";
 import Profile from "./pages/Landing/Profile";
-import {Provider, useSelector} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import store from "./store";
 import Donors from "./pages/Landing/Donors";
 import Loader from "./components/shared/Loader";
 import Post from "./pages/Landing/Post";
+import {fetchMe, fetchNotification} from "./store/actions/authActions";
+import DonorProfile from "./pages/Landing/DonorProfile";
 
 const App = () => {
     const {siteLoading} = useSelector(state => state.site)
     const token = localStorage.getItem('token')
+    const dispatch = useDispatch()
 
     const theme = useMemo(() => {
         return createTheme({
@@ -55,6 +58,21 @@ const App = () => {
         });
     }, []);
 
+    useEffect(() => {
+        let token = localStorage.getItem('token') || null
+        if(token){
+            dispatch(fetchMe())
+        }
+
+
+
+    }, [])
+
+    useEffect(()=>{
+        dispatch(fetchNotification())
+    },[])
+
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
@@ -68,6 +86,7 @@ const App = () => {
                         <Route exact path="/donors" component={Donors}/>
                         <Route exact path="/seekers" component={Seekers}/>
                         <Route exact path="/post" component={Post}/>
+                        <Route exact path="/donor-profile/:id" component={DonorProfile}/>
 
                         <Route exact path="/profile">
                             {token ? <Profile /> : <Redirect to="/" /> }

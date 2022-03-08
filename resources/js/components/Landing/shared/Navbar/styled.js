@@ -78,13 +78,16 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
 
+    logoutBtn: {
+        cursor: 'pointer'
+    },
+
     drawer: {
         zIndex: 999999999999,
         "& .MuiDrawer-paper": {
             width: 200,
         },
     },
-
 
 
 

@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchMe, update} from "../../../../store/actions/authActions";
 import {TOGGLE_PROFILE_DIALOG} from "../../../../store/types";
 import {upload} from "../../../../store/actions/siteActions";
+import FileUploader from "../../shared/FileUploader";
 
 
 const ProfileEdit = () => {
@@ -27,7 +28,7 @@ const ProfileEdit = () => {
         blood_group: currentUser?.profile?.blood_group,
         religion: currentUser?.profile?.religion,
         gender: currentUser?.profile?.gender,
-
+        avatar: currentUser?.profile?.avatar
     })
 
 
@@ -66,27 +67,40 @@ const ProfileEdit = () => {
         }))
     }
 
+    const uploadHandler = (file) => {
+        if(file){
+            dispatch(upload(file, (image) => {
+                setForm((prevState) => ({
+                    ...prevState,
+                    avatar: image
+                }))
+            }))
+        }
+    }
+
     return (
         <form onSubmit={submitHandler}>
 
 
-            <Box textAlign='center'>
-                <Avatar className={classes.avatar}/>
+            {/*<Box textAlign='center'>*/}
+            {/*    <Avatar className={classes.avatar}/>*/}
 
-                <label htmlFor="contained-button-file">
-                    <input
-                        accept="image/*"
-                        id="contained-button-file"
-                        multiple
-                        type="file"
-                        className={classes.input}
-                        // onChange={e =>  setSelectedImage(e.target.files[0])}
-                    />
-                    <Button variant="contained" component="span">
-                        Upload
-                    </Button>
-                </label>
-            </Box>
+            {/*    <label htmlFor="contained-button-file">*/}
+            {/*        <input*/}
+            {/*            accept="image/*"*/}
+            {/*            id="contained-button-file"*/}
+            {/*            multiple*/}
+            {/*            type="file"*/}
+            {/*            className={classes.input}*/}
+            {/*            // onChange={e =>  setSelectedImage(e.target.files[0])}*/}
+            {/*        />*/}
+            {/*        <Button variant="contained" component="span">*/}
+            {/*            Upload*/}
+            {/*        </Button>*/}
+            {/*    </label>*/}
+            {/*</Box>*/}
+
+            <FileUploader avatar={form.avatar} changer={uploadHandler} />
 
 
             <TextField

@@ -37,6 +37,8 @@ Route::prefix('v1')->group(function(){
     Route::apiResource('/blood-requests', \App\Http\Controllers\Api\BloodRequestController::class)->only(['index', 'store', 'show']);
     Route::post('/filter-blood-requests', [\App\Http\Controllers\Api\BloodRequestController::class, 'filterSeekerRequest']);
     Route::get('/my-blood-requests', [\App\Http\Controllers\Api\BloodRequestController::class, 'authUserBloodRequests'])->middleware('auth:sanctum');
+    Route::get('/get-notifications', [\App\Http\Controllers\Api\DonateController::class, 'donateNotifications'])->middleware('auth:sanctum');
+    Route::get('/donate-history', [\App\Http\Controllers\Api\DonateController::class, 'donateHistory'])->middleware('auth:sanctum');
 
     Route::post('/file-uploader', [\App\Http\Controllers\Api\HelperController::class, 'fileUploader']);
 

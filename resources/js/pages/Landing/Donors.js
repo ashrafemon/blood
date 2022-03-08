@@ -3,10 +3,10 @@ import {Button, Container, Grid, Typography} from "@mui/material";
 import Donor from "../../components/Landing/Donor";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchDonors} from "../../store/actions/donorActions";
-import {SEARCH_DONORS} from "../../store/types";
 import Wrapper from "../../components/Landing/shared/Wrapper";
 import DonorSearch from "../../components/Landing/Donor/Search";
 import RequestForm from "../../components/Landing/Seeker/RequestForm";
+import * as types from "../../store/types";
 
 
 const Donors = () => {
@@ -20,8 +20,11 @@ const Donors = () => {
 
     const clearSearch = useCallback(() => {
         dispatch({
-            type: SEARCH_DONORS,
-            payload: {}
+            type: types.SEARCH_DONORS,
+            payload: {
+                searchDonorsData: {},
+                formData: {}
+            }
         })
     }, [dispatch])
 

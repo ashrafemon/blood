@@ -18,6 +18,7 @@
                 $bloodRequests = BloodRequest::with(['user.profile', 'district', 'area'])
                     ->where('status', 'active')
                     ->where('accepted_date', '>=', today())
+                    ->where('user_id', '!=', request()->user('sanctum')['id'])
                     ->latest()
                     ->paginate(12);
 

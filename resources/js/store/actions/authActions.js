@@ -328,3 +328,125 @@ export const fetchPostHistory = () => dispatch => {
         })
         .catch(err => console.log(err))
 }
+
+
+
+export const fetchNotification = () => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.notifications.index, {
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.FETCH_NOTIFICATION_LIST,
+                    payload: res.data
+                })
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}
+
+
+export const fetchDonateProfile = (id, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.seeker.donateProfile.replace(':id', id), {
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.FETCH_DONATE_PROFILE,
+                    payload: res.data
+                })
+
+                cb()
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}
+
+
+export const donateUpdate = (data, id, cb = () => {
+}) => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.seeker.donateUpdate.replace(':id', id), {
+        method: "PATCH",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+        body: JSON.stringify(data),
+
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log('rating',res)
+            // if (res.status === 'success') {
+            //
+            //     // dispatch({
+            //     //     type: types.FETCH_DONATE_PROFILE,
+            //     //     payload: res.data
+            //     // })
+            //
+            //     cb()
+            // }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}
+
+
+export const fetchDonateHistory = () => dispatch => {
+    dispatch(toggleSiteLoading(true))
+
+    fetch(ApiUrl.auth.donateHistory, {
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("token")
+        },
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log('post', res)
+            if (res.status === 'success') {
+                dispatch({
+                    type: types.FETCH_DONATION_HISTORY,
+                    payload: res.data.data
+                })
+            }
+
+            dispatch(toggleSiteLoading(false))
+
+        })
+        .catch(err => console.log(err))
+}

@@ -29,6 +29,13 @@ const initialState = {
     expandContent: '',
     expandStatus: false,
 
+
+
+    toggleMenu: {
+        status: false,
+        content: ''
+    }
+
 }
 
 const siteReducer = (state = initialState, action) => {
@@ -127,6 +134,15 @@ const siteReducer = (state = initialState, action) => {
                 ...state,
                 expandContent: action.payload.expandContent,
                 expandStatus: action.payload.expandStatus
+            }
+        case types.TOGGLE_MENU:
+            return {
+                ...state,
+                toggleMenu: {
+                    status: action.payload.status,
+                    content: action.payload.content
+                }
+
             }
 
         default:

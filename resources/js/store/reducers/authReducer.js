@@ -9,6 +9,10 @@ const initialState = {
     authFormType: 'login',
     phone: null,
     history: [],
+    donateHistory: [],
+    notificationList: [],
+    donateProfile: {}
+
 }
 
 const authReducer = (state = initialState, action) => {
@@ -43,6 +47,16 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isAuthenticate: action.payload.isAuthenticate,
                 currentUser: action.payload.currentUser,
+            }
+        case types.FETCH_NOTIFICATION_LIST:
+            return {
+                ...state,
+                notificationList: action.payload
+            }
+        case types.FETCH_DONATE_PROFILE:
+            return {
+                ...state,
+                donateProfile: action.payload
             }
 
         case types.TOGGLE_DIALOG:
@@ -86,6 +100,12 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 history: action.payload
             }
+        case types.FETCH_DONATION_HISTORY:
+            return {
+                ...state,
+                donateHistory: action.payload
+            }
+
         default:
             return state
     }

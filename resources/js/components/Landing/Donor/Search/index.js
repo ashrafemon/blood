@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchAreasByDistrict, fetchDistricts} from "../../../../store/actions/siteActions";
 import {bloodGroup, gender, religion} from "../../../../constants/_data";
 import {FETCH_AREAS} from "../../../../store/types";
+import * as types from "../../../../store/types";
 
 const Search = () => {
 
@@ -25,6 +26,43 @@ const Search = () => {
         religion: formData?.religion || null,
     });
 
+
+    useEffect(() => {
+        if(formData && formData.district_id && typeof formData.district_id === "number"){
+            dispatch(fetchAreasByDistrict(formData.district_id))
+            districts.forEach((item) => {
+                if(item.id === formData.district_id)
+                    setForm((prevState) => ({
+                        ...prevState,
+                        district_id: item
+                    }))
+            })
+        }
+    }, [formData.district_id])
+
+    useEffect(() => {
+        if(formData && formData.area_id && typeof formData.area_id === "number" && areas.length > 0){
+            areas.forEach((item) => {
+                if(item.id === formData.area_id)
+                    setForm((prevState) => ({
+                        ...prevState,
+                        area_id: item
+                    }))
+            })
+        }
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            dispatch({
+                type: types.SEARCH_DONORS,
+                payload: {
+                    searchDonorsData: {},
+                    formData: {}
+                }
+            })
+        }
+    }, [])
 
     const fieldChangeHandler = (field, value) => {
         setForm((prevState) => ({

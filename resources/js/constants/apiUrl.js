@@ -14,13 +14,16 @@ const ApiUrl = {
     uploader: {
         image: ROOT_URL + 'file-uploader'
     },
-    seeker:{
+    seeker: {
         index: ROOT_URL + 'blood-requests',
         show: ROOT_URL + 'blood-requests/:id',
         filter: ROOT_URL + 'filter-blood-requests',
-        commit: ROOT_URL + 'commit-donate'
+        commit: ROOT_URL + 'commit-donate',
+        donateProfile: ROOT_URL + 'show-donate/:id',
+        donateUpdate: ROOT_URL + 'donate-update/:id'
+
     },
-    auth:{
+    auth: {
         login: ROOT_URL + 'auth/login',
         register: ROOT_URL + 'auth/register',
         update: ROOT_URL + 'auth/update',
@@ -29,9 +32,13 @@ const ApiUrl = {
         otpVerify: ROOT_URL + 'auth/reset-otp-verify',
         resetPassword: ROOT_URL + 'auth/reset-new-password',
         post: ROOT_URL + 'my-blood-requests',
-
+        donateHistory: ROOT_URL + 'donate-history',
         me: ROOT_URL + 'auth/me'
+    },
+    notifications: {
+        index: ROOT_URL + 'get-notifications'
     }
+
 }
 
 export default ApiUrl

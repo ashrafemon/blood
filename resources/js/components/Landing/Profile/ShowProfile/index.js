@@ -281,9 +281,6 @@ const ShowProfile = () => {
 
                     </DialogContent>
                 </Dialog>
-
-            {/*</Grid>*/}
-            {/*</Container>*/}
         </Box>
     )
 }
