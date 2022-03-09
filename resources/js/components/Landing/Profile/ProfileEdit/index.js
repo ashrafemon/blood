@@ -1,63 +1,93 @@
 import React, {useEffect, useState} from 'react'
 import {Box} from "@mui/system";
-import {Avatar, Button, Stack, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import {useStyles} from "./styled";
 import {Autocomplete} from "@mui/lab";
 import {bloodGroup, gender, religion} from "../../../../constants/_data";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMe, update} from "../../../../store/actions/authActions";
-import {TOGGLE_PROFILE_DIALOG} from "../../../../store/types";
-import {upload} from "../../../../store/actions/siteActions";
+import {FETCH_AREAS, TOGGLE_PROFILE_DIALOG} from "../../../../store/types";
+import {fetchAreasByDistrict, fetchDistricts, upload} from "../../../../store/actions/siteActions";
 import FileUploader from "../../shared/FileUploader";
 
 
 const ProfileEdit = () => {
-    const {currentUser} = useSelector(state => state.auth)
-
     const classes = useStyles()
+    const {currentUser} = useSelector(state => state.auth)
+    const {districts, areas} = useSelector((state) => state.site)
+
+
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchMe())
+
+
     }, [dispatch])
 
 
+    useEffect(() => {
+        dispatch(fetchDistricts)
+    }, [])
+
+
     const [form, setForm] = useState({
-        name: currentUser?.name,
-        email: currentUser?.email,
-        blood_group: currentUser?.profile?.blood_group,
-        religion: currentUser?.profile?.religion,
-        gender: currentUser?.profile?.gender,
-        avatar: currentUser?.profile?.avatar
+        name: currentUser?.name || null,
+        email: currentUser?.email || null,
+        blood_group: currentUser?.profile?.blood_group || null,
+        religion: currentUser?.profile?.religion || null,
+        gender: currentUser?.profile?.gender || null,
+        avatar: currentUser?.profile?.avatar || null,
+        district_id: currentUser?.profile?.district_id || null,
+        area_id: currentUser?.profile?.area_id || null,
     })
 
+    useEffect(()=>{
+        if (currentUser && currentUser?.profile?.district_id){
+            dispatch(fetchAreasByDistrict(currentUser?.profile?.district_id))
+            districts.forEach(item => {
+                if (item.id === currentUser.profile.district_id){
+                    setForm(prevState => ({
+                        ...prevState,
+                        district_id: item
+                    }))
+                }
+            })
+        }
+    },[currentUser?.profile?.district_id])
+
+    useEffect(()=>{
+        if (currentUser && currentUser?.profile?.area_id){
+
+            areas.forEach(item => {
+                if (item.id === currentUser.profile.area_id){
+                    setForm(prevState => ({
+                        ...prevState,
+                        area_id: item
+                    }))
+                }
+            })
+        }
+    },[currentUser?.profile?.area_id])
 
     const fieldChangeHandler = (field, value) => {
         setForm(prevState => ({
             ...prevState,
             [field]: value
         }))
-    }
 
-    // const [selectedImage, setSelectedImage] = useState(null);
-    // const [imageUrl, setImageUrl] = useState(null);
-    //
-    // const fileUpload = (field,value) => {
-    //     setSelectedImage(value)
-    //
-    // }
-    //
-    //
-    // useEffect(() => {
-    //     if (selectedImage) {
-    //         setImageUrl(URL.createObjectURL(selectedImage));
-    //     }
-    // }, [selectedImage]);
+        if (field === 'district_id') {
+            if (value) dispatch(fetchAreasByDistrict(value.id))
+            else dispatch({
+                type: FETCH_AREAS,
+                payload: []
+            })
+        }
+    }
 
 
     const submitHandler = (e) => {
         e.preventDefault()
-
 
         dispatch(update(form, () => {
             dispatch({
@@ -68,7 +98,7 @@ const ProfileEdit = () => {
     }
 
     const uploadHandler = (file) => {
-        if(file){
+        if (file) {
             dispatch(upload(file, (image) => {
                 setForm((prevState) => ({
                     ...prevState,
@@ -81,26 +111,7 @@ const ProfileEdit = () => {
     return (
         <form onSubmit={submitHandler}>
 
-
-            {/*<Box textAlign='center'>*/}
-            {/*    <Avatar className={classes.avatar}/>*/}
-
-            {/*    <label htmlFor="contained-button-file">*/}
-            {/*        <input*/}
-            {/*            accept="image/*"*/}
-            {/*            id="contained-button-file"*/}
-            {/*            multiple*/}
-            {/*            type="file"*/}
-            {/*            className={classes.input}*/}
-            {/*            // onChange={e =>  setSelectedImage(e.target.files[0])}*/}
-            {/*        />*/}
-            {/*        <Button variant="contained" component="span">*/}
-            {/*            Upload*/}
-            {/*        </Button>*/}
-            {/*    </label>*/}
-            {/*</Box>*/}
-
-            <FileUploader avatar={form.avatar} changer={uploadHandler} />
+            <FileUploader avatar={form.avatar} changer={uploadHandler}/>
 
 
             <TextField
@@ -120,6 +131,30 @@ const ProfileEdit = () => {
                 variant="outlined"
                 value={form.email}
                 onChange={e => fieldChangeHandler('email', e.target.value)}
+            />
+
+            <Autocomplete
+                disablePortal
+                options={districts}
+                getOptionLabel={option => option.name || ''}
+                fullWidth
+                value={form.district_id}
+                onChange={(e, data) => fieldChangeHandler('district_id', data)}
+                renderInput={(params) =>
+                    <TextField {...params} margin='normal' label="District"/>
+                }
+            />
+
+
+            <Autocomplete
+                disablePortal
+                options={areas}
+                getOptionLabel={option => option.name || ''}
+                fullWidth
+                onChange={(e, data) => fieldChangeHandler('area_id', data)}
+                renderInput={(params) =>
+                    <TextField margin='normal' {...params} label="Areas"/>
+                }
             />
 
             <Autocomplete

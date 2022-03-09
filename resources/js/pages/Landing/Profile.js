@@ -52,6 +52,7 @@ const Profile = () => {
                     <Grid item lg={8} sm={6} xs={12}>
                         <ShowProfile/>
                     </Grid>
+
                     <Grid item lg={4} sm={6} xs={12}>
                         <Avatar src={currentUser ? currentUser?.profile?.avatar : profileImg}
                                 className={classes.avatar}/>

@@ -5,12 +5,27 @@ export const useStyles = makeStyles((theme) => ({
         background: '#E3364A',
         borderRadius: '10px',
         width: '50%',
-        marginTop: '10px'
+        marginTop: '10px',
+        position: 'relative',
+
+        "&:before":{
+            position: 'absolute',
+            content: "''",
+            width: 2,
+            height: '50%',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'white'
+
+        }
     },
 
 
     cardIcon: {
         borderRadius: '0 !important',
+        minHeight: 50,
+        minWidth: 50,
 
         '& .MuiAvatar-img': {
             objectFit: 'contain !important'

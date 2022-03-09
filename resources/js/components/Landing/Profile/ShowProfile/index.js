@@ -3,7 +3,9 @@ import {Box} from "@mui/system";
 import {
     Avatar,
     Card,
-    CardContent, Dialog, DialogContent,
+    CardContent,
+    Dialog,
+    DialogContent,
     Grid,
     IconButton,
     List,
@@ -20,9 +22,11 @@ import {fetchMe, update} from "../../../../store/actions/authActions";
 import {AUTH_FORM_TYPE, TOGGLE_PROFILE_DIALOG} from "../../../../store/types";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
-import DonateHistory from "../History/DonateHistory";
 import ProfileEdit from "../ProfileEdit";
 import CloseIcon from '@mui/icons-material/Close';
+import {BloodDropHand, BloodWhiteIcon} from "../../../../constants/_icons";
+
+
 
 const ShowProfile = () => {
     const classes = useStyles()
@@ -113,6 +117,10 @@ const ShowProfile = () => {
                             <Typography variant='h2'>
                                 {currentUser?.name}
                             </Typography>
+
+                            <Typography variant='h6' color='primary'>
+                                # {currentUser?.id}
+                            </Typography>
                         </Grid>
 
                         <Grid item lg={2}>
@@ -129,26 +137,37 @@ const ShowProfile = () => {
                     <Card className={classes.card} elevation={0}>
                         <CardContent>
                             <Stack direction='row' alignItems='center' justifyContent='space-around'>
-                                <Box>
-                                    <Avatar/>
+
+                                <Stack direction='column' alignItems='center' justifyContent='center'>
+                                    <Avatar src={BloodWhiteIcon} className={classes.cardIcon} />
+
+                                    <Box my={1}>
+                                        <Typography color='white' variant='h3'>
+                                            {currentUser?.profile?.blood_group}
+                                        </Typography>
+                                    </Box>
+
 
                                     <Typography color='white' variant='h5'>
-                                        {currentUser?.profile?.blood_group}
-                                        <br/>
                                         Group
                                     </Typography>
-                                </Box>
+                                </Stack>
 
-                                <Box>
-                                    <Avatar/>
+
+                                <Stack direction='column' alignItems='center' justifyContent='center'>
+                                    <Avatar src={BloodDropHand} className={classes.cardIcon} />
+
+                                    <Box my={1}>
+                                        <Typography color='white' variant='h3'>
+                                            5
+                                        </Typography>
+                                    </Box>
+
 
                                     <Typography color='white' variant='h5'>
-                                        {currentUser?.profile?.blood_group}
-                                        <br/>
                                         Life Saved
                                     </Typography>
-                                </Box>
-
+                                </Stack>
                             </Stack>
 
                         </CardContent>
@@ -247,40 +266,42 @@ const ShowProfile = () => {
                         Address:
                     </Typography>
 
-                    <Typography variant='body1'>
-                        Address, address
+                    <Typography variant='h6' mx={2}>
+                        area, district
                     </Typography>
+
+
                 </ListItem>
             </List>
 
 
-                <Dialog
-                    open={toggleProfileDialog}
-                    maxWidth="sm"
-                    fullWidth
-                    className={classes.modal}
-                    onClose={() => toggleDialog(false)}
-                >
-                    <DialogContent>
-                        <Grid container alignItems='center'>
-                            <Grid item lg={11}>
+            <Dialog
+                open={toggleProfileDialog}
+                maxWidth="sm"
+                fullWidth
+                className={classes.modal}
+                onClose={() => toggleDialog(false)}
+            >
+                <DialogContent>
+                    <Grid container alignItems='center'>
+                        <Grid item lg={11}>
 
-                                <Typography variant='h4'>
-                                    Update Your Profile
-                                </Typography>
-                            </Grid>
-
-                            <Grid item lg={1}>
-                                <IconButton onClick={() => toggleDialog(false)}>
-                                    <CloseIcon/>
-                                </IconButton>
-                            </Grid>
+                            <Typography variant='h4'>
+                                Update Your Profile
+                            </Typography>
                         </Grid>
 
-                        {authFormType === 'profile' && <ProfileEdit/>}
+                        <Grid item lg={1}>
+                            <IconButton onClick={() => toggleDialog(false)}>
+                                <CloseIcon/>
+                            </IconButton>
+                        </Grid>
+                    </Grid>
 
-                    </DialogContent>
-                </Dialog>
+                    {authFormType === 'profile' && <ProfileEdit/>}
+
+                </DialogContent>
+            </Dialog>
         </Box>
     )
 }

@@ -13,6 +13,7 @@ import Loader from "./components/shared/Loader";
 import Post from "./pages/Landing/Post";
 import {fetchMe, fetchNotification} from "./store/actions/authActions";
 import DonorProfile from "./pages/Landing/DonorProfile";
+import {fetchDistricts} from "./store/actions/siteActions";
 
 const App = () => {
     const {siteLoading} = useSelector(state => state.site)
@@ -63,10 +64,10 @@ const App = () => {
         if(token){
             dispatch(fetchMe())
         }
-
-
+        dispatch(fetchDistricts())
 
     }, [])
+
 
     useEffect(()=>{
         dispatch(fetchNotification())

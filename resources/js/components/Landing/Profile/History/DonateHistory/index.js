@@ -17,38 +17,43 @@ const DonateHistory = () => {
 
     return (
         <Grid container>
-            {donateHistory?.map((item, i) => (
-                <Grid item lg={4} sm={6} xs={12} key={i}>
-                    <Card className={classes.card}>
-                        <CardContent>
-                            <Stack direction='row'>
-                                <Avatar className={classes.avatar}/>
+            {donateHistory.length > 0  ? (
+                donateHistory?.map((item, i) => (
+                    <Grid item lg={4} sm={6} xs={12} key={i}>
+                        <Card className={classes.card}>
+                            <CardContent>
+                                <Stack direction='row'>
+                                    <Avatar className={classes.avatar}/>
 
-                                <List>
-                                    <ListItem>
-                                        <Typography>
-                                            Blood Group: {item?.blood_request?.blood_group}
-                                        </Typography>
-                                    </ListItem>
+                                    <List>
+                                        <ListItem>
+                                            <Typography>
+                                                Blood Group: {item?.blood_request?.blood_group}
+                                            </Typography>
+                                        </ListItem>
 
-                                    <ListItem>
-                                        <Typography>
-                                            Location
-                                        </Typography>
-                                    </ListItem>
+                                        <ListItem>
+                                            <Typography>
+                                                Location
+                                            </Typography>
+                                        </ListItem>
 
-                                    <ListItem>
-                                        <Typography>
-                                            Donation
-                                        </Typography>
-                                    </ListItem>
+                                        <ListItem>
+                                            <Typography>
+                                                Donation
+                                            </Typography>
+                                        </ListItem>
 
-                                </List>
-                            </Stack>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            ))}
+                                    </List>
+                                </Stack>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))
+            ): (
+                <Typography variant='h6' color='primary'> Currently, you don't have any donate history. Please try to donate & save life</Typography>
+            )}
+
         </Grid>
     )
 }
