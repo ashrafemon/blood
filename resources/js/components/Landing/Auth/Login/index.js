@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useStyles} from "./styled";
 import {Box} from "@mui/system";
-import {Button, TextField} from "@mui/material";
+import {Button, IconButton, InputAdornment, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {login, validateAuthErrors} from "../../../../store/actions/authActions";
 import {isRequiredValidate, lengthValidate, phoneValidation} from "../../../../utils/validateHelpers";
 import {AUTH_FORM_TYPE} from "../../../../store/types";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const Login = () => {
     const classes = useStyles();
@@ -15,12 +16,17 @@ const Login = () => {
     const [form, setForm] = useState({
         phone: null,
         password: null,
+        isShow: false
     })
+
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     const [errors, setErrors] = useState({
         phone: {text: '', show: false},
         password: {text: '', show: false}
     })
+
 
     const filedChangeHandler = (field, value) => {
         setErrors((prevState) => ({
@@ -105,12 +111,26 @@ const Login = () => {
                     error={errors.password.show}
                     margin="normal"
                     label="Password *"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     fullWidth
                     variant="outlined"
                     value={form.password}
                     onChange={e => filedChangeHandler('password', e.target.value)}
                     helperText={errors.password.text}
+
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    // onMouseDown={handleMouseDownPassword}
+                                >
+                                    {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
 
                 />
 

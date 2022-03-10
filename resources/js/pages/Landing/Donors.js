@@ -7,6 +7,7 @@ import Wrapper from "../../components/Landing/shared/Wrapper";
 import DonorSearch from "../../components/Landing/Donor/Search";
 import RequestForm from "../../components/Landing/Seeker/RequestForm";
 import * as types from "../../store/types";
+import {Box} from "@mui/system";
 
 
 const Donors = () => {
@@ -70,14 +71,23 @@ const Donors = () => {
                         </Grid>
                     </>
 
-                ) : (
-                    <Grid container spacing={12}>
-                        {donors?.data?.map((data, i) => (
-                            <Grid item lg={4} sm={6} xs={12} key={i}>
-                                <Donor item={data}/>
+                ) : (<Box>
+                        {donors?.data?.length > 0 ? (
+                            <Grid container spacing={12}>
+                                {donors?.data?.map((data, i) => (
+                                    <Grid item lg={4} sm={6} xs={12} key={i}>
+                                        <Donor item={data}/>
+                                    </Grid>
+                                ))}
                             </Grid>
-                        ))}
-                    </Grid>
+                        ) : (
+                            <Typography variant='h3' color='primary'>
+                                Currently, Donors are not available.
+                            </Typography>
+                        )}
+
+                    </Box>
+
                 )}
             </Container>
         </Wrapper>

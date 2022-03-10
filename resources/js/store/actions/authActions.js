@@ -283,7 +283,6 @@ export const resetPassword = (data, cb = () => {
         .then(res => res.json())
         .then(res => {
 
-
             if (res.status === 'success') {
                 dispatch({
                     type: types.RESET_PASSWORD,

@@ -31,6 +31,8 @@ import RecoverEmail from "../../Auth/Recovery/Email";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Logout} from "@mui/icons-material";
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import PasswordIcon from '@mui/icons-material/Password';
+import PasswordChange from "../../Profile/PasswordChange";
 
 const NavList = () => {
     const classes = useStyles();
@@ -50,6 +52,20 @@ const NavList = () => {
             type: AUTH_FORM_TYPE,
             payload: 'login'
         })
+
+    }
+
+    const showPasswordDialog = () => {
+        dispatch({
+            type: TOGGLE_DIALOG,
+            payload: true
+        })
+
+        dispatch({
+            type: AUTH_FORM_TYPE,
+            payload: 'change_password'
+        })
+
     }
 
     const closeDialog = () => {
@@ -234,7 +250,7 @@ const NavList = () => {
                         <IconButton
                             onClick={showProfile}
                         >
-                            <Avatar src={currentUser ? currentUser?.profile?.avatar : profileImg} />
+                            <Avatar src={currentUser ? currentUser?.profile?.avatar : profileImg}/>
                         </IconButton>
 
                         <Popover
@@ -262,6 +278,13 @@ const NavList = () => {
                                     </ListItem>
                                 </NavLink>
 
+
+                                <ListItem className={classes.logoutBtn} onClick={showPasswordDialog}>
+                                    <ListItemIcon>
+                                        <PasswordIcon fontSize="small"/>
+                                    </ListItemIcon>
+                                    Change Password
+                                </ListItem>
 
                                 <ListItem onClick={destroy} className={classes.logoutBtn}>
                                     <ListItemIcon>
@@ -295,32 +318,37 @@ const NavList = () => {
                             </IconButton>
                         </Box>
 
-                        <Box textAlign='center' my={2}>
-                            <Typography variant='h2'>
-                                {authFormType === 'login' && 'Please Sign In'}
-                                {authFormType === 'register' && 'Please Sign Up'}
-                                {authFormType === 'forgot' && 'Forgot Password'}
-                                {authFormType === 'otp' && 'Verify OTP'}
-                                {authFormType === 'password' && 'Set Your New Password'}
-                            </Typography>
-                            <Avatar src={LoginLogo} className={classes.authLogo}/>
-                        </Box>
+                        {authFormType === 'change_password' ? <PasswordChange/> : (
+                            <>
+                                <Box textAlign='center' my={2}>
+                                    <Typography variant='h2'>
+                                        {authFormType === 'login' && 'Please Sign In'}
+                                        {authFormType === 'register' && 'Please Sign Up'}
+                                        {authFormType === 'forgot' && 'Forgot Password'}
+                                        {authFormType === 'otp' && 'Verify OTP'}
+                                        {authFormType === 'password' && 'Set Your New Password'}
+                                    </Typography>
+                                    <Avatar src={LoginLogo} className={classes.authLogo}/>
+                                </Box>
 
 
-                        {authFormType === 'login' && <Login/>}
-                        {authFormType === 'register' && <Registration/>}
-                        {authFormType === 'forgot' && <RecoverEmail/>}
-                        {authFormType === 'otp' && <OTP/>}
-                        {authFormType === 'password' && <ChangePassword/>}
+                                {authFormType === 'login' && <Login/>}
+                                {authFormType === 'register' && <Registration/>}
+                                {authFormType === 'forgot' && <RecoverEmail/>}
+                                {authFormType === 'otp' && <OTP/>}
+                                {authFormType === 'password' && <ChangePassword/>}
 
-                        <Box textAlign='center' my={2}>
-                            <Typography mb={1}>
-                                OR
-                            </Typography>
+                                <Box textAlign='center' my={2}>
+                                    <Typography mb={1}>
+                                        OR
+                                    </Typography>
 
-                            <Button variant="text"
-                                    onClick={showRegistration}>{authFormType === 'login' ? 'Sign Up' : 'Login'}</Button>
-                        </Box>
+                                    <Button variant="text"
+                                            onClick={showRegistration}>{authFormType === 'login' ? 'Sign Up' : 'Login'}</Button>
+                                </Box>
+                            </>
+                        )}
+
 
                     </DialogContent>
 
