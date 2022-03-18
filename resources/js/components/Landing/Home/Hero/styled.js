@@ -7,7 +7,12 @@ export const useStyles = makeStyles(() => ({
         minHeight: '100vh',
         maxHeight: '100vh',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+
+        "@media(max-width: 600px)": {
+            minHeight: '100vh',
+            maxHeight: '100vh',
+        },
     },
     content: {
         width: '100%',
@@ -16,7 +21,12 @@ export const useStyles = makeStyles(() => ({
         position:'absolute',
         top: 0,
         left: 0,
-        zIndex: 111
+        zIndex: 111,
+
+        "@media(max-width: 600px)": {
+            minHeight: '100vh',
+            maxHeight: '100vh',
+        },
     },
 
     heroTitle: {

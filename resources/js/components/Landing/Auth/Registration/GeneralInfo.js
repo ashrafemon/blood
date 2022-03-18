@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useStyles} from "./styled";
 import {Box} from "@mui/system";
-import {TextField} from "@mui/material";
+import {IconButton, InputAdornment, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 
 import {register, validateAuthErrors} from "../../../../store/actions/authActions";
 import {isEqualValidate, isRequiredValidate, lengthValidate, phoneValidation} from "../../../../utils/validateHelpers";
 import validator from 'validator';
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const GeneralInfo = (props) => {
     const classes = useStyles();
@@ -14,13 +15,39 @@ const GeneralInfo = (props) => {
     const dispatch = useDispatch();
     const {validateErrors} = useSelector(state => state.auth)
 
+    // const [form, setForm] = useState({
+    //     name: null,
+    //     phone: null,
+    //     email: null,
+    //     password: null,
+    //     password_confirmation: null,
+    // });
+
+
     const [form, setForm] = useState({
         name: null,
         phone: null,
         email: null,
         password: null,
-        password_confirmation: null
+        password_confirmation: null,
+        isShow: false
     });
+
+    const handleClickShowPassword = (field) => {
+        if (field === 'password'){
+            setForm(prevState => ({
+                ...prevState,
+                isShow: !form.isShow
+            }))
+        }else if (field === 'confirmPassword'){
+            setForm(prevState => ({
+                ...prevState,
+                isShow: !form.isShow
+            }))
+        }
+
+    };
+
 
 
     const fieldChangeHandler = (field, value) => {
@@ -34,6 +61,7 @@ const GeneralInfo = (props) => {
             [field]: value
         }))
     }
+
 
     const [errors, setErrors] = useState({
         name: {text: '', show: false},
@@ -157,25 +185,54 @@ const GeneralInfo = (props) => {
                 <TextField
                     margin="normal"
                     label="Password *"
-                    type="password"
+                    type={form.isShow ? "text" : "password"}
+
                     fullWidth
                     variant="outlined"
                     value={form.password}
                     onChange={e => fieldChangeHandler('password', e.target.value)}
                     error={errors.password.show}
                     helperText={errors.password.text}
+
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => handleClickShowPassword('password')}
+                                    // onMouseDown={handleMouseDownPassword}
+                                >
+                                    {form.isShow ? <Visibility/> : <VisibilityOff/>}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
 
                 <TextField
                     margin="normal"
                     label="Confirm Password *"
-                    type="password"
+                    type={form.isShow ? "text" : "password"}
                     fullWidth
                     variant="outlined"
                     value={form.password_confirmation}
                     onChange={e => fieldChangeHandler('password_confirmation', e.target.value)}
                     error={errors.password_confirmation.show}
                     helperText={errors.password_confirmation.text}
+
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => handleClickShowPassword('confirmPassword')}
+                                    // onMouseDown={handleMouseDownPassword}
+                                >
+                                    {form.isShow ? <Visibility/> : <VisibilityOff/>}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
             </form>
         </Box>

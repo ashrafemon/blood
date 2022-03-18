@@ -16,7 +16,6 @@ const Login = () => {
     const [form, setForm] = useState({
         phone: null,
         password: null,
-        isShow: false
     })
 
     const [showPassword, setShowPassword] = useState(false);
